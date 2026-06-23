@@ -1,0 +1,971 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"/>
+<title>Suite in Centro · Treviso</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root{--r:#FF385C;--dk:#222;--gy:#717171;--bd:#EBEBEB;--sf:#F7F7F7;--wh:#fff;}
+*{box-sizing:border-box;margin:0;padding:0;}
+html{font-size:18px;scroll-behavior:smooth;}
+body{font-family:'Inter',system-ui,sans-serif;color:var(--dk);background:var(--wh);-webkit-font-smoothing:antialiased;padding-bottom:80px;}
+.icon{width:20px;height:20px;fill:none;stroke:currentColor;stroke-width:1.6;stroke-linecap:round;stroke-linejoin:round;flex:0 0 auto;}
+.icon .f{fill:currentColor;stroke:none;}
+@keyframes fu{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
+
+/* TOPBAR */
+.topbar{display:flex;align-items:center;justify-content:space-between;padding:10px 16px;border-bottom:1px solid var(--bd);background:var(--wh);position:sticky;top:0;z-index:40;}
+.lang-sw{display:flex;gap:3px;background:var(--sf);border-radius:999px;padding:3px;}
+.lb{background:none;border:none;font:inherit;font-weight:700;font-size:.75rem;color:var(--gy);padding:7px 12px;border-radius:999px;cursor:pointer;min-height:36px;}
+.lb.on{background:var(--dk);color:var(--wh);}
+.print-btn{background:var(--sf);border:none;border-radius:50%;width:44px;height:44px;display:flex;align-items:center;justify-content:center;cursor:pointer;color:var(--dk);}
+
+/* CAROUSEL */
+.car{position:relative;overflow:hidden;border-radius:0 0 20px 20px;}
+.slides{display:flex;transition:transform .4s ease;touch-action:pan-y;}
+.slides img{width:100%;height:210px;object-fit:cover;display:block;flex:0 0 100%;}
+.cbtn{position:absolute;top:50%;transform:translateY(-50%);width:44px;height:44px;border-radius:50%;border:none;background:rgba(255,255,255,.92);box-shadow:0 2px 8px rgba(0,0,0,.18);display:flex;align-items:center;justify-content:center;cursor:pointer;}
+.cbtn svg{width:20px;height:20px;color:var(--dk);}
+.cbtn.prev{left:10px;}.cbtn.next{right:10px;}
+.cdots{position:absolute;bottom:10px;left:0;right:0;display:flex;justify-content:center;gap:5px;}
+.cdot{width:6px;height:6px;border-radius:50%;border:none;background:rgba(255,255,255,.5);padding:0;cursor:pointer;transition:width .2s,background .2s;}
+.cdot.on{width:16px;border-radius:4px;background:var(--wh);}
+.badge{position:absolute;bottom:-14px;left:18px;background:var(--wh);border-radius:999px;padding:8px 14px;box-shadow:0 4px 16px rgba(0,0,0,.15);display:flex;align-items:center;gap:6px;font-weight:700;font-size:.8rem;}
+.badge svg{width:13px;height:13px;color:var(--r);}
+
+/* CONTAINER */
+.wrap{max-width:860px;margin:0 auto;padding:26px 18px 20px;}
+@media(min-width:700px){.wrap{padding:30px 40px 20px;}}
+
+/* TITLE */
+.tblock{animation:fu .4s ease both;}
+.tblock h1{font-size:clamp(1.3rem,4vw,1.7rem);font-weight:800;margin-bottom:6px;line-height:1.2;}
+.loc{display:flex;align-items:center;gap:7px;color:var(--gy);font-size:.87rem;margin-bottom:10px;}
+.loc svg{width:16px;height:16px;color:var(--gy);}
+.meta{display:flex;align-items:center;gap:8px;font-size:.87rem;margin-bottom:8px;}
+.sh{background:var(--sf);border-radius:999px;padding:4px 12px;font-weight:700;font-size:.74rem;}
+.qf{color:var(--gy);font-size:.87rem;}
+
+/* DESKTOP GRID */
+@media(min-width:700px){
+  .grid{display:grid;grid-template-columns:1fr 1fr;gap:14px;}
+  .grid .card:first-child,.grid .card.full{grid-column:1/-1;}
+}
+
+/* CARDS */
+.card{border:1px solid var(--bd);border-radius:16px;margin-bottom:12px;overflow:hidden;background:var(--wh);}
+@media(min-width:700px){.card{margin-bottom:0;}}
+.cs{background:none;border:none;font:inherit;color:inherit;text-align:left;display:flex;align-items:center;gap:12px;padding:16px;width:100%;cursor:pointer;}
+.cs:hover{background:var(--sf);}
+.cs .lead{color:var(--r);width:22px;height:22px;}
+.st{display:flex;flex-direction:column;gap:2px;flex:1;}
+.st .title{font-weight:700;font-size:.97rem;}
+.st .sub{color:var(--gy);font-size:.78rem;}
+.chv{color:var(--gy);transition:transform .3s;flex:0 0 auto;width:20px;height:20px;}
+.cs[aria-expanded=true] .chv{transform:rotate(180deg);}
+.coll{display:grid;grid-template-rows:0fr;transition:grid-template-rows .32s ease;}
+.coll.open{grid-template-rows:1fr;}
+.coll-in{overflow:hidden;min-height:0;}
+.cc{padding:0 16px 18px;}
+.cc p{font-size:.92rem;line-height:1.6;color:var(--dk);}
+.cc h3{font-size:.9rem;font-weight:700;margin:16px 0 8px;}
+
+/* STATS */
+.stats{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-bottom:14px;}
+.stat{background:var(--sf);border-radius:12px;padding:12px 6px;text-align:center;}
+.stat .n{font-weight:800;font-size:.88rem;line-height:1.3;}
+.stat .l{color:var(--gy);font-size:.7rem;margin-top:3px;}
+
+/* ROWS */
+.row{padding:12px 0;border-bottom:1px solid var(--bd);}
+.row:last-child{border-bottom:none;}
+.row .lbl{font-weight:600;display:flex;align-items:center;gap:9px;margin-bottom:4px;font-size:.9rem;}
+.row .lbl svg{color:var(--gy);width:18px;height:18px;}
+.row .val{color:var(--gy);font-size:.85rem;line-height:1.55;padding-left:27px;}
+.row .vrow{display:flex;align-items:center;justify-content:space-between;gap:10px;padding-left:27px;}
+.row .vrow .val{padding-left:0;}
+.ph{color:#c0392b;font-style:italic;}
+
+/* COPY BTN */
+.cpbtn{background:var(--sf);border:none;border-radius:10px;width:44px;height:44px;display:flex;align-items:center;justify-content:center;cursor:pointer;color:var(--dk);flex:0 0 auto;}
+.cpbtn:hover{background:var(--bd);}
+
+/* AMENITIES */
+.amen{display:grid;grid-template-columns:1fr 1fr;gap:12px 10px;margin-bottom:4px;}
+.am{display:flex;align-items:center;gap:9px;font-size:.85rem;}
+.am svg{width:18px;height:18px;color:var(--dk);}
+.more-btn{background:none;border:none;font:inherit;color:var(--dk);font-weight:700;font-size:.83rem;text-decoration:underline;padding:8px 0 2px;cursor:pointer;}
+.more-btn .less{display:none;}
+.more-btn[aria-expanded=true] .ml{display:none;}
+.more-btn[aria-expanded=true] .less{display:inline;}
+
+/* CHECKLIST */
+ul.cl{list-style:none;display:flex;flex-direction:column;gap:9px;}
+ul.cl li{display:flex;align-items:flex-start;gap:9px;font-size:.88rem;line-height:1.5;}
+ul.cl li svg{color:var(--gy);width:17px;height:17px;margin-top:2px;flex:0 0 auto;}
+
+/* SUB ACCORDION */
+.sub{border-top:1px solid var(--bd);margin-top:2px;}
+.ss{background:none;border:none;font:inherit;color:inherit;width:100%;display:flex;align-items:center;justify-content:space-between;gap:10px;padding:13px 0;font-weight:600;font-size:.88rem;cursor:pointer;}
+.ss svg.chv{width:18px;height:18px;}
+.sc{padding-bottom:12px;}
+
+/* TAG */
+.tag{background:var(--sf);color:var(--gy);border-radius:999px;padding:2px 8px;font-size:.62rem;font-weight:700;text-transform:uppercase;letter-spacing:.04em;}
+
+/* HSCROLL CARDS */
+.hs{display:flex;gap:10px;overflow-x:auto;padding-bottom:4px;scroll-snap-type:x mandatory;-webkit-overflow-scrolling:touch;scrollbar-width:none;margin:0 -2px 4px;}
+.hs::-webkit-scrollbar{display:none;}
+.pc{flex:0 0 auto;width:158px;scroll-snap-align:start;border:1px solid var(--bd);border-radius:14px;padding:12px;}
+.pc svg{color:var(--r);width:18px;height:18px;margin-bottom:8px;}
+.pc .pn{font-weight:700;font-size:.87rem;margin-bottom:3px;line-height:1.3;}
+.pc .pd{color:var(--gy);font-size:.78rem;line-height:1.4;}
+
+/* PLACE LIST (ristoranti, cicchetti, colazioni) */
+.plist{display:flex;flex-direction:column;gap:0;}
+.pitem{padding:12px 0;border-bottom:1px solid var(--bd);}
+.pitem:last-child{border-bottom:none;}
+.pname{font-weight:700;font-size:.9rem;display:flex;align-items:center;gap:8px;margin-bottom:3px;}
+.pname svg{color:var(--r);width:16px;height:16px;flex:0 0 auto;}
+.pdesc{color:var(--gy);font-size:.82rem;line-height:1.5;padding-left:24px;}
+
+/* EVENT LIST */
+.elist{display:flex;flex-direction:column;gap:10px;}
+.eitem{background:var(--sf);border-radius:12px;padding:12px 14px;}
+.edate{font-family:'Inter',monospace;font-size:.7rem;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:var(--r);margin-bottom:4px;}
+.etitle{font-weight:700;font-size:.9rem;margin-bottom:2px;}
+.edesc{color:var(--gy);font-size:.82rem;line-height:1.4;}
+
+/* HOST CARD */
+.hcard{display:flex;align-items:center;gap:14px;background:var(--sf);border-radius:16px;padding:14px;margin-bottom:14px;}
+.hav{width:50px;height:50px;border-radius:50%;background:var(--r);color:var(--wh);display:flex;align-items:center;justify-content:center;font-weight:800;font-size:1.2rem;flex:0 0 auto;}
+.hn{font-weight:700;font-size:.95rem;}
+.hm{color:var(--gy);font-size:.8rem;margin-top:2px;}
+
+/* BUTTONS */
+.btns{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:8px;}
+.btn{display:inline-flex;align-items:center;gap:8px;background:var(--dk);color:var(--wh);text-decoration:none;padding:13px 20px;border-radius:999px;font-weight:700;font-size:.88rem;min-height:48px;}
+.btn.ol{background:var(--wh);color:var(--dk);border:1px solid var(--dk);}
+.btn svg{width:17px;height:17px;}
+
+/* FLOATING BUTTONS */
+.call-fab{position:fixed;right:16px;bottom:80px;z-index:26;width:54px;height:54px;border-radius:50%;background:var(--r);color:var(--wh);text-decoration:none;display:flex;align-items:center;justify-content:center;box-shadow:0 4px 14px rgba(255,56,92,.4);}
+.call-fab svg{width:24px;height:24px;}
+.fab{position:fixed;right:16px;bottom:144px;z-index:25;width:46px;height:46px;border-radius:50%;border:none;background:var(--dk);color:var(--wh);display:flex;align-items:center;justify-content:center;box-shadow:0 4px 12px rgba(0,0,0,.2);cursor:pointer;opacity:0;transform:translateY(8px);transition:opacity .2s,transform .2s;pointer-events:none;}
+.fab.show{opacity:1;transform:translateY(0);pointer-events:auto;}
+.fab svg{width:19px;height:19px;}
+
+/* TOAST */
+.toast{position:fixed;bottom:80px;left:50%;transform:translateX(-50%) translateY(8px);background:var(--dk);color:var(--wh);padding:8px 18px;border-radius:999px;font-size:.8rem;font-weight:600;opacity:0;pointer-events:none;transition:opacity .25s,transform .25s;z-index:35;}
+.toast.show{opacity:1;transform:translateX(-50%) translateY(0);}
+
+/* BOTTOM TABBAR */
+.tabbar{position:fixed;left:0;right:0;bottom:0;z-index:30;display:flex;justify-content:space-around;background:var(--wh);border-top:1px solid var(--bd);padding:6px 4px calc(6px + env(safe-area-inset-bottom));}
+.tab{background:none;border:none;color:var(--gy);display:flex;flex-direction:column;align-items:center;gap:3px;font:inherit;font-size:.68rem;font-weight:600;padding:7px 10px;cursor:pointer;min-width:44px;min-height:48px;}
+.tab svg{width:22px;height:22px;}
+.tab.on{color:var(--r);}
+
+/* FOOTER */
+footer{text-align:center;padding:20px 18px 10px;color:var(--gy);font-size:.76rem;display:flex;flex-direction:column;align-items:center;gap:5px;}
+footer svg{color:var(--r);width:14px;height:14px;}
+
+/* PRINT */
+@media print{
+  .topbar,.tabbar,.fab,.call-fab,.toast,.cpbtn,.car,.more-btn{display:none!important;}
+  body{padding-bottom:0;}
+  .wrap{max-width:100%;padding:12px;}
+  .card{border:1px solid #ddd;page-break-inside:avoid;margin-bottom:10px;}
+  .coll{grid-template-rows:1fr!important;}
+  .coll-in{overflow:visible!important;}
+  .hs{display:block;overflow:visible;}
+  .pc{width:100%;border:none;border-bottom:1px solid #eee;border-radius:0;margin-bottom:8px;padding:8px 0;}
+  .grid{display:block;}
+  a{color:var(--dk);}
+}
+
+@media(prefers-reduced-motion:reduce){html{scroll-behavior:auto;}*{transition:none!important;animation:none!important;}}
+</style>
+</head>
+<body>
+
+<svg style="display:none" aria-hidden="true">
+  <symbol id="i-star" viewBox="0 0 24 24"><path class="f" d="M12 2.5l2.9 6.1 6.7.9-4.9 4.7 1.2 6.6L12 17.8 6.1 20.8l1.2-6.6L2.4 9.5l6.7-.9z"/></symbol>
+  <symbol id="i-wifi" viewBox="0 0 24 24"><path d="M2 9.5c5.5-5 14.5-5 20 0"/><path d="M5 13c3.5-3 10.5-3 14 0"/><path d="M8.5 16.5c1.8-1.5 5.2-1.5 7 0"/><circle class="f" cx="12" cy="20" r="1"/></symbol>
+  <symbol id="i-key" viewBox="0 0 24 24"><circle cx="8" cy="14.5" r="3.8"/><path d="M10.7 11.8 19 3.5"/><path d="M15.5 6 18 8.5"/><path d="M17.5 4 20 6.5"/></symbol>
+  <symbol id="i-parking" viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="4"/><path d="M9 16V8h3.5a3 3 0 1 1 0 6H9"/></symbol>
+  <symbol id="i-home" viewBox="0 0 24 24"><path d="M4 11.5 12 4l8 7.5"/><path d="M6 10.5V20h12v-9.5"/><path d="M10 20v-5h4v5"/></symbol>
+  <symbol id="i-pin" viewBox="0 0 24 24"><path d="M12 21s7-6.6 7-11.2A7 7 0 0 0 5 9.8C5 14.4 12 21 12 21z"/><circle cx="12" cy="9.5" r="2.6"/></symbol>
+  <symbol id="i-fork" viewBox="0 0 24 24"><path d="M8 3v4a2 2 0 0 0 2 2h0a2 2 0 0 0 2-2V3"/><path d="M10 9v12"/><path d="M16 3v12"/><path d="M16 15a2 2 0 0 1-2 2h0a2 2 0 0 1-2-2"/></symbol>
+  <symbol id="i-glass" viewBox="0 0 24 24"><path d="M8 3l-2 9h12L16 3z"/><path d="M12 12v9"/><path d="M9 21h6"/></symbol>
+  <symbol id="i-coffee" viewBox="0 0 24 24"><path d="M4 8h13v4a5 5 0 0 1-5 5H9a5 5 0 0 1-5-5V8z"/><path d="M17 9h1.5a2.2 2.2 0 0 1 0 4.4H17"/></symbol>
+  <symbol id="i-calendar" viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M3 10h18"/><path d="M8 3v4"/><path d="M16 3v4"/></symbol>
+  <symbol id="i-trash" viewBox="0 0 24 24"><path d="M4 7h16"/><path d="M9 7V4.5h6V7"/><path d="M6.5 7 7.6 20h8.8L17.5 7"/><path d="M10 11v5"/><path d="M14 11v5"/></symbol>
+  <symbol id="i-info" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 11v5"/><circle class="f" cx="12" cy="8" r="1"/></symbol>
+  <symbol id="i-phone" viewBox="0 0 24 24"><path d="M5 4h3l1.5 4.5-2 1.5a11.5 11.5 0 0 0 5.5 5.5l1.5-2L19 15v3a2 2 0 0 1-2 2A15.5 15.5 0 0 1 3 6a2 2 0 0 1 2-2z"/></symbol>
+  <symbol id="i-chat" viewBox="0 0 24 24"><path d="M4 5h16v10H9l-4 3.5V5z"/></symbol>
+  <symbol id="i-check" viewBox="0 0 24 24"><path d="M5 12.5 9.5 17 19 7"/></symbol>
+  <symbol id="i-heart" viewBox="0 0 24 24"><path class="f" d="M12 20.5 4.5 13a5 5 0 0 1 7-7.1L12 6l.5-.1a5 5 0 0 1 7 7.1L12 20.5z"/></symbol>
+  <symbol id="i-chv" viewBox="0 0 24 24"><path d="M6 9l6 6 6-6"/></symbol>
+  <symbol id="i-cl" viewBox="0 0 24 24"><path d="M15 6l-6 6 6 6"/></symbol>
+  <symbol id="i-cr" viewBox="0 0 24 24"><path d="M9 6l6 6-6 6"/></symbol>
+  <symbol id="i-cu" viewBox="0 0 24 24"><path d="M6 15l6-6 6 6"/></symbol>
+  <symbol id="i-copy" viewBox="0 0 24 24"><rect x="9" y="9" width="11" height="11" rx="2"/><path d="M5 15V6a2 2 0 0 1 2-2h9"/></symbol>
+  <symbol id="i-print" viewBox="0 0 24 24"><path d="M7 9V4h10v5"/><rect x="5" y="9" width="14" height="7" rx="1"/><path d="M7 16v4h10v-4"/></symbol>
+  <symbol id="i-paw" viewBox="0 0 24 24"><circle class="f" cx="7.5" cy="9" r="1.5"/><circle class="f" cx="12" cy="6.5" r="1.5"/><circle class="f" cx="16.5" cy="9" r="1.5"/><path d="M12 11c3 0 5.5 2.2 5.5 4.6a2.9 2.9 0 0 1-2.9 2.9c-1 0-1.8-.8-2.6-.8s-1.6.8-2.6.8A2.9 2.9 0 0 1 6.5 15.6C6.5 13.2 9 11 12 11z"/></symbol>
+  <symbol id="i-tv" viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="12" rx="2"/><path d="M8 21h8"/><path d="M12 17v4"/></symbol>
+  <symbol id="i-washer" viewBox="0 0 24 24"><rect x="4" y="2" width="16" height="20" rx="2"/><circle class="f" cx="8" cy="6" r=".8"/><circle class="f" cx="11" cy="6" r=".8"/><circle cx="12" cy="14" r="4.5"/></symbol>
+  <symbol id="i-therm" viewBox="0 0 24 24"><path d="M12 3a3 3 0 0 1 3 3v7.55A5 5 0 1 1 7 17.5V6a3 3 0 0 1 3-3z"/><line x1="12" y1="3" x2="12" y2="14"/></symbol>
+  <symbol id="i-blind" viewBox="0 0 24 24"><path d="M4 4h16"/><path d="M4 8h16"/><path d="M4 12h16"/><path d="M12 12v8"/><path d="M9 20h6"/></symbol>
+  <symbol id="i-shower" viewBox="0 0 24 24"><path d="M9 4a3 3 0 0 1 6 0v1H9V4z"/><path d="M6.5 8h11l-1.2 3.5h-8.6L6.5 8z"/><path d="M9 15v1.5"/><path d="M12 15v1.5"/><path d="M15 15v1.5"/><path d="M9 19v1.5"/><path d="M12 19v1.5"/><path d="M15 19v1.5"/></symbol>
+  <symbol id="i-desk" viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="11" rx="1.5"/><path d="M2 19h20"/><path d="M8 19v-4"/><path d="M16 19v-4"/></symbol>
+  <symbol id="i-terrace" viewBox="0 0 24 24"><path d="M3 17h18"/><path d="M12 7v10"/><path d="M5 7h14"/><path d="M8 3l4 4 4-4"/></symbol>
+  <symbol id="i-euro" viewBox="0 0 24 24"><path d="M16.5 6.5a6.5 6.5 0 0 0 0 11"/><path d="M4.5 10h9"/><path d="M4.5 14h9"/></symbol>
+  <symbol id="i-train" viewBox="0 0 24 24"><rect x="5" y="3" width="14" height="13" rx="3"/><path d="M5 9.5h14"/><circle class="f" cx="9" cy="13" r="1"/><circle class="f" cx="15" cy="13" r="1"/><path d="M7.5 20 9.5 17h5l2 3"/></symbol>
+</svg>
+
+<!-- TOPBAR -->
+<div class="topbar">
+  <div class="lang-sw" role="group" aria-label="Language">
+    <button class="lb on" data-lang="it">IT</button>
+    <button class="lb" data-lang="en">EN</button>
+    <button class="lb" data-lang="es">ES</button>
+  </div>
+  <button class="print-btn" id="printBtn" aria-label="Stampa"><svg class="icon"><use href="#i-print"/></svg></button>
+</div>
+
+<!-- CAROUSEL -->
+<div class="car">
+  <div class="slides" id="slides">
+    <img src="https://a0.muscache.com/im/pictures/hosting/Hosting-U3RheVN1cHBseUxpc3Rpbmc6MTI0NDcyNTg5MTg3NTEwNzYzNg%3D%3D/original/a81a9580-5863-470b-ab22-b3914c7b95d7.jpeg?im_w=1200" alt="Terrazza privata">
+    <img src="https://a0.muscache.com/im/pictures/hosting/Hosting-U3RheVN1cHBseUxpc3Rpbmc6MTI0NDcyNTg5MTg3NTEwNzYzNg%3D%3D/original/4e4c5b8c-bd62-4b2f-bf1f-c496ca86b086.jpeg?im_w=1200" alt="Soggiorno">
+    <img src="https://a0.muscache.com/im/pictures/hosting/Hosting-U3RheVN1cHBseUxpc3Rpbmc6MTI0NDcyNTg5MTg3NTEwNzYzNg%3D%3D/original/3d3e8a50-08c5-4d5f-a6d6-becd6936e5db.jpeg?im_w=1200" alt="Cucina">
+    <img src="https://a0.muscache.com/im/pictures/hosting/Hosting-U3RheVN1cHBseUxpc3Rpbmc6MTI0NDcyNTg5MTg3NTEwNzYzNg%3D%3D/original/0a1a43ca-430a-4692-9671-6459844d90f9.jpeg?im_w=1200" alt="Camera da letto">
+    <img src="https://a0.muscache.com/im/pictures/hosting/Hosting-U3RheVN1cHBseUxpc3Rpbmc6MTI0NDcyNTg5MTg3NTEwNzYzNg%3D%3D/original/7b47db07-1c29-494c-85d9-14d26c18bd26.jpeg?im_w=1200" alt="Bagno">
+  </div>
+  <button class="cbtn prev" id="prev" aria-label="Precedente"><svg class="icon"><use href="#i-cl"/></svg></button>
+  <button class="cbtn next" id="next" aria-label="Successiva"><svg class="icon"><use href="#i-cr"/></svg></button>
+  <div class="cdots" id="cdots">
+    <button class="cdot on" data-i="0"></button>
+    <button class="cdot" data-i="1"></button>
+    <button class="cdot" data-i="2"></button>
+    <button class="cdot" data-i="3"></button>
+    <button class="cdot" data-i="4"></button>
+  </div>
+  <div class="badge"><svg class="icon"><use href="#i-star"/></svg> <span data-t="badge">4,98 · 125 recensioni</span></div>
+</div>
+
+<div class="wrap">
+  <div class="tblock">
+    <h1 data-t="h1">Suite in Centro · Terrazza e Parcheggio</h1>
+    <p class="loc"><svg class="icon"><use href="#i-pin"/></svg> <span data-t="loc">Treviso, centro storico · a pochi passi dal Duomo e da Piazza dei Signori</span></p>
+    <div class="meta"><span class="sh">Superhost</span><span style="color:var(--gy)" data-t="host">Ospitato da Ardit</span></div>
+    <p class="qf" data-t="facts">2 ospiti · 1 camera da letto · 1 letto matrimoniale · 1 bagno</p>
+  </div>
+
+  <div class="grid" style="margin-top:20px;">
+
+  <!-- ARRIVO -->
+  <div class="card" id="arrivo">
+    <button class="cs" aria-expanded="true" aria-controls="arrivo-c">
+      <svg class="icon lead"><use href="#i-key"/></svg>
+      <span class="st"><span class="title" data-t="arrivo.t">Arrivo e partenza</span><span class="sub" data-t="arrivo.s">Check-in, parcheggio, accesso</span></span>
+      <svg class="icon chv"><use href="#i-chv"/></svg>
+    </button>
+    <div class="coll open" id="arrivo-c"><div class="coll-in"><div class="cc">
+      <div class="stats">
+        <div class="stat"><div class="n">15:00 - 02:00</div><div class="l" data-t="arrivo.ci">Check-in</div></div>
+        <div class="stat"><div class="n" data-t="arrivo.cov">Entro 10:00</div><div class="l" data-t="arrivo.co">Check-out</div></div>
+        <div class="stat"><div class="n" data-t="arrivo.gv">2 persone</div><div class="l" data-t="arrivo.gl">Ospiti max</div></div>
+      </div>
+      <div class="row">
+        <div class="lbl"><svg class="icon"><use href="#i-key"/></svg> <span data-t="arrivo.acc">Accesso all'appartamento</span></div>
+        <div class="val">
+          <ul class="cl" style="margin-top:4px;">
+            <li><svg class="icon"><use href="#i-check"/></svg> <span data-t="arrivo.s1" class="ph">[Step 1: citofono — nome/numero da citofonare]</span></li>
+            <li><svg class="icon"><use href="#i-check"/></svg> <span data-t="arrivo.s2" class="ph">[Step 2: salire al piano — es. secondo piano, scala A]</span></li>
+            <li><svg class="icon"><use href="#i-check"/></svg> <span data-t="arrivo.s3" class="ph">[Step 3: porta — numero appartamento e dove sono le chiavi]</span></li>
+          </ul>
+        </div>
+      </div>
+      <div class="row">
+        <div class="lbl"><svg class="icon"><use href="#i-parking"/></svg> <span data-t="arrivo.park">Parcheggio</span></div>
+        <div class="val" data-t="arrivo.parkv">Posto auto privato e coperto all'interno dello stabile. Il telecomando del cancello è già agganciato al portachiavi che ricevete al check-in.</div>
+      </div>
+      <div class="row">
+        <div class="lbl"><svg class="icon"><use href="#i-pin"/></svg> <span data-t="arrivo.how">Come arrivare</span></div>
+        <div class="val" data-t="arrivo.howv">La stazione di Treviso è a circa 10 minuti a piedi. In auto seguite le indicazioni per il centro storico. <span class="ph">[Aggiungere indirizzo esatto]</span></div>
+      </div>
+      <h3 data-t="arrivo.coh">Al check-out</h3>
+      <ul class="cl">
+        <li><svg class="icon"><use href="#i-check"/></svg> <span data-t="arrivo.co1">Chiudere tutte le finestre e la porta a chiave</span></li>
+        <li><svg class="icon"><use href="#i-check"/></svg> <span data-t="arrivo.co2">Spegnere luci, TV e termostati</span></li>
+        <li><svg class="icon"><use href="#i-check"/></svg> <span data-t="arrivo.co3">Lasciare le chiavi <span class="ph">[dove indicato]</span></span></li>
+        <li><svg class="icon"><use href="#i-check"/></svg> <span data-t="arrivo.co4">Abbassare le tapparelle se volete lasciare l'appartamento fresco</span></li>
+      </ul>
+    </div></div></div>
+  </div>
+
+  <!-- WIFI -->
+  <div class="card" id="wifi">
+    <button class="cs" aria-expanded="true" aria-controls="wifi-c">
+      <svg class="icon lead"><use href="#i-wifi"/></svg>
+      <span class="st"><span class="title" data-t="wifi.t">Wi-Fi</span><span class="sub" data-t="wifi.s">Rete e password</span></span>
+      <svg class="icon chv"><use href="#i-chv"/></svg>
+    </button>
+    <div class="coll open" id="wifi-c"><div class="coll-in"><div class="cc">
+      <div class="row">
+        <div class="lbl" data-t="wifi.sp">Velocità</div>
+        <div class="val" data-t="wifi.spv">736 Mbps, ideale per streaming, videochiamate e smart working.</div>
+      </div>
+      <div class="row">
+        <div class="lbl" data-t="wifi.ssid">Nome rete</div>
+        <div class="vrow"><span class="val ph" id="w-ssid">[NOME_RETE]</span><button class="cpbtn" data-copy="w-ssid" aria-label="Copia"><svg class="icon"><use href="#i-copy"/></svg></button></div>
+      </div>
+      <div class="row">
+        <div class="lbl" data-t="wifi.pw">Password</div>
+        <div class="vrow"><span class="val ph" id="w-pass">[PASSWORD_WIFI]</span><button class="cpbtn" data-copy="w-pass" aria-label="Copia"><svg class="icon"><use href="#i-copy"/></svg></button></div>
+      </div>
+    </div></div></div>
+  </div>
+
+  <!-- LA CASA -->
+  <div class="card full" id="casa">
+    <button class="cs" aria-expanded="false" aria-controls="casa-c">
+      <svg class="icon lead"><use href="#i-home"/></svg>
+      <span class="st"><span class="title" data-t="casa.t">La casa</span><span class="sub" data-t="casa.s">Servizi, regole, elettrodomestici</span></span>
+      <svg class="icon chv"><use href="#i-chv"/></svg>
+    </button>
+    <div class="coll" id="casa-c"><div class="coll-in"><div class="cc">
+      <p data-t="casa.desc">Suite open space nel cuore del centro storico. La zona notte con letto matrimoniale è integrata nel living, senza porta separata. La terrazza privata con tavolo e ombrellone affaccia sulla Chiesa di San Nicolò.</p>
+      <h3 data-t="casa.am">Servizi</h3>
+      <div class="amen">
+        <div class="am"><svg class="icon"><use href="#i-terrace"/></svg> <span data-t="am.terrace">Terrazza privata</span></div>
+        <div class="am"><svg class="icon"><use href="#i-parking"/></svg> <span data-t="am.park">Parcheggio coperto</span></div>
+        <div class="am"><svg class="icon"><use href="#i-tv"/></svg> <span data-t="am.tv">Smart TV 43" 4K</span></div>
+        <div class="am"><svg class="icon"><use href="#i-wifi"/></svg> <span data-t="am.wifi">Wi-Fi 736 Mbps</span></div>
+        <div class="am"><svg class="icon"><use href="#i-paw"/></svg> <span data-t="am.pets">Animali ammessi</span></div>
+        <div class="am"><svg class="icon"><use href="#i-desk"/></svg> <span data-t="am.desk">Spazio di lavoro</span></div>
+      </div>
+      <button class="more-btn" aria-expanded="false" aria-controls="casa-more">
+        <span class="ml" data-t="casa.more">Mostra tutti i servizi</span><span class="less" data-t="casa.less">Mostra meno</span>
+      </button>
+      <div class="coll" id="casa-more"><div class="coll-in">
+        <div class="amen" style="margin-top:10px;">
+          <div class="am"><svg class="icon"><use href="#i-washer"/></svg> <span data-t="am.wash">Lavatrice e asciugatrice</span></div>
+          <div class="am"><svg class="icon"><use href="#i-shower"/></svg> <span data-t="am.shower">Doccia walk-in</span></div>
+          <div class="am"><svg class="icon"><use href="#i-coffee"/></svg> <span data-t="am.coffee">Macchina da caffè</span></div>
+          <div class="am"><svg class="icon"><use href="#i-euro"/></svg> <span data-t="am.iron">Ferro da stiro verticale</span></div>
+        </div>
+      </div></div>
+
+      <!-- REGOLE -->
+      <div class="sub">
+        <button class="ss" aria-expanded="true" aria-controls="regole-c">
+          <span data-t="regole.t">Regole della casa</span><svg class="icon chv"><use href="#i-chv"/></svg>
+        </button>
+        <div class="coll open" id="regole-c"><div class="coll-in"><div class="sc">
+          <ul class="cl">
+            <li><svg class="icon"><use href="#i-check"/></svg> <span data-t="reg.1">Check-in 15:00 - 02:00, check-out entro le 10:00</span></li>
+            <li><svg class="icon"><use href="#i-check"/></svg> <span data-t="reg.2">Massimo 2 ospiti</span></li>
+            <li><svg class="icon"><use href="#i-paw"/></svg> <span data-t="reg.3">Animali domestici ammessi</span></li>
+            <li><svg class="icon"><use href="#i-check"/></svg> <span data-t="reg.4" class="ph">[Politica fumo: es. vietato in appartamento, consentito in terrazza]</span></li>
+            <li><svg class="icon"><use href="#i-check"/></svg> <span data-t="reg.5" class="ph">[Orari di quiete: es. dopo le 23:00]</span></li>
+            <li><svg class="icon"><use href="#i-info"/></svg> <span data-t="reg.6">La zona notte è open space, senza porta separata dal living.</span></li>
+          </ul>
+        </div></div></div>
+      </div>
+
+      <!-- CLIMA -->
+      <div class="sub">
+        <button class="ss" aria-expanded="false" aria-controls="clima-c">
+          <span data-t="clima.t">Clima e tapparelle</span><svg class="icon chv"><use href="#i-chv"/></svg>
+        </button>
+        <div class="coll" id="clima-c"><div class="coll-in"><div class="sc">
+          <div class="row">
+            <div class="lbl"><svg class="icon"><use href="#i-therm"/></svg> <span data-t="clima.l">Riscaldamento e raffreddamento</span></div>
+            <div class="val" data-t="clima.v">Sistema a pavimento con termostato a manopola a parete in ogni stanza. Girate la manopola verso destra per aumentare la temperatura, verso sinistra per diminuirla. Le bocchette che vedete in giro regolano l'umidità. Il raffreddamento è integrato nel pavimento.</div>
+          </div>
+          <div class="row">
+            <div class="lbl"><svg class="icon"><use href="#i-blind"/></svg> <span data-t="blind.l">Tapparelle elettriche</span></div>
+            <div class="val" data-t="blind.v">I pulsanti per alzare e abbassare le tapparelle si trovano sotto il citofono in cucina/soggiorno, e sotto gli interruttori della luce in bagno.</div>
+          </div>
+        </div></div></div>
+      </div>
+
+      <!-- ELETTRODOMESTICI -->
+      <div class="sub">
+        <button class="ss" aria-expanded="false" aria-controls="elettro-c">
+          <span data-t="el.t">Elettrodomestici</span> <span class="tag" data-t="el.tag">Da aggiornare</span><svg class="icon chv"><use href="#i-chv"/></svg>
+        </button>
+        <div class="coll" id="elettro-c"><div class="coll-in"><div class="sc">
+          <div class="row">
+            <div class="lbl"><svg class="icon"><use href="#i-washer"/></svg> <span data-t="el.wash">Lavatrice e asciugatrice</span></div>
+            <div class="val ph" data-t="el.washv">[Da completare con modello reale dopo sopralluogo]</div>
+          </div>
+          <div class="row">
+            <div class="lbl"><svg class="icon"><use href="#i-coffee"/></svg> <span data-t="el.coffee">Macchina da caffè, bollitore, tostapane</span></div>
+            <div class="val ph" data-t="el.coffeev">[Da completare con modello reale dopo sopralluogo]</div>
+          </div>
+          <div class="row">
+            <div class="lbl"><svg class="icon"><use href="#i-home"/></svg> <span data-t="el.oven">Forno, lavastoviglie, microonde</span></div>
+            <div class="val ph" data-t="el.ovenv">[Da completare con modello reale dopo sopralluogo]</div>
+          </div>
+          <div class="row">
+            <div class="lbl"><svg class="icon"><use href="#i-tv"/></svg> <span data-t="el.tv">Smart TV e streaming</span></div>
+            <div class="val" data-t="el.tvv">Premi Home sul telecomando. Netflix e YouTube sono già installati, seleziona il profilo Ospiti. La TV è connessa alla rete Wi-Fi dell'appartamento.</div>
+          </div>
+          <div class="row">
+            <div class="lbl"><svg class="icon"><use href="#i-shower"/></svg> <span data-t="el.bath">Bagno e set cortesia</span></div>
+            <div class="val" data-t="el.bathv">Nella doccia trovi due flaconi: doccia/shampoo e sapone corpo. Sul lavandino c'è il sapone per le mani. Asciugamani di varie misure nell'apposito ripiano. Asciugacapelli sotto il lavandino.</div>
+          </div>
+        </div></div></div>
+      </div>
+
+      <!-- RACCOLTA DIFFERENZIATA -->
+      <div class="sub">
+        <button class="ss" aria-expanded="false" aria-controls="rifiuti-c">
+          <span data-t="rif.t">Raccolta differenziata</span><svg class="icon chv"><use href="#i-chv"/></svg>
+        </button>
+        <div class="coll" id="rifiuti-c"><div class="coll-in"><div class="sc">
+          <div class="row">
+            <div class="lbl"><svg class="icon"><use href="#i-trash"/></svg> <span data-t="rif.where">Dove si trovano i contenitori</span></div>
+            <div class="val" data-t="rif.wherev">Nell'area del posto auto, all'interno dello stabile.</div>
+          </div>
+          <ul class="cl" style="margin-top:8px;">
+            <li><svg class="icon"><use href="#i-check"/></svg> <span data-t="rif.yellow"><strong>Giallo</strong> — carta e cartone</span></li>
+            <li><svg class="icon"><use href="#i-check"/></svg> <span data-t="rif.blue"><strong>Blu</strong> — vetro, plastica e alluminio</span></li>
+            <li><svg class="icon"><use href="#i-check"/></svg> <span data-t="rif.grey"><strong>Grigio</strong> — secco non riciclabile</span></li>
+            <li><svg class="icon"><use href="#i-check"/></svg> <span data-t="rif.brown"><strong>Marrone</strong> — umido organico</span></li>
+          </ul>
+          <p style="margin-top:10px;font-size:.8rem;color:var(--gy);" data-t="rif.cal">Giorni di raccolta: <span class="ph">[da aggiungere dal calendario comunale]</span></p>
+        </div></div></div>
+      </div>
+
+      <!-- INFO PRATICHE -->
+      <div class="sub">
+        <button class="ss" aria-expanded="false" aria-controls="info-c">
+          <span data-t="info.t">Info pratiche</span><svg class="icon chv"><use href="#i-chv"/></svg>
+        </button>
+        <div class="coll" id="info-c"><div class="coll-in"><div class="sc">
+          <div class="row">
+            <div class="lbl"><svg class="icon"><use href="#i-euro"/></svg> <span data-t="info.tax">Tassa di soggiorno</span></div>
+            <div class="val" data-t="info.taxv">4 euro a persona per notte (in vigore dal 1° luglio 2024). Minori di 16 anni esenti. Il pagamento avviene al check-in in contanti o carta.</div>
+          </div>
+          <div class="row">
+            <div class="lbl" data-t="info.cir">Dati di registrazione</div>
+            <div class="val">CIR: IT026086B4ZU2EAGAL</div>
+          </div>
+        </div></div></div>
+      </div>
+
+    </div></div></div>
+  </div>
+
+  <!-- DINTORNI -->
+  <div class="card full" id="dintorni">
+    <button class="cs" aria-expanded="false" aria-controls="dint-c">
+      <svg class="icon lead"><use href="#i-pin"/></svg>
+      <span class="st"><span class="title" data-t="dint.t">Dintorni</span><span class="sub" data-t="dint.s">Punti di interesse, cibo, eventi</span></span>
+      <svg class="icon chv"><use href="#i-chv"/></svg>
+    </button>
+    <div class="coll" id="dint-c"><div class="coll-in"><div class="cc">
+
+      <!-- PUNTI DI INTERESSE -->
+      <h3 data-t="dint.poi">Punti di interesse</h3>
+      <div class="hs">
+        <div class="pc"><svg class="icon"><use href="#i-pin"/></svg><div class="pn" data-t="poi.1n">Duomo e Piazza dei Signori</div><div class="pd" data-t="poi.1d">3 min a piedi. Cuore del centro storico.</div></div>
+        <div class="pc"><svg class="icon"><use href="#i-pin"/></svg><div class="pn" data-t="poi.2n">Chiesa di San Nicolò</div><div class="pd" data-t="poi.2d">2 min a piedi. Visibile dalla terrazza.</div></div>
+        <div class="pc"><svg class="icon"><use href="#i-pin"/></svg><div class="pn" data-t="poi.3n">Museo Bailo</div><div class="pd" data-t="poi.3d">8 min a piedi. Arte moderna e contemporanea.</div></div>
+        <div class="pc"><svg class="icon"><use href="#i-pin"/></svg><div class="pn" data-t="poi.4n">Isola della Pescheria</div><div class="pd" data-t="poi.4d">5 min a piedi. Mercato e aperitivi sui canali.</div></div>
+        <div class="pc"><svg class="icon"><use href="#i-train"/></svg><div class="pn" data-t="poi.5n">Stazione di Treviso</div><div class="pd" data-t="poi.5d">10 min a piedi. Venezia in 30 min.</div></div>
+      </div>
+
+      <!-- RISTORANTI -->
+      <div class="sub">
+        <button class="ss" aria-expanded="false" aria-controls="rist-c">
+          <span><svg class="icon" style="display:inline;margin-right:6px;vertical-align:middle;color:var(--r)"><use href="#i-fork"/></svg><span data-t="dint.rist">Top 5 ristoranti</span></span><svg class="icon chv"><use href="#i-chv"/></svg>
+        </button>
+        <div class="coll" id="rist-c"><div class="coll-in"><div class="sc">
+          <div class="plist">
+            <div class="pitem"><div class="pname"><svg class="icon"><use href="#i-fork"/></svg><span data-t="r1.n">Le Beccherie</span></div><div class="pdesc" data-t="r1.d">Piazza Ancilotto 11 · 4 min a piedi. Ristorante storico del 1939, uno dei luoghi d'origine del tiramisù. Cucina veneta tradizionale d'eccellenza.</div></div>
+            <div class="pitem"><div class="pname"><svg class="icon"><use href="#i-fork"/></svg><span data-t="r2.n">Osteria Contemporanea</span></div><div class="pdesc" data-t="r2.d">Centro storico · 6 min a piedi. Cucina creativa con ingredienti locali, ottima cura dei piatti. Molto apprezzata dai locali.</div></div>
+            <div class="pitem"><div class="pname"><svg class="icon"><use href="#i-fork"/></svg><span data-t="r3.n">Trattoria all'Oca Bianca</span></div><div class="pdesc" data-t="r3.d">Vicolo della Torre 7 · 5 min a piedi. Storico locale anni '60 con cucina veneta classica: bigoli all'anatra, oca arrosta, specialità di stagione.</div></div>
+            <div class="pitem"><div class="pname"><svg class="icon"><use href="#i-fork"/></svg><span data-t="r4.n">Saporitour</span></div><div class="pdesc" data-t="r4.d">Centro · 7 min a piedi. Cucina contemporanea che valorizza i sapori del territorio veneto, ambiente moderno ed elegante.</div></div>
+            <div class="pitem"><div class="pname"><svg class="icon"><use href="#i-fork"/></svg><span data-t="r5.n">Pierre Trattoria Sartoriale</span></div><div class="pdesc" data-t="r5.d">Centro · 8 min a piedi. Cucina creativa con materie prime locali, menu stagionale che cambia spesso. Ottima presentazione dei piatti.</div></div>
+          </div>
+        </div></div></div>
+      </div>
+
+      <!-- CICCHETTI -->
+      <div class="sub">
+        <button class="ss" aria-expanded="false" aria-controls="cic-c">
+          <span><svg class="icon" style="display:inline;margin-right:6px;vertical-align:middle;color:var(--r)"><use href="#i-glass"/></svg><span data-t="dint.cic">Top 5 aperitivo e cicchetti</span></span><svg class="icon chv"><use href="#i-chv"/></svg>
+        </button>
+        <div class="coll" id="cic-c"><div class="coll-in"><div class="sc">
+          <p style="font-size:.82rem;color:var(--gy);margin-bottom:10px;" data-t="cic.intro">Il rito dell'aperitivo a Treviso: uno spritz o un'ombra di vino con cicchetti (piccoli bocconi tipici). L'Isola della Pescheria è il centro della vita serale.</p>
+          <div class="plist">
+            <div class="pitem"><div class="pname"><svg class="icon"><use href="#i-glass"/></svg><span data-t="c1.n">Antica Osteria Al Botegon</span></div><div class="pdesc" data-t="c1.d">Viale Burchiellati 7 · 6 min a piedi. Dal 1890, l'istituzione dell'aperitivo trevigiano. Polpette fatte a mano, nervetti, baccalà, bogoi. Sempre animato.</div></div>
+            <div class="pitem"><div class="pname"><svg class="icon"><use href="#i-glass"/></svg><span data-t="c2.n">Muscoli's</span></div><div class="pdesc" data-t="c2.d">Via Pescheria 23 · 5 min a piedi. In piena Pescheria, famoso per il panino al prosecco premiato con lo Stuzzicadente d'oro. Vasta scelta di cicchetti.</div></div>
+            <div class="pitem"><div class="pname"><svg class="icon"><use href="#i-glass"/></svg><span data-t="c3.n">Bacaro San Michele</span></div><div class="pdesc" data-t="c3.d">Via San Michele 7 · 4 min a piedi. Autentico bacaro veneziano in centro, cicchetti gourmet, atmosfera allegra. Ottimo per una sosta veloce.</div></div>
+            <div class="pitem"><div class="pname"><svg class="icon"><use href="#i-glass"/></svg><span data-t="c4.n">Cantinetta Venegazzù</span></div><div class="pdesc" data-t="c4.d">Piazza Ancilotto 2 · 4 min a piedi. Cantina raccolta con tavoli all'aperto, vini di alta qualità e piccoli assaggi. Ideale per una degustazione.</div></div>
+            <div class="pitem"><div class="pname"><svg class="icon"><use href="#i-glass"/></svg><span data-t="c5.n">Bottega Abbiati</span></div><div class="pdesc" data-t="c5.d">Zona Pescheria · 5 min a piedi. Enoteca raffinata con cicchetti gourmet: acciughe con burrata e pesto, baccalà, proposte creative abbinate a vini ricercati.</div></div>
+          </div>
+        </div></div></div>
+      </div>
+
+      <!-- COLAZIONI -->
+      <div class="sub">
+        <button class="ss" aria-expanded="false" aria-controls="col-c">
+          <span><svg class="icon" style="display:inline;margin-right:6px;vertical-align:middle;color:var(--r)"><use href="#i-coffee"/></svg><span data-t="dint.col">Top 5 colazioni</span></span><svg class="icon chv"><use href="#i-chv"/></svg>
+        </button>
+        <div class="coll" id="col-c"><div class="coll-in"><div class="sc">
+          <div class="plist">
+            <div class="pitem"><div class="pname"><svg class="icon"><use href="#i-coffee"/></svg><span data-t="b1.n">Taste Coffee</span></div><div class="pdesc" data-t="b1.d">Ponte Malvasia · 3 min a piedi. Specialty coffee di alta qualità, estrazione lenta e metodi manuali. Il posto giusto per chi ama il caffè vero.</div></div>
+            <div class="pitem"><div class="pname"><svg class="icon"><use href="#i-coffee"/></svg><span data-t="b2.n">Bloom Caffetteria</span></div><div class="pdesc" data-t="b2.d">Via San Liberale 10 · 5 min a piedi. Ispirato ai caffè letterari, specialty coffee, cold brew, tè internazionali. Anche spazio co-working.</div></div>
+            <div class="pitem"><div class="pname"><svg class="icon"><use href="#i-coffee"/></svg><span data-t="b3.n">Malvasia Risto Brunch</span></div><div class="pdesc" data-t="b3.d">Vicolo Trevisi 29 · 4 min a piedi. Per chi vuole una colazione abbondante: pancakes, avocado toast, uova, estratti. Perfetto per il weekend.</div></div>
+            <div class="pitem"><div class="pname"><svg class="icon"><use href="#i-coffee"/></svg><span data-t="b4.n">Caffè e Cioccolato</span></div><div class="pdesc" data-t="b4.d">Via Pola 4 · 3 min a piedi. A due passi dal Duomo, colorato e curato. Pasticceria artigianale, tè pomeridiani, piccola area esterna.</div></div>
+            <div class="pitem"><div class="pname"><svg class="icon"><use href="#i-coffee"/></svg><span data-t="b5.n">Giardino Bistrot</span></div><div class="pdesc" data-t="b5.d">Viale Cesare Battisti 35 · 7 min a piedi. Piccolo bistrot biologico con dolci artigianali, torte e centrifughe. Mostre di artisti locali a rotazione.</div></div>
+          </div>
+        </div></div></div>
+      </div>
+
+      <!-- EVENTI ESTATE 2026 -->
+      <div class="sub">
+        <button class="ss" aria-expanded="false" aria-controls="ev-c">
+          <span><svg class="icon" style="display:inline;margin-right:6px;vertical-align:middle;color:var(--r)"><use href="#i-calendar"/></svg><span data-t="dint.ev">Eventi estate 2026</span></span><svg class="icon chv"><use href="#i-chv"/></svg>
+        </button>
+        <div class="coll" id="ev-c"><div class="coll-in"><div class="sc">
+          <div class="elist">
+            <div class="eitem">
+              <div class="edate" data-t="ev1.d">10 — 25 luglio 2026</div>
+              <div class="etitle" data-t="ev1.t">Suoni di Marca sulle Mura</div>
+              <div class="edesc" data-t="ev1.v">Concerti estivi sulle mura storiche di Treviso. Uno degli appuntamenti musicali più attesi dell'estate trevigiana, con artisti italiani e internazionali in un contesto unico all'aperto.</div>
+            </div>
+            <div class="eitem">
+              <div class="edate" data-t="ev2.d">14 marzo — 1 novembre 2026</div>
+              <div class="etitle" data-t="ev2.t">Nino Springolo — Museo Bailo</div>
+              <div class="edesc" data-t="ev2.v">Grande retrospettiva dedicata a Nino Springolo (1886-1975), pittore veneto. Al Museo Bailo, raggiungibile a piedi dall'appartamento.</div>
+            </div>
+            <div class="eitem">
+              <div class="edate" data-t="ev3.d">Luglio — agosto 2026</div>
+              <div class="etitle" data-t="ev3.t">Fondazione Imago Mundi — Gallerie delle Prigioni</div>
+              <div class="edesc" data-t="ev3.v">Esposizioni a cadenza settimanale nelle suggestive Gallerie delle Prigioni. Arte contemporanea internazionale nel cuore del centro storico.</div>
+            </div>
+            <div class="eitem">
+              <div class="edate" data-t="ev4.d">Estate 2026</div>
+              <div class="etitle" data-t="ev4.t">Cinema all'aperto — Giardino Turroni</div>
+              <div class="edesc" data-t="ev4.v">Proiezioni serali nel giardino del Cinema Turroni. Ingresso gratuito, atmosfera estiva trevigiana. Portate qualcosa su cui sedervi.</div>
+            </div>
+          </div>
+        </div></div></div>
+      </div>
+
+    </div></div></div>
+  </div>
+
+  <!-- CONTATTI -->
+  <div class="card full" id="contatti">
+    <button class="cs" aria-expanded="false" aria-controls="cont-c">
+      <svg class="icon lead"><use href="#i-chat"/></svg>
+      <span class="st"><span class="title" data-t="cont.t">Contatti</span><span class="sub" data-t="cont.s">Host, emergenze, assistenza</span></span>
+      <svg class="icon chv"><use href="#i-chv"/></svg>
+    </button>
+    <div class="coll" id="cont-c"><div class="coll-in"><div class="cc">
+      <div class="hcard">
+        <div class="hav">A</div>
+        <div><div class="hn">Ardit</div><div class="hm" data-t="cont.hm">Superhost · risponde entro un'ora · IT, EN, ES</div></div>
+      </div>
+      <div class="btns">
+        <a class="btn" href="https://wa.me/[NUMERO]" target="_blank" rel="noopener"><svg class="icon"><use href="#i-chat"/></svg> WhatsApp</a>
+        <a class="btn ol" href="tel:[NUMERO]"><svg class="icon"><use href="#i-phone"/></svg> <span data-t="cont.call">Chiama</span></a>
+      </div>
+      <div class="row">
+        <div class="lbl" data-t="cont.em">Emergenze (Italia)</div>
+        <div class="val">112 — polizia, ambulanza, vigili del fuoco.</div>
+      </div>
+      <div class="row">
+        <div class="lbl" data-t="cont.hosp">Ospedale più vicino</div>
+        <div class="val ph">[Ca' Foncello — Via Ospedale 1, Treviso · 15 min a piedi]</div>
+      </div>
+      <div class="row">
+        <div class="lbl" data-t="cont.pharm">Farmacia più vicina</div>
+        <div class="val ph">[Nome farmacia, indirizzo, orari]</div>
+      </div>
+    </div></div></div>
+  </div>
+
+  </div><!-- end grid -->
+
+  <footer>
+    <span data-t="foot.1">Suite in Centro · Treviso</span>
+    <span><svg class="icon"><use href="#i-heart"/></svg> <span data-t="foot.2">Buon soggiorno</span></span>
+  </footer>
+</div>
+
+<a class="call-fab" href="tel:[NUMERO]" aria-label="Chiama l'host"><svg class="icon"><use href="#i-phone"/></svg></a>
+<button class="fab" id="toTop" aria-label="Torna su"><svg class="icon"><use href="#i-cu"/></svg></button>
+<div class="toast" id="toast"></div>
+
+<nav class="tabbar">
+  <button class="tab on" data-target="arrivo"><svg class="icon"><use href="#i-key"/></svg><span data-t="tab.arr">Arrivo</span></button>
+  <button class="tab" data-target="wifi"><svg class="icon"><use href="#i-wifi"/></svg><span>Wi-Fi</span></button>
+  <button class="tab" data-target="casa"><svg class="icon"><use href="#i-home"/></svg><span data-t="tab.casa">Casa</span></button>
+  <button class="tab" data-target="dintorni"><svg class="icon"><use href="#i-pin"/></svg><span data-t="tab.dint">Dintorni</span></button>
+  <button class="tab" data-target="contatti"><svg class="icon"><use href="#i-chat"/></svg><span data-t="tab.cont">Contatti</span></button>
+</nav>
+
+<script>
+var T={
+  it:{
+    "badge":"4,98 · 125 recensioni","h1":"Suite in Centro · Terrazza e Parcheggio",
+    "loc":"Treviso, centro storico · a pochi passi dal Duomo e da Piazza dei Signori",
+    "host":"Ospitato da Ardit","facts":"2 ospiti · 1 camera da letto · 1 letto matrimoniale · 1 bagno",
+    "arrivo.t":"Arrivo e partenza","arrivo.s":"Check-in, parcheggio, accesso",
+    "arrivo.ci":"Check-in","arrivo.co":"Check-out","arrivo.cov":"Entro 10:00",
+    "arrivo.gl":"Ospiti max","arrivo.gv":"2 persone",
+    "arrivo.acc":"Accesso all'appartamento",
+    "arrivo.s1":"[Step 1: citofono — nome/numero da citofonare]",
+    "arrivo.s2":"[Step 2: salire al piano — es. secondo piano, scala A]",
+    "arrivo.s3":"[Step 3: porta — numero appartamento e dove sono le chiavi]",
+    "arrivo.park":"Parcheggio","arrivo.parkv":"Posto auto privato e coperto all'interno dello stabile. Il telecomando del cancello è già agganciato al portachiavi che ricevete al check-in.",
+    "arrivo.how":"Come arrivare","arrivo.howv":"La stazione di Treviso è a circa 10 minuti a piedi. In auto seguite le indicazioni per il centro storico.",
+    "arrivo.coh":"Al check-out",
+    "arrivo.co1":"Chiudere tutte le finestre e la porta a chiave",
+    "arrivo.co2":"Spegnere luci, TV e termostati",
+    "arrivo.co3":"Lasciare le chiavi dove indicato",
+    "arrivo.co4":"Abbassare le tapparelle se volete lasciare l'appartamento fresco",
+    "wifi.t":"Wi-Fi","wifi.s":"Rete e password","wifi.sp":"Velocità",
+    "wifi.spv":"736 Mbps, ideale per streaming, videochiamate e smart working.",
+    "wifi.ssid":"Nome rete","wifi.pw":"Password",
+    "casa.t":"La casa","casa.s":"Servizi, regole, elettrodomestici",
+    "casa.desc":"Suite open space nel cuore del centro storico. La zona notte con letto matrimoniale è integrata nel living, senza porta separata. La terrazza privata con tavolo e ombrellone affaccia sulla Chiesa di San Nicolò.",
+    "casa.am":"Servizi","casa.more":"Mostra tutti i servizi","casa.less":"Mostra meno",
+    "am.terrace":"Terrazza privata","am.park":"Parcheggio coperto","am.tv":"Smart TV 43\" 4K",
+    "am.wifi":"Wi-Fi 736 Mbps","am.pets":"Animali ammessi","am.desk":"Spazio di lavoro",
+    "am.wash":"Lavatrice e asciugatrice","am.shower":"Doccia walk-in",
+    "am.coffee":"Macchina da caffè","am.iron":"Ferro da stiro verticale",
+    "regole.t":"Regole della casa",
+    "reg.1":"Check-in 15:00 - 02:00, check-out entro le 10:00",
+    "reg.2":"Massimo 2 ospiti","reg.3":"Animali domestici ammessi",
+    "reg.4":"[Politica fumo: es. vietato in appartamento, consentito in terrazza]",
+    "reg.5":"[Orari di quiete: es. dopo le 23:00]",
+    "reg.6":"La zona notte è open space, senza porta separata dal living.",
+    "clima.t":"Clima e tapparelle",
+    "clima.l":"Riscaldamento e raffreddamento",
+    "clima.v":"Sistema a pavimento con termostato a manopola a parete in ogni stanza. Girate la manopola verso destra per aumentare la temperatura, verso sinistra per diminuirla. Le bocchette che vedete in giro regolano l'umidità.",
+    "blind.l":"Tapparelle elettriche",
+    "blind.v":"I pulsanti per alzare e abbassare le tapparelle si trovano sotto il citofono in cucina/soggiorno, e sotto gli interruttori della luce in bagno.",
+    "el.t":"Elettrodomestici","el.tag":"Da aggiornare",
+    "el.wash":"Lavatrice e asciugatrice","el.washv":"[Da completare con modello reale dopo sopralluogo]",
+    "el.coffee":"Macchina da caffè, bollitore, tostapane","el.coffeev":"[Da completare con modello reale dopo sopralluogo]",
+    "el.oven":"Forno, lavastoviglie, microonde","el.ovenv":"[Da completare con modello reale dopo sopralluogo]",
+    "el.tv":"Smart TV e streaming","el.tvv":"Premi Home sul telecomando. Netflix e YouTube sono già installati, seleziona il profilo Ospiti.",
+    "el.bath":"Bagno e set cortesia","el.bathv":"Nella doccia trovi due flaconi: doccia/shampoo e sapone corpo. Sul lavandino c'è il sapone per le mani. Asciugamani di varie misure nell'apposito ripiano. Asciugacapelli sotto il lavandino.",
+    "rif.t":"Raccolta differenziata","rif.where":"Dove si trovano i contenitori",
+    "rif.wherev":"Nell'area del posto auto, all'interno dello stabile.",
+    "rif.yellow":"Giallo — carta e cartone","rif.blue":"Blu — vetro, plastica e alluminio",
+    "rif.grey":"Grigio — secco non riciclabile","rif.brown":"Marrone — umido organico",
+    "rif.cal":"Giorni di raccolta: [da aggiungere dal calendario comunale]",
+    "info.t":"Info pratiche","info.tax":"Tassa di soggiorno",
+    "info.taxv":"4 euro a persona per notte (dal 1° luglio 2024). Minori di 16 anni esenti. Si paga al check-in.",
+    "info.cir":"Dati di registrazione",
+    "dint.t":"Dintorni","dint.s":"Punti di interesse, cibo, eventi","dint.poi":"Punti di interesse",
+    "poi.1n":"Duomo e Piazza dei Signori","poi.1d":"3 min a piedi. Cuore del centro storico.",
+    "poi.2n":"Chiesa di San Nicolò","poi.2d":"2 min a piedi. Visibile dalla terrazza.",
+    "poi.3n":"Museo Bailo","poi.3d":"8 min a piedi. Arte moderna e contemporanea.",
+    "poi.4n":"Isola della Pescheria","poi.4d":"5 min a piedi. Mercato e aperitivi sui canali.",
+    "poi.5n":"Stazione di Treviso","poi.5d":"10 min a piedi. Venezia in 30 min.",
+    "dint.rist":"Top 5 ristoranti",
+    "r1.n":"Le Beccherie","r1.d":"Piazza Ancilotto 11 · 4 min a piedi. Ristorante storico del 1939, uno dei luoghi d'origine del tiramisù. Cucina veneta tradizionale d'eccellenza.",
+    "r2.n":"Osteria Contemporanea","r2.d":"Centro storico · 6 min a piedi. Cucina creativa con ingredienti locali, ottima cura dei piatti.",
+    "r3.n":"Trattoria all'Oca Bianca","r3.d":"Vicolo della Torre 7 · 5 min a piedi. Storico locale anni '60 con cucina veneta: bigoli all'anatra, oca arrosta.",
+    "r4.n":"Saporitour","r4.d":"Centro · 7 min a piedi. Cucina contemporanea che valorizza i sapori del territorio veneto.",
+    "r5.n":"Pierre Trattoria Sartoriale","r5.d":"Centro · 8 min a piedi. Cucina creativa con menu stagionale e ottima presentazione.",
+    "dint.cic":"Top 5 aperitivo e cicchetti",
+    "cic.intro":"Il rito dell'aperitivo a Treviso: uno spritz o un'ombra di vino con cicchetti. L'Isola della Pescheria è il centro della vita serale.",
+    "c1.n":"Antica Osteria Al Botegon","c1.d":"Viale Burchiellati 7 · 6 min. Dal 1890. Polpette fatte a mano, nervetti, baccalà. Sempre animato.",
+    "c2.n":"Muscoli's","c2.d":"Via Pescheria 23 · 5 min. Famoso per il panino al prosecco. Vasta scelta di cicchetti.",
+    "c3.n":"Bacaro San Michele","c3.d":"Via San Michele 7 · 4 min. Autentico bacaro veneziano, cicchetti gourmet, atmosfera allegra.",
+    "c4.n":"Cantinetta Venegazzù","c4.d":"Piazza Ancilotto 2 · 4 min. Vini di alta qualità e piccoli assaggi. Ideale per una degustazione.",
+    "c5.n":"Bottega Abbiati","c5.d":"Zona Pescheria · 5 min. Enoteca raffinata con cicchetti gourmet abbinati a vini ricercati.",
+    "dint.col":"Top 5 colazioni",
+    "b1.n":"Taste Coffee","b1.d":"Ponte Malvasia · 3 min. Specialty coffee, estrazione lenta e metodi manuali.",
+    "b2.n":"Bloom Caffetteria","b2.d":"Via San Liberale 10 · 5 min. Specialty coffee, cold brew, tè internazionali. Anche co-working.",
+    "b3.n":"Malvasia Risto Brunch","b3.d":"Vicolo Trevisi 29 · 4 min. Pancakes, avocado toast, uova. Perfetto per il weekend.",
+    "b4.n":"Caffè e Cioccolato","b4.d":"Via Pola 4 · 3 min. A due passi dal Duomo. Pasticceria artigianale e area esterna.",
+    "b5.n":"Giardino Bistrot","b5.d":"Viale C. Battisti 35 · 7 min. Biologico, dolci artigianali, mostre di artisti locali.",
+    "dint.ev":"Eventi estate 2026",
+    "ev1.d":"10 — 25 luglio 2026","ev1.t":"Suoni di Marca sulle Mura","ev1.v":"Concerti estivi sulle mura storiche di Treviso con artisti italiani e internazionali. Uno degli eventi musicali più attesi dell'estate.",
+    "ev2.d":"14 marzo — 1 novembre 2026","ev2.t":"Nino Springolo — Museo Bailo","ev2.v":"Grande retrospettiva sul pittore veneto. Al Museo Bailo, raggiungibile a piedi.",
+    "ev3.d":"Luglio — agosto 2026","ev3.t":"Imago Mundi — Gallerie delle Prigioni","ev3.v":"Esposizioni a cadenza settimanale di arte contemporanea internazionale nel cuore del centro storico.",
+    "ev4.d":"Estate 2026","ev4.t":"Cinema all'aperto — Giardino Turroni","ev4.v":"Proiezioni serali gratuite nel giardino del Cinema Turroni. Portate qualcosa su cui sedervi.",
+    "cont.t":"Contatti","cont.s":"Host, emergenze, assistenza",
+    "cont.hm":"Superhost · risponde entro un'ora · IT, EN, ES",
+    "cont.call":"Chiama","cont.em":"Emergenze (Italia)",
+    "cont.hosp":"Ospedale più vicino","cont.pharm":"Farmacia più vicina",
+    "foot.1":"Suite in Centro · Treviso","foot.2":"Buon soggiorno",
+    "tab.arr":"Arrivo","tab.casa":"Casa","tab.dint":"Dintorni","tab.cont":"Contatti",
+    "toast":"Copiato"
+  },
+  en:{
+    "badge":"4.98 · 125 reviews","h1":"Suite in the Centre · Terrace and Parking",
+    "loc":"Treviso, historic centre · a short walk from the Cathedral and Piazza dei Signori",
+    "host":"Hosted by Ardit","facts":"2 guests · 1 bedroom · 1 double bed · 1 bathroom",
+    "arrivo.t":"Arrival and departure","arrivo.s":"Check-in, parking, access",
+    "arrivo.ci":"Check-in","arrivo.co":"Check-out","arrivo.cov":"By 10:00",
+    "arrivo.gl":"Max guests","arrivo.gv":"2 people",
+    "arrivo.acc":"Access to the apartment",
+    "arrivo.s1":"[Step 1: intercom — name/number to ring]",
+    "arrivo.s2":"[Step 2: go up to the floor — e.g. second floor, staircase A]",
+    "arrivo.s3":"[Step 3: door — apartment number and where to find the keys]",
+    "arrivo.park":"Parking","arrivo.parkv":"Private covered parking inside the building. The gate remote is already attached to the key ring you receive at check-in.",
+    "arrivo.how":"How to get there","arrivo.howv":"Treviso railway station is about 10 minutes on foot. By car, follow signs for the historic centre.",
+    "arrivo.coh":"At check-out",
+    "arrivo.co1":"Close all windows and lock the door",
+    "arrivo.co2":"Turn off lights, TV and thermostats",
+    "arrivo.co3":"Leave the keys where indicated",
+    "arrivo.co4":"Lower the blinds if you want to keep the apartment cool",
+    "wifi.t":"Wi-Fi","wifi.s":"Network and password","wifi.sp":"Speed",
+    "wifi.spv":"736 Mbps, ideal for streaming, video calls and remote work.",
+    "wifi.ssid":"Network name","wifi.pw":"Password",
+    "casa.t":"The apartment","casa.s":"Amenities, rules, appliances",
+    "casa.desc":"Open-plan suite in the heart of the historic centre. The bedroom with double bed is integrated into the living area, without a separate door. The private terrace with table and umbrella overlooks the Church of San Nicolò.",
+    "casa.am":"Amenities","casa.more":"Show all amenities","casa.less":"Show less",
+    "am.terrace":"Private terrace","am.park":"Covered parking","am.tv":"Smart TV 43\" 4K",
+    "am.wifi":"Wi-Fi 736 Mbps","am.pets":"Pets allowed","am.desk":"Workspace",
+    "am.wash":"Washer and dryer","am.shower":"Walk-in shower",
+    "am.coffee":"Coffee machine","am.iron":"Vertical steam iron",
+    "regole.t":"House rules",
+    "reg.1":"Check-in 15:00 - 02:00, check-out by 10:00",
+    "reg.2":"Maximum 2 guests","reg.3":"Pets allowed",
+    "reg.4":"[Smoking policy: e.g. no smoking inside, allowed on the terrace]",
+    "reg.5":"[Quiet hours: e.g. after 23:00]",
+    "reg.6":"The bedroom is open-plan, without a separate door from the living area.",
+    "clima.t":"Climate and blinds",
+    "clima.l":"Heating and cooling",
+    "clima.v":"Underfloor system with a wall-mounted dial thermostat in each room. Turn the dial right to increase the temperature, left to decrease it. The vents you see around regulate humidity.",
+    "blind.l":"Electric blinds",
+    "blind.v":"The buttons to raise and lower the blinds are located below the intercom in the kitchen/living room, and below the light switches in the bathroom.",
+    "el.t":"Appliances","el.tag":"To update",
+    "el.wash":"Washer and dryer","el.washv":"[To be completed with real model after inspection]",
+    "el.coffee":"Coffee machine, kettle, toaster","el.coffeev":"[To be completed with real model after inspection]",
+    "el.oven":"Oven, dishwasher, microwave","el.ovenv":"[To be completed with real model after inspection]",
+    "el.tv":"Smart TV and streaming","el.tvv":"Press Home on the remote. Netflix and YouTube are already installed, select the Guests profile.",
+    "el.bath":"Bathroom and toiletries","el.bathv":"In the shower you'll find two bottles: shower/shampoo and body soap. Hand soap is on the sink. Towels of various sizes on the designated shelf. Hair dryer under the sink.",
+    "rif.t":"Waste sorting","rif.where":"Where to find the bins",
+    "rif.wherev":"In the parking area, inside the building.",
+    "rif.yellow":"Yellow — paper and cardboard","rif.blue":"Blue — glass, plastic and aluminium",
+    "rif.grey":"Grey — general waste","rif.brown":"Brown — organic waste",
+    "rif.cal":"Collection days: [to be added from the municipal calendar]",
+    "info.t":"Practical info","info.tax":"Tourist tax",
+    "info.taxv":"4 euros per person per night (from 1 July 2024). Children under 16 exempt. Paid at check-in.",
+    "info.cir":"Registration details",
+    "dint.t":"Surroundings","dint.s":"Points of interest, food, events","dint.poi":"Points of interest",
+    "poi.1n":"Cathedral and Piazza dei Signori","poi.1d":"3 min walk. Heart of the historic centre.",
+    "poi.2n":"Church of San Nicolò","poi.2d":"2 min walk. Visible from the terrace.",
+    "poi.3n":"Museo Bailo","poi.3d":"8 min walk. Modern and contemporary art.",
+    "poi.4n":"Isola della Pescheria","poi.4d":"5 min walk. Market and aperitifs by the canals.",
+    "poi.5n":"Treviso railway station","poi.5d":"10 min walk. Venice in 30 min.",
+    "dint.rist":"Top 5 restaurants",
+    "r1.n":"Le Beccherie","r1.d":"Piazza Ancilotto 11 · 4 min walk. Historic restaurant from 1939, one of the birthplaces of tiramisù. Traditional Venetian cuisine.",
+    "r2.n":"Osteria Contemporanea","r2.d":"Historic centre · 6 min walk. Creative cuisine with local ingredients, excellent attention to detail.",
+    "r3.n":"Trattoria all'Oca Bianca","r3.d":"Vicolo della Torre 7 · 5 min walk. Classic 1960s restaurant with Venetian cuisine: duck pasta, roast goose.",
+    "r4.n":"Saporitour","r4.d":"Centre · 7 min walk. Contemporary cuisine celebrating Venetian flavours in an elegant setting.",
+    "r5.n":"Pierre Trattoria Sartoriale","r5.d":"Centre · 8 min walk. Creative cuisine with seasonal menu and excellent presentation.",
+    "dint.cic":"Top 5 aperitivo and cicchetti",
+    "cic.intro":"The aperitivo ritual in Treviso: a spritz or glass of wine with cicchetti (typical small bites). The Isola della Pescheria is the heart of evening life.",
+    "c1.n":"Antica Osteria Al Botegon","c1.d":"Viale Burchiellati 7 · 6 min. Since 1890. Handmade meatballs, baccalà, classic snacks. Always lively.",
+    "c2.n":"Muscoli's","c2.d":"Via Pescheria 23 · 5 min. Famous for the award-winning prosecco sandwich. Wide choice of cicchetti.",
+    "c3.n":"Bacaro San Michele","c3.d":"Via San Michele 7 · 4 min. Authentic Venetian bacaro, gourmet cicchetti, friendly atmosphere.",
+    "c4.n":"Cantinetta Venegazzù","c4.d":"Piazza Ancilotto 2 · 4 min. High-quality wines and small tastings. Perfect for a wine experience.",
+    "c5.n":"Bottega Abbiati","c5.d":"Pescheria area · 5 min. Refined wine bar with gourmet cicchetti and a great wine selection.",
+    "dint.col":"Top 5 breakfast spots",
+    "b1.n":"Taste Coffee","b1.d":"Ponte Malvasia · 3 min. Specialty coffee, slow extraction and manual methods.",
+    "b2.n":"Bloom Caffetteria","b2.d":"Via San Liberale 10 · 5 min. Specialty coffee, cold brew, international teas. Also a co-working space.",
+    "b3.n":"Malvasia Risto Brunch","b3.d":"Vicolo Trevisi 29 · 4 min. Pancakes, avocado toast, eggs. Perfect for a lazy weekend morning.",
+    "b4.n":"Caffè e Cioccolato","b4.d":"Via Pola 4 · 3 min. Steps from the Cathedral. Artisan pastries and outdoor seating.",
+    "b5.n":"Giardino Bistrot","b5.d":"Viale C. Battisti 35 · 7 min. Organic bistrot with artisan cakes and rotating local art exhibitions.",
+    "dint.ev":"Events summer 2026",
+    "ev1.d":"10 — 25 July 2026","ev1.t":"Suoni di Marca sulle Mura","ev1.v":"Summer concerts on the historic city walls with Italian and international artists. One of the most anticipated events of the summer.",
+    "ev2.d":"14 March — 1 November 2026","ev2.t":"Nino Springolo — Museo Bailo","ev2.v":"Major retrospective on the Venetian painter. At Museo Bailo, reachable on foot.",
+    "ev3.d":"July — August 2026","ev3.t":"Imago Mundi — Gallerie delle Prigioni","ev3.v":"Weekly international contemporary art exhibitions in the historic city centre.",
+    "ev4.d":"Summer 2026","ev4.t":"Open-air cinema — Giardino Turroni","ev4.v":"Free evening screenings in the garden of Cinema Turroni. Bring something to sit on.",
+    "cont.t":"Contact","cont.s":"Host, emergencies, support",
+    "cont.hm":"Superhost · replies within an hour · IT, EN, ES",
+    "cont.call":"Call","cont.em":"Emergencies (Italy)",
+    "cont.hosp":"Nearest hospital","cont.pharm":"Nearest pharmacy",
+    "foot.1":"Suite in Centro · Treviso","foot.2":"Enjoy your stay",
+    "tab.arr":"Arrival","tab.casa":"Home","tab.dint":"Around","tab.cont":"Contact",
+    "toast":"Copied"
+  },
+  es:{
+    "badge":"4,98 · 125 reseñas","h1":"Suite en el Centro · Terraza y Aparcamiento",
+    "loc":"Treviso, centro histórico · a pocos pasos de la Catedral y la Piazza dei Signori",
+    "host":"Anfitrión: Ardit","facts":"2 huéspedes · 1 dormitorio · 1 cama matrimonial · 1 baño",
+    "arrivo.t":"Llegada y salida","arrivo.s":"Check-in, aparcamiento, acceso",
+    "arrivo.ci":"Check-in","arrivo.co":"Check-out","arrivo.cov":"Antes de las 10:00",
+    "arrivo.gl":"Huéspedes máx.","arrivo.gv":"2 personas",
+    "arrivo.acc":"Acceso al apartamento",
+    "arrivo.s1":"[Paso 1: telefonillo — nombre/número que llamar]",
+    "arrivo.s2":"[Paso 2: subir al piso — ej. segundo piso, escalera A]",
+    "arrivo.s3":"[Paso 3: puerta — número de apartamento y dónde están las llaves]",
+    "arrivo.park":"Aparcamiento","arrivo.parkv":"Plaza de aparcamiento privada y cubierta dentro del edificio. El mando de la puerta ya está en el llavero que recibes en el check-in.",
+    "arrivo.how":"Cómo llegar","arrivo.howv":"La estación de tren de Treviso está a unos 10 minutos a pie. En coche, seguir las indicaciones hacia el centro histórico.",
+    "arrivo.coh":"Al hacer el check-out",
+    "arrivo.co1":"Cerrar todas las ventanas y la puerta con llave",
+    "arrivo.co2":"Apagar luces, TV y termostatos",
+    "arrivo.co3":"Dejar las llaves donde se indique",
+    "arrivo.co4":"Bajar las persianas si quieres dejar el apartamento fresco",
+    "wifi.t":"Wi-Fi","wifi.s":"Red y contraseña","wifi.sp":"Velocidad",
+    "wifi.spv":"736 Mbps, ideal para streaming, videollamadas y teletrabajo.",
+    "wifi.ssid":"Nombre de la red","wifi.pw":"Contraseña",
+    "casa.t":"La casa","casa.s":"Servicios, normas, electrodomésticos",
+    "casa.desc":"Suite diáfana en el corazón del centro histórico. La zona de dormir con cama matrimonial está integrada en el salón, sin puerta separada. La terraza privada con mesa y sombrilla da a la Iglesia de San Nicolò.",
+    "casa.am":"Servicios","casa.more":"Mostrar todos los servicios","casa.less":"Mostrar menos",
+    "am.terrace":"Terraza privada","am.park":"Aparcamiento cubierto","am.tv":"Smart TV 43\" 4K",
+    "am.wifi":"Wi-Fi 736 Mbps","am.pets":"Se admiten mascotas","am.desk":"Espacio de trabajo",
+    "am.wash":"Lavadora y secadora","am.shower":"Ducha walk-in",
+    "am.coffee":"Cafetera","am.iron":"Plancha de vapor vertical",
+    "regole.t":"Normas de la casa",
+    "reg.1":"Check-in 15:00 - 02:00, check-out antes de las 10:00",
+    "reg.2":"Máximo 2 huéspedes","reg.3":"Se admiten mascotas",
+    "reg.4":"[Política de fumadores: ej. prohibido fumar dentro, permitido en terraza]",
+    "reg.5":"[Horario de silencio: ej. después de las 23:00]",
+    "reg.6":"La zona de dormir es diáfana, sin puerta separada del salón.",
+    "clima.t":"Clima y persianas",
+    "clima.l":"Calefacción y refrigeración",
+    "clima.v":"Sistema de suelo radiante con termostato de mando giratorio en cada habitación. Gira el mando a la derecha para aumentar la temperatura, a la izquierda para disminuirla. Las rejillas regulan la humedad.",
+    "blind.l":"Persianas eléctricas",
+    "blind.v":"Los botones para subir y bajar las persianas están debajo del telefonillo en la cocina/salón, y debajo de los interruptores de luz en el baño.",
+    "el.t":"Electrodomésticos","el.tag":"Por actualizar",
+    "el.wash":"Lavadora y secadora","el.washv":"[Por completar con el modelo real tras la visita]",
+    "el.coffee":"Cafetera, hervidor, tostadora","el.coffeev":"[Por completar con el modelo real tras la visita]",
+    "el.oven":"Horno, lavavajillas, microondas","el.ovenv":"[Por completar con el modelo real tras la visita]",
+    "el.tv":"Smart TV y streaming","el.tvv":"Pulsa Home en el mando. Netflix y YouTube ya están instalados, selecciona el perfil Huéspedes.",
+    "el.bath":"Baño y artículos de aseo","el.bathv":"En la ducha encontrarás dos frascos: gel/champú y jabón corporal. En el lavabo hay jabón de manos. Toallas de varios tamaños en el estante. Secador bajo el lavabo.",
+    "rif.t":"Reciclaje","rif.where":"Dónde están los contenedores",
+    "rif.wherev":"En la zona de aparcamiento, dentro del edificio.",
+    "rif.yellow":"Amarillo — papel y cartón","rif.blue":"Azul — vidrio, plástico y aluminio",
+    "rif.grey":"Gris — residuos generales","rif.brown":"Marrón — residuos orgánicos",
+    "rif.cal":"Días de recogida: [añadir del calendario municipal]",
+    "info.t":"Información práctica","info.tax":"Tasa turística",
+    "info.taxv":"4 euros por persona por noche (desde el 1 de julio de 2024). Menores de 16 años exentos. Se paga en el check-in.",
+    "info.cir":"Datos de registro",
+    "dint.t":"Alrededores","dint.s":"Puntos de interés, gastronomía, eventos","dint.poi":"Puntos de interés",
+    "poi.1n":"Catedral y Piazza dei Signori","poi.1d":"3 min a pie. Corazón del centro histórico.",
+    "poi.2n":"Iglesia de San Nicolò","poi.2d":"2 min a pie. Visible desde la terraza.",
+    "poi.3n":"Museo Bailo","poi.3d":"8 min a pie. Arte moderno y contemporáneo.",
+    "poi.4n":"Isola della Pescheria","poi.4d":"5 min a pie. Mercado y aperitivos junto a los canales.",
+    "poi.5n":"Estación de Treviso","poi.5d":"10 min a pie. Venecia en 30 min.",
+    "dint.rist":"Top 5 restaurantes",
+    "r1.n":"Le Beccherie","r1.d":"Piazza Ancilotto 11 · 4 min. Restaurante histórico de 1939, uno de los lugares de origen del tiramisú. Cocina veneciana tradicional.",
+    "r2.n":"Osteria Contemporanea","r2.d":"Centro histórico · 6 min. Cocina creativa con ingredientes locales, excelente presentación.",
+    "r3.n":"Trattoria all'Oca Bianca","r3.d":"Vicolo della Torre 7 · 5 min. Local clásico de los años 60 con cocina veneciana: pasta con pato, oca asada.",
+    "r4.n":"Saporitour","r4.d":"Centro · 7 min. Cocina contemporánea que celebra los sabores del territorio véneto.",
+    "r5.n":"Pierre Trattoria Sartoriale","r5.d":"Centro · 8 min. Cocina creativa con menú de temporada y excelente presentación.",
+    "dint.cic":"Top 5 aperitivo y cicchetti",
+    "cic.intro":"El ritual del aperitivo en Treviso: un spritz o una copa de vino con cicchetti (pequeños bocados típicos). La Isola della Pescheria es el centro de la vida nocturna.",
+    "c1.n":"Antica Osteria Al Botegon","c1.d":"Viale Burchiellati 7 · 6 min. Desde 1890. Albóndigas caseras, baccalà, snacks clásicos. Siempre animado.",
+    "c2.n":"Muscoli's","c2.d":"Via Pescheria 23 · 5 min. Famoso por el sándwich de prosecco premiado. Amplia selección de cicchetti.",
+    "c3.n":"Bacaro San Michele","c3.d":"Via San Michele 7 · 4 min. Auténtico bacaro veneciano, cicchetti gourmet, ambiente alegre.",
+    "c4.n":"Cantinetta Venegazzù","c4.d":"Piazza Ancilotto 2 · 4 min. Vinos de alta calidad y pequeños aperitivos. Ideal para una cata.",
+    "c5.n":"Bottega Abbiati","c5.d":"Zona Pescheria · 5 min. Enoteca refinada con cicchetti gourmet y gran selección de vinos.",
+    "dint.col":"Top 5 desayunos",
+    "b1.n":"Taste Coffee","b1.d":"Ponte Malvasia · 3 min. Specialty coffee, extracción lenta y métodos manuales.",
+    "b2.n":"Bloom Caffetteria","b2.d":"Via San Liberale 10 · 5 min. Specialty coffee, cold brew, tés internacionales. También co-working.",
+    "b3.n":"Malvasia Risto Brunch","b3.d":"Vicolo Trevisi 29 · 4 min. Pancakes, tostadas de aguacate, huevos. Perfecto para el fin de semana.",
+    "b4.n":"Caffè e Cioccolato","b4.d":"Via Pola 4 · 3 min. A pasos de la Catedral. Pastelería artesanal y terraza exterior.",
+    "b5.n":"Giardino Bistrot","b5.d":"Viale C. Battisti 35 · 7 min. Bistró ecológico con dulces artesanales y exposiciones de artistas locales.",
+    "dint.ev":"Eventos verano 2026",
+    "ev1.d":"10 — 25 julio 2026","ev1.t":"Suoni di Marca sulle Mura","ev1.v":"Conciertos de verano en las murallas históricas con artistas italianos e internacionales. Uno de los eventos más esperados del verano.",
+    "ev2.d":"14 marzo — 1 noviembre 2026","ev2.t":"Nino Springolo — Museo Bailo","ev2.v":"Gran retrospectiva del pintor véneto. En el Museo Bailo, al que se puede llegar a pie.",
+    "ev3.d":"Julio — agosto 2026","ev3.t":"Imago Mundi — Gallerie delle Prigioni","ev3.v":"Exposiciones semanales de arte contemporáneo internacional en el centro histórico.",
+    "ev4.d":"Verano 2026","ev4.t":"Cine al aire libre — Giardino Turroni","ev4.v":"Proyecciones nocturnas gratuitas en el jardín del Cinema Turroni. Lleva algo en lo que sentarte.",
+    "cont.t":"Contacto","cont.s":"Anfitrión, emergencias, asistencia",
+    "cont.hm":"Superhost · responde en una hora · IT, EN, ES",
+    "cont.call":"Llamar","cont.em":"Emergencias (Italia)",
+    "cont.hosp":"Hospital más cercano","cont.pharm":"Farmacia más cercana",
+    "foot.1":"Suite in Centro · Treviso","foot.2":"Disfruta tu estancia",
+    "tab.arr":"Llegada","tab.casa":"Casa","tab.dint":"Alrededores","tab.cont":"Contacto",
+    "toast":"Copiado"
+  }
+};
+
+var lang='it';
+function applyLang(l){
+  if(!T[l])return;
+  lang=l;
+  document.documentElement.lang=l;
+  document.querySelectorAll('[data-t]').forEach(function(el){
+    var k=el.getAttribute('data-t');
+    if(T[l][k]!==undefined)el.textContent=T[l][k];
+  });
+  document.querySelectorAll('.lb').forEach(function(b){b.classList.toggle('on',b.getAttribute('data-lang')===l);});
+}
+document.querySelectorAll('.lb').forEach(function(b){b.addEventListener('click',function(){applyLang(b.getAttribute('data-lang'));});});
+
+document.getElementById('printBtn').addEventListener('click',function(){window.print();});
+
+// Accordion
+function bindToggle(btn){
+  btn.addEventListener('click',function(){
+    var ex=btn.getAttribute('aria-expanded')==='true';
+    btn.setAttribute('aria-expanded',String(!ex));
+    var c=document.getElementById(btn.getAttribute('aria-controls'));
+    if(c)c.classList.toggle('open',!ex);
+  });
+}
+document.querySelectorAll('.cs,.ss,.more-btn').forEach(bindToggle);
+
+// Carousel
+var sl=document.getElementById('slides'),dots=document.querySelectorAll('.cdot'),idx=0;
+function go(i){idx=(i+dots.length)%dots.length;sl.style.transform='translateX('+(-idx*100)+'%)';dots.forEach(function(d,j){d.classList.toggle('on',j===idx);});}
+document.getElementById('prev').addEventListener('click',function(){go(idx-1);});
+document.getElementById('next').addEventListener('click',function(){go(idx+1);});
+dots.forEach(function(d,j){d.addEventListener('click',function(){go(j);});});
+var sx=0;
+sl.addEventListener('touchstart',function(e){sx=e.touches[0].clientX;});
+sl.addEventListener('touchend',function(e){var dx=e.changedTouches[0].clientX-sx;if(dx>40)go(idx-1);else if(dx<-40)go(idx+1);});
+
+// Copy
+var toast=document.getElementById('toast');
+function showToast(m){toast.textContent=m;toast.classList.add('show');clearTimeout(window._tt);window._tt=setTimeout(function(){toast.classList.remove('show');},1600);}
+document.querySelectorAll('.cpbtn').forEach(function(btn){
+  btn.addEventListener('click',function(){
+    var t=document.getElementById(btn.getAttribute('data-copy'));
+    if(!t)return;
+    var txt=t.textContent.trim();
+    var done=function(){showToast(T[lang]['toast']||'Copiato');};
+    if(navigator.clipboard){navigator.clipboard.writeText(txt).then(done,done);}else{done();}
+  });
+});
+
+// Tab bar
+var tabs=document.querySelectorAll('.tab'),tabMap={};
+tabs.forEach(function(t){tabMap[t.getAttribute('data-target')]=t;});
+tabs.forEach(function(tab){
+  tab.addEventListener('click',function(){
+    var id=tab.getAttribute('data-target'),card=document.getElementById(id);
+    if(!card)return;
+    var s=card.querySelector('.cs'),c=document.getElementById(s.getAttribute('aria-controls'));
+    s.setAttribute('aria-expanded','true');c.classList.add('open');
+    card.scrollIntoView({behavior:'smooth',block:'start'});
+  });
+});
+var spy=new IntersectionObserver(function(entries){
+  entries.forEach(function(e){
+    if(e.isIntersecting){var l=tabMap[e.target.id];if(l){tabs.forEach(function(t){t.classList.remove('on');});l.classList.add('on');}}
+  });
+},{rootMargin:'-45% 0px -50% 0px'});
+document.querySelectorAll('.card[id]').forEach(function(c){spy.observe(c);});
+
+// FAB
+var fab=document.getElementById('toTop');
+window.addEventListener('scroll',function(){fab.classList.toggle('show',window.scrollY>400);});
+fab.addEventListener('click',function(){window.scrollTo({top:0,behavior:'smooth'});});
+</script>
+</body>
+</html>
