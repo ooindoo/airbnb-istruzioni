@@ -271,7 +271,7 @@ footer svg{color:var(--r);width:14px;height:14px;}
   <div class="card" id="arrivo">
     <button class="cs" aria-expanded="true" aria-controls="arrivo-c">
       <svg class="icon lead"><use href="#i-key"/></svg>
-      <span class="st"><span class="title" data-t="arrivo.t">Arrivo e partenza</span><span class="sub" data-t="arrivo.s">Check-in, parcheggio, accesso</span></span>
+      <span class="st"><span class="title" data-t="arrivo.t">Arrivo e partenza</span><span class="sub" data-t="arrivo.s">Check-in, garage, accesso</span></span>
       <svg class="icon chv"><use href="#i-chv"/></svg>
     </button>
     <div class="coll open" id="arrivo-c"><div class="coll-in"><div class="cc">
@@ -283,27 +283,28 @@ footer svg{color:var(--r);width:14px;height:14px;}
       <div class="row">
         <div class="lbl"><svg class="icon"><use href="#i-key"/></svg> <span data-t="arrivo.acc">Accesso all'appartamento</span></div>
         <div class="val">
+          <p data-t="arrivo.intro" style="margin-bottom:8px;font-size:.92rem;">Il check-in è sempre di persona con Ardit, che consegna le chiavi all'arrivo.</p>
           <ul class="cl" style="margin-top:4px;">
-            <li><svg class="icon"><use href="#i-check"/></svg> <span data-t="arrivo.s1" class="ph">[Step 1: citofono — nome/numero da citofonare]</span></li>
-            <li><svg class="icon"><use href="#i-check"/></svg> <span data-t="arrivo.s2" class="ph">[Step 2: salire al piano — es. secondo piano, scala A]</span></li>
-            <li><svg class="icon"><use href="#i-check"/></svg> <span data-t="arrivo.s3" class="ph">[Step 3: porta — numero appartamento e dove sono le chiavi]</span></li>
+            <li><svg class="icon"><use href="#i-check"/></svg> <span data-t="arrivo.s1">Citofonare dal basso: cercare il numero della struttura</span></li>
+            <li><svg class="icon"><use href="#i-check"/></svg> <span data-t="arrivo.s2">Salire al piano 1. Sul pianerottolo girare a destra: la porta di fronte è l'appartamento. Dall'ascensore è la porta davanti a voi.</span></li>
+            <li><svg class="icon"><use href="#i-check"/></svg> <span data-t="arrivo.s3">Le chiavi si trovano sul tavolo in soggiorno.</span></li>
           </ul>
         </div>
       </div>
       <div class="row">
-        <div class="lbl"><svg class="icon"><use href="#i-parking"/></svg> <span data-t="arrivo.park">Parcheggio</span></div>
-        <div class="val" data-t="arrivo.parkv">Posto auto privato e coperto all'interno dello stabile. Il telecomando del cancello è già agganciato al portachiavi che ricevete al check-in.</div>
+        <div class="lbl"><svg class="icon"><use href="#i-parking"/></svg> <span data-t="arrivo.park">Garage</span></div>
+        <div class="val" data-t="arrivo.garagev">Il garage si apre premendo il tasto 1 del telecomando sul portachiavi. Il basculante si apre e si chiude da solo.</div>
       </div>
       <div class="row">
         <div class="lbl"><svg class="icon"><use href="#i-pin"/></svg> <span data-t="arrivo.how">Come arrivare</span></div>
-        <div class="val" data-t="arrivo.howv">La stazione di Treviso è a circa 10 minuti a piedi. In auto seguite le indicazioni per il centro storico. <span class="ph">[Aggiungere indirizzo esatto]</span></div>
+        <div class="val" data-t="arrivo.howv">Via Angelo Garbizza 11, Treviso. La stazione è a 10 minuti a piedi. In auto seguite le indicazioni per il centro storico.</div>
       </div>
       <h3 data-t="arrivo.coh">Al check-out</h3>
       <ul class="cl">
-        <li><svg class="icon"><use href="#i-check"/></svg> <span data-t="arrivo.co1">Chiudere tutte le finestre e la porta a chiave</span></li>
-        <li><svg class="icon"><use href="#i-check"/></svg> <span data-t="arrivo.co2">Spegnere luci, TV e termostati</span></li>
-        <li><svg class="icon"><use href="#i-check"/></svg> <span data-t="arrivo.co3">Lasciare le chiavi <span class="ph">[dove indicato]</span></span></li>
-        <li><svg class="icon"><use href="#i-check"/></svg> <span data-t="arrivo.co4">Abbassare le tapparelle se volete lasciare l'appartamento fresco</span></li>
+        <li><svg class="icon"><use href="#i-check"/></svg> <span data-t="arrivo.co1">Con il pulsante sotto al citofono (simbolo casa + freccia destra) si spengono tutte le luci e si abbassano tutte le tapparelle con un solo gesto.</span></li>
+        <li><svg class="icon"><use href="#i-check"/></svg> <span data-t="arrivo.co2">Spegnete eventuali luci attaccate alle prese e la TV, se accese.</span></li>
+        <li><svg class="icon"><use href="#i-check"/></svg> <span data-t="arrivo.co3">Se avete acceso lo scaldabagno, spegnetelo prima di uscire.</span></li>
+        <li><svg class="icon"><use href="#i-check"/></svg> <span data-t="arrivo.co4">Lasciate le chiavi sul tavolo in soggiorno.</span></li>
       </ul>
     </div></div></div>
   </div>
@@ -322,11 +323,11 @@ footer svg{color:var(--r);width:14px;height:14px;}
       </div>
       <div class="row">
         <div class="lbl" data-t="wifi.ssid">Nome rete</div>
-        <div class="vrow"><span class="val ph" id="w-ssid">[NOME_RETE]</span><button class="cpbtn" data-copy="w-ssid" aria-label="Copia"><svg class="icon"><use href="#i-copy"/></svg></button></div>
+        <div class="vrow"><span class="val" id="w-ssid">WINDTRE-EA67B8</span><button class="cpbtn" data-copy="w-ssid" aria-label="Copia"><svg class="icon"><use href="#i-copy"/></svg></button></div>
       </div>
       <div class="row">
         <div class="lbl" data-t="wifi.pw">Password</div>
-        <div class="vrow"><span class="val ph" id="w-pass">[PASSWORD_WIFI]</span><button class="cpbtn" data-copy="w-pass" aria-label="Copia"><svg class="icon"><use href="#i-copy"/></svg></button></div>
+        <div class="vrow"><span class="val" id="w-pass">2024SuiteTrevisoWiFi</span><button class="cpbtn" data-copy="w-pass" aria-label="Copia"><svg class="icon"><use href="#i-copy"/></svg></button></div>
       </div>
     </div></div></div>
   </div>
@@ -371,8 +372,7 @@ footer svg{color:var(--r);width:14px;height:14px;}
             <li><svg class="icon"><use href="#i-check"/></svg> <span data-t="reg.1">Check-in 15:00 - 02:00, check-out entro le 10:00</span></li>
             <li><svg class="icon"><use href="#i-check"/></svg> <span data-t="reg.2">Massimo 2 ospiti</span></li>
             <li><svg class="icon"><use href="#i-paw"/></svg> <span data-t="reg.3">Animali domestici ammessi</span></li>
-            <li><svg class="icon"><use href="#i-check"/></svg> <span data-t="reg.4" class="ph">[Politica fumo: es. vietato in appartamento, consentito in terrazza]</span></li>
-            <li><svg class="icon"><use href="#i-check"/></svg> <span data-t="reg.5" class="ph">[Orari di quiete: es. dopo le 23:00]</span></li>
+            <li><svg class="icon"><use href="#i-check"/></svg> <span data-t="reg.4">Vietato fumare all'interno. Consentito solo in terrazza.</span></li>
             <li><svg class="icon"><use href="#i-info"/></svg> <span data-t="reg.6">La zona notte è open space, senza porta separata dal living.</span></li>
           </ul>
         </div></div></div>
@@ -386,11 +386,15 @@ footer svg{color:var(--r);width:14px;height:14px;}
         <div class="coll" id="clima-c"><div class="coll-in"><div class="sc">
           <div class="row">
             <div class="lbl"><svg class="icon"><use href="#i-therm"/></svg> <span data-t="clima.l">Riscaldamento e raffreddamento</span></div>
-            <div class="val" data-t="clima.v">Sistema a pavimento con termostato a manopola a parete in ogni stanza. Girate la manopola verso destra per aumentare la temperatura, verso sinistra per diminuirla. Le bocchette che vedete in giro regolano l'umidità. Il raffreddamento è integrato nel pavimento.</div>
+            <div class="val" data-t="clima.v">Sistema a pavimento con termostati digitali th-Tune a parete: uno in ingresso e uno in camera. Girate la manopola in senso orario per alzare la temperatura, antiorario per abbassarla. La temperatura impostata compare sul display. Meglio non spegnerli: lasciate sempre una temperatura di base impostata.</div>
           </div>
           <div class="row">
             <div class="lbl"><svg class="icon"><use href="#i-blind"/></svg> <span data-t="blind.l">Tapparelle elettriche</span></div>
-            <div class="val" data-t="blind.v">I pulsanti per alzare e abbassare le tapparelle si trovano sotto il citofono in cucina/soggiorno, e sotto gli interruttori della luce in bagno.</div>
+            <div class="val" data-t="blind.v">I pulsanti si trovano sotto al citofono in cucina/soggiorno e di fianco agli interruttori luce in camera e bagno. Ogni gruppo controlla le tapparelle della zona corrispondente.</div>
+          </div>
+          <div class="row">
+            <div class="lbl"><svg class="icon"><use href="#i-parking"/></svg> <span data-t="garage.l">Garage</span></div>
+            <div class="val" data-t="garage.v">Dall'esterno: tasto 1 del telecomando sul portachiavi. Dall'interno: freccia su illuminata sul pannello a parete. Il basculante si apre e si chiude da solo.</div>
           </div>
         </div></div></div>
       </div>
@@ -406,20 +410,20 @@ footer svg{color:var(--r);width:14px;height:14px;}
             <div class="val ph" data-t="el.washv">[Da completare con modello reale dopo sopralluogo]</div>
           </div>
           <div class="row">
-            <div class="lbl"><svg class="icon"><use href="#i-coffee"/></svg> <span data-t="el.coffee">Macchina da caffè, bollitore, tostapane</span></div>
-            <div class="val ph" data-t="el.coffeev">[Da completare con modello reale dopo sopralluogo]</div>
+            <div class="lbl"><svg class="icon"><use href="#i-coffee"/></svg> <span data-t="el.coffee">Macchina da caffè</span></div>
+            <div class="val" data-t="el.coffeev">Sollevate la leva in alto per aprire il vano capsule. Inserite una capsula A Modo Mio (le trovate nel barattolo di vetro accanto alla macchina) e abbassate la leva. Premete il tasto laterale e attendete che la spia smetta di lampeggiare: il caffè viene erogato automaticamente. La macchina si spegne da sola dopo 9 minuti.</div>
+          </div>
+          <div class="row">
+            <div class="lbl"><svg class="icon"><use href="#i-coffee"/></svg> <span data-t="el.kettle">Bollitore e tostapane</span></div>
+            <div class="val" data-t="el.kettlev">Bollitore: riempite solo con acqua fino al livello MAX, premete il tasto laterale. Si spegne da solo a ebollizione. Tostapane: inserite il pane, scegliete la doratura con la manopola (1 chiaro, 7 scuro), abbassate la leva. Premete STOP per interrompere.</div>
           </div>
           <div class="row">
             <div class="lbl"><svg class="icon"><use href="#i-home"/></svg> <span data-t="el.oven">Forno, lavastoviglie, microonde</span></div>
             <div class="val ph" data-t="el.ovenv">[Da completare con modello reale dopo sopralluogo]</div>
           </div>
           <div class="row">
-            <div class="lbl"><svg class="icon"><use href="#i-tv"/></svg> <span data-t="el.tv">Smart TV e streaming</span></div>
-            <div class="val" data-t="el.tvv">Premi Home sul telecomando. Netflix e YouTube sono già installati, seleziona il profilo Ospiti. La TV è connessa alla rete Wi-Fi dell'appartamento.</div>
-          </div>
-          <div class="row">
-            <div class="lbl"><svg class="icon"><use href="#i-shower"/></svg> <span data-t="el.bath">Bagno e set cortesia</span></div>
-            <div class="val" data-t="el.bathv">Nella doccia trovi due flaconi: doccia/shampoo e sapone corpo. Sul lavandino c'è il sapone per le mani. Asciugamani di varie misure nell'apposito ripiano. Asciugacapelli sotto il lavandino.</div>
+            <div class="lbl"><svg class="icon"><use href="#i-shower"/></svg> <span data-t="el.bath">Bagno e scaldabagno</span></div>
+            <div class="val" data-t="el.bathv">Scaldabagno: tasto ON/OFF per accendere, + e - per la temperatura, tasto 2h/4h per il timer. Spegnetelo al check-out se lo avete acceso. Nella doccia trovate shampoo e sapone corpo. Sapone mani sul lavandino. Asciugamani sul mobile in legno di fianco al lavandino. Asciugacapelli nel cassetto sotto il lavandino.</div>
           </div>
         </div></div></div>
       </div>
@@ -432,15 +436,15 @@ footer svg{color:var(--r);width:14px;height:14px;}
         <div class="coll" id="rifiuti-c"><div class="coll-in"><div class="sc">
           <div class="row">
             <div class="lbl"><svg class="icon"><use href="#i-trash"/></svg> <span data-t="rif.where">Dove si trovano i contenitori</span></div>
-            <div class="val" data-t="rif.wherev">Nell'area del posto auto, all'interno dello stabile.</div>
+            <div class="val" data-t="rif.wherev">I quattro contenitori di questo appartamento si trovano nel posto auto n.3, accanto alla parete. Non usate gli altri nel garage, appartengono ai vicini.</div>
           </div>
           <ul class="cl" style="margin-top:8px;">
-            <li><svg class="icon"><use href="#i-check"/></svg> <span data-t="rif.yellow"><strong>Giallo</strong> — carta e cartone</span></li>
-            <li><svg class="icon"><use href="#i-check"/></svg> <span data-t="rif.blue"><strong>Blu</strong> — vetro, plastica e alluminio</span></li>
-            <li><svg class="icon"><use href="#i-check"/></svg> <span data-t="rif.grey"><strong>Grigio</strong> — secco non riciclabile</span></li>
-            <li><svg class="icon"><use href="#i-check"/></svg> <span data-t="rif.brown"><strong>Marrone</strong> — umido organico</span></li>
+            <li><svg class="icon"><use href="#i-check"/></svg> <span data-t="rif.yellow">Giallo CARTA · carta e cartone</span></li>
+            <li><svg class="icon"><use href="#i-check"/></svg> <span data-t="rif.blue">Blu VETRO PLASTICA LATTINE · bottiglie, barattoli, lattine</span></li>
+            <li><svg class="icon"><use href="#i-check"/></svg> <span data-t="rif.grey">Grigio SECCO · secco non riciclabile</span></li>
+            <li><svg class="icon"><use href="#i-check"/></svg> <span data-t="rif.brown">Marrone · umido (avanzi di cibo, fondi di caffè, bucce)</span></li>
           </ul>
-          <p style="margin-top:10px;font-size:.8rem;color:var(--gy);" data-t="rif.cal">Giorni di raccolta: <span class="ph">[da aggiungere dal calendario comunale]</span></p>
+          <p style="margin-top:10px;font-size:.8rem;color:var(--gy);" data-t="rif.cal">Come funziona: controllate il calendario Contarina (contarina.it) per sapere quale tipologia raccolgono il giorno successivo. La sera prima, entro le 21:00, portate il bidone corrispondente fuori dal palazzo e posizionatelo sul marciapiede sotto le cassette della posta. La mattina, dopo il passaggio, rimettetelo nel posto auto n.3.</p>
         </div></div></div>
       </div>
 
@@ -579,8 +583,8 @@ footer svg{color:var(--r);width:14px;height:14px;}
         <div><div class="hn">Ardit</div><div class="hm" data-t="cont.hm">Superhost · risponde entro un'ora · IT, EN, ES</div></div>
       </div>
       <div class="btns">
-        <a class="btn" href="https://wa.me/[NUMERO]" target="_blank" rel="noopener"><svg class="icon"><use href="#i-chat"/></svg> WhatsApp</a>
-        <a class="btn ol" href="tel:[NUMERO]"><svg class="icon"><use href="#i-phone"/></svg> <span data-t="cont.call">Chiama</span></a>
+        <a class="btn" href="https://wa.me/393805897356" target="_blank" rel="noopener"><svg class="icon"><use href="#i-chat"/></svg> WhatsApp</a>
+        <a class="btn ol" href="tel:+393805897356"><svg class="icon"><use href="#i-phone"/></svg> <span data-t="cont.call">Chiama</span></a>
       </div>
       <div class="row">
         <div class="lbl" data-t="cont.em">Emergenze (Italia)</div>
@@ -605,7 +609,7 @@ footer svg{color:var(--r);width:14px;height:14px;}
   </footer>
 </div>
 
-<a class="call-fab" href="tel:[NUMERO]" aria-label="Chiama l'host"><svg class="icon"><use href="#i-phone"/></svg></a>
+<a class="call-fab" href="tel:+393805897356" aria-label="Chiama l'host"><svg class="icon"><use href="#i-phone"/></svg></a>
 <button class="fab" id="toTop" aria-label="Torna su"><svg class="icon"><use href="#i-cu"/></svg></button>
 <div class="toast" id="toast"></div>
 
@@ -623,20 +627,21 @@ var T={
     "badge":"4,98 · 125 recensioni","h1":"Suite in Centro · Terrazza e Parcheggio",
     "loc":"Treviso, centro storico · a pochi passi dal Duomo e da Piazza dei Signori",
     "host":"Ospitato da Ardit","facts":"2 ospiti · 1 camera da letto · 1 letto matrimoniale · 1 bagno",
-    "arrivo.t":"Arrivo e partenza","arrivo.s":"Check-in, parcheggio, accesso",
+    "arrivo.t":"Arrivo e partenza","arrivo.s":"Check-in, garage, accesso",
     "arrivo.ci":"Check-in","arrivo.co":"Check-out","arrivo.cov":"Entro 10:00",
     "arrivo.gl":"Ospiti max","arrivo.gv":"2 persone",
     "arrivo.acc":"Accesso all'appartamento",
-    "arrivo.s1":"[Step 1: citofono — nome/numero da citofonare]",
-    "arrivo.s2":"[Step 2: salire al piano — es. secondo piano, scala A]",
-    "arrivo.s3":"[Step 3: porta — numero appartamento e dove sono le chiavi]",
-    "arrivo.park":"Parcheggio","arrivo.parkv":"Posto auto privato e coperto all'interno dello stabile. Il telecomando del cancello è già agganciato al portachiavi che ricevete al check-in.",
-    "arrivo.how":"Come arrivare","arrivo.howv":"La stazione di Treviso è a circa 10 minuti a piedi. In auto seguite le indicazioni per il centro storico.",
+    "arrivo.intro":"Il check-in è sempre di persona con Ardit, che consegna le chiavi all'arrivo.",
+    "arrivo.s1":"Citofonare dal basso: cercare il numero della struttura",
+    "arrivo.s2":"Salire al piano 1. Sul pianerottolo girare a destra: la porta di fronte è l'appartamento. Dall'ascensore è la porta davanti a voi.",
+    "arrivo.s3":"Le chiavi si trovano sul tavolo in soggiorno.",
+    "arrivo.park":"Garage","arrivo.garagev":"Il garage si apre premendo il tasto 1 del telecomando sul portachiavi. Il basculante si apre e si chiude da solo.",
+    "arrivo.how":"Come arrivare","arrivo.howv":"Via Angelo Garbizza 11, Treviso. La stazione è a 10 minuti a piedi. In auto seguite le indicazioni per il centro storico.",
     "arrivo.coh":"Al check-out",
-    "arrivo.co1":"Chiudere tutte le finestre e la porta a chiave",
-    "arrivo.co2":"Spegnere luci, TV e termostati",
-    "arrivo.co3":"Lasciare le chiavi dove indicato",
-    "arrivo.co4":"Abbassare le tapparelle se volete lasciare l'appartamento fresco",
+    "arrivo.co1":"Con il pulsante sotto al citofono (simbolo casa + freccia destra) si spengono tutte le luci e si abbassano tutte le tapparelle con un solo gesto.",
+    "arrivo.co2":"Spegnete eventuali luci attaccate alle prese e la TV, se accese.",
+    "arrivo.co3":"Se avete acceso lo scaldabagno, spegnetelo prima di uscire.",
+    "arrivo.co4":"Lasciate le chiavi sul tavolo in soggiorno.",
     "wifi.t":"Wi-Fi","wifi.s":"Rete e password","wifi.sp":"Velocità",
     "wifi.spv":"736 Mbps, ideale per streaming, videochiamate e smart working.",
     "wifi.ssid":"Nome rete","wifi.pw":"Password",
@@ -650,25 +655,26 @@ var T={
     "regole.t":"Regole della casa",
     "reg.1":"Check-in 15:00 - 02:00, check-out entro le 10:00",
     "reg.2":"Massimo 2 ospiti","reg.3":"Animali domestici ammessi",
-    "reg.4":"[Politica fumo: es. vietato in appartamento, consentito in terrazza]",
-    "reg.5":"[Orari di quiete: es. dopo le 23:00]",
+    "reg.4":"Vietato fumare all'interno. Consentito solo in terrazza.",
     "reg.6":"La zona notte è open space, senza porta separata dal living.",
     "clima.t":"Clima e tapparelle",
     "clima.l":"Riscaldamento e raffreddamento",
-    "clima.v":"Sistema a pavimento con termostato a manopola a parete in ogni stanza. Girate la manopola verso destra per aumentare la temperatura, verso sinistra per diminuirla. Le bocchette che vedete in giro regolano l'umidità.",
+    "clima.v":"Sistema a pavimento con termostati digitali th-Tune a parete: uno in ingresso e uno in camera. Girate la manopola in senso orario per alzare la temperatura, antiorario per abbassarla. La temperatura impostata compare sul display. Meglio non spegnerli: lasciate sempre una temperatura di base impostata.",
     "blind.l":"Tapparelle elettriche",
-    "blind.v":"I pulsanti per alzare e abbassare le tapparelle si trovano sotto il citofono in cucina/soggiorno, e sotto gli interruttori della luce in bagno.",
-    "el.t":"Elettrodomestici","el.tag":"Da aggiornare",
-    "el.wash":"Lavatrice e asciugatrice","el.washv":"[Da completare con modello reale dopo sopralluogo]",
-    "el.coffee":"Macchina da caffè, bollitore, tostapane","el.coffeev":"[Da completare con modello reale dopo sopralluogo]",
+    "blind.v":"I pulsanti si trovano sotto al citofono in cucina/soggiorno e di fianco agli interruttori luce in camera e bagno. Ogni gruppo controlla le tapparelle della zona corrispondente.",
+    "garage.l":"Garage",
+    "garage.v":"Dall'esterno: tasto 1 del telecomando sul portachiavi. Dall'interno: freccia su illuminata sul pannello a parete. Il basculante si apre e si chiude da solo.",
+    "el.t":"Elettrodomestici","el.tag":"Istruzioni",
+    "el.wash":"Lavatrice e asciugatrice","el.washv":"Girate la manopola sul programma: Cotone 40° per uso normale, Rapido 15 min per capi leggeri, Lava+Asciuga per asciugare dopo il lavaggio. Il detersivo (capsule) si trova sul piano a destra della lavatrice. Premete Play/Pausa per avviare.",
+    "el.coffee":"Macchina da caffè","el.coffeev":"Sollevate la leva in alto per aprire il vano capsule. Inserite una capsula A Modo Mio (le trovate nel barattolo di vetro accanto alla macchina) e abbassate la leva. Premete il tasto laterale e attendete che la spia smetta di lampeggiare: il caffè viene erogato automaticamente. La macchina si spegne da sola dopo 9 minuti.",
+    "el.kettle":"Bollitore e tostapane","el.kettlev":"Bollitore: riempite solo con acqua fino al livello MAX, premete il tasto laterale. Si spegne da solo a ebollizione. Tostapane: inserite il pane, scegliete la doratura con la manopola (1 chiaro, 7 scuro), abbassate la leva. Premete STOP per interrompere.",
     "el.oven":"Forno, lavastoviglie, microonde","el.ovenv":"[Da completare con modello reale dopo sopralluogo]",
-    "el.tv":"Smart TV e streaming","el.tvv":"Premi Home sul telecomando. Netflix e YouTube sono già installati, seleziona il profilo Ospiti.",
-    "el.bath":"Bagno e set cortesia","el.bathv":"Nella doccia trovi due flaconi: doccia/shampoo e sapone corpo. Sul lavandino c'è il sapone per le mani. Asciugamani di varie misure nell'apposito ripiano. Asciugacapelli sotto il lavandino.",
+    "el.bath":"Bagno e scaldabagno","el.bathv":"Scaldabagno: tasto ON/OFF per accendere, + e - per la temperatura, tasto 2h/4h per il timer. Spegnetelo al check-out se lo avete acceso. Nella doccia trovate shampoo e sapone corpo. Sapone mani sul lavandino. Asciugamani sul mobile in legno di fianco al lavandino. Asciugacapelli nel cassetto sotto il lavandino.",
     "rif.t":"Raccolta differenziata","rif.where":"Dove si trovano i contenitori",
-    "rif.wherev":"Nell'area del posto auto, all'interno dello stabile.",
-    "rif.yellow":"Giallo — carta e cartone","rif.blue":"Blu — vetro, plastica e alluminio",
-    "rif.grey":"Grigio — secco non riciclabile","rif.brown":"Marrone — umido organico",
-    "rif.cal":"Giorni di raccolta: [da aggiungere dal calendario comunale]",
+    "rif.wherev":"I quattro contenitori di questo appartamento si trovano nel posto auto n.3, accanto alla parete. Non usate gli altri nel garage, appartengono ai vicini.",
+    "rif.yellow":"Giallo CARTA · carta e cartone","rif.blue":"Blu VETRO PLASTICA LATTINE · bottiglie, barattoli, lattine",
+    "rif.grey":"Grigio SECCO · secco non riciclabile","rif.brown":"Marrone · umido (avanzi di cibo, fondi di caffè, bucce)",
+    "rif.cal":"Come funziona: controllate il calendario Contarina (contarina.it) per sapere quale tipologia raccolgono il giorno successivo. La sera prima, entro le 21:00, portate il bidone corrispondente fuori dal palazzo e posizionatelo sul marciapiede sotto le cassette della posta. La mattina, dopo il passaggio, rimettetelo nel posto auto n.3.",
     "info.t":"Info pratiche","info.tax":"Tassa di soggiorno",
     "info.taxv":"4 euro a persona per notte (dal 1° luglio 2024). Minori di 16 anni esenti. Si paga al check-in.",
     "info.cir":"Dati di registrazione",
@@ -714,20 +720,21 @@ var T={
     "badge":"4.98 · 125 reviews","h1":"Suite in the Centre · Terrace and Parking",
     "loc":"Treviso, historic centre · a short walk from the Cathedral and Piazza dei Signori",
     "host":"Hosted by Ardit","facts":"2 guests · 1 bedroom · 1 double bed · 1 bathroom",
-    "arrivo.t":"Arrival and departure","arrivo.s":"Check-in, parking, access",
+    "arrivo.t":"Arrival and departure","arrivo.s":"Check-in, garage, access",
     "arrivo.ci":"Check-in","arrivo.co":"Check-out","arrivo.cov":"By 10:00",
     "arrivo.gl":"Max guests","arrivo.gv":"2 people",
     "arrivo.acc":"Access to the apartment",
-    "arrivo.s1":"[Step 1: intercom — name/number to ring]",
-    "arrivo.s2":"[Step 2: go up to the floor — e.g. second floor, staircase A]",
-    "arrivo.s3":"[Step 3: door — apartment number and where to find the keys]",
-    "arrivo.park":"Parking","arrivo.parkv":"Private covered parking inside the building. The gate remote is already attached to the key ring you receive at check-in.",
-    "arrivo.how":"How to get there","arrivo.howv":"Treviso railway station is about 10 minutes on foot. By car, follow signs for the historic centre.",
+    "arrivo.intro":"Check-in is always in person with Ardit, who hands over the keys on arrival.",
+    "arrivo.s1":"Use the intercom at the bottom: find the property number",
+    "arrivo.s2":"Go to floor 1. On the landing turn right: the apartment is the door facing you. From the lift it is the door straight ahead.",
+    "arrivo.s3":"Keys are on the living room table.",
+    "arrivo.park":"Garage","arrivo.garagev":"The garage opens by pressing button 1 on the key ring remote. The door opens and closes automatically.",
+    "arrivo.how":"How to get there","arrivo.howv":"Via Angelo Garbizza 11, Treviso. The railway station is a 10-minute walk. By car follow signs for the historic centre.",
     "arrivo.coh":"At check-out",
-    "arrivo.co1":"Close all windows and lock the door",
-    "arrivo.co2":"Turn off lights, TV and thermostats",
-    "arrivo.co3":"Leave the keys where indicated",
-    "arrivo.co4":"Lower the blinds if you want to keep the apartment cool",
+    "arrivo.co1":"The button below the intercom (house icon + right arrow) turns off all lights and lowers all blinds in one press.",
+    "arrivo.co2":"Turn off any plug-in lamps and the TV if they are on.",
+    "arrivo.co3":"If you turned on the water heater, switch it off before leaving.",
+    "arrivo.co4":"Leave the keys on the living room table.",
     "wifi.t":"Wi-Fi","wifi.s":"Network and password","wifi.sp":"Speed",
     "wifi.spv":"736 Mbps, ideal for streaming, video calls and remote work.",
     "wifi.ssid":"Network name","wifi.pw":"Password",
@@ -741,25 +748,26 @@ var T={
     "regole.t":"House rules",
     "reg.1":"Check-in 15:00 - 02:00, check-out by 10:00",
     "reg.2":"Maximum 2 guests","reg.3":"Pets allowed",
-    "reg.4":"[Smoking policy: e.g. no smoking inside, allowed on the terrace]",
-    "reg.5":"[Quiet hours: e.g. after 23:00]",
+    "reg.4":"No smoking inside. Smoking is allowed on the terrace only.",
     "reg.6":"The bedroom is open-plan, without a separate door from the living area.",
     "clima.t":"Climate and blinds",
     "clima.l":"Heating and cooling",
-    "clima.v":"Underfloor system with a wall-mounted dial thermostat in each room. Turn the dial right to increase the temperature, left to decrease it. The vents you see around regulate humidity.",
+    "clima.v":"Underfloor system with digital th-Tune thermostats on the wall: one at the entrance and one in the bedroom. Turn the dial clockwise to raise the temperature, anticlockwise to lower it. The set temperature shows on the display. It is best not to switch them off: always leave a base temperature set.",
     "blind.l":"Electric blinds",
-    "blind.v":"The buttons to raise and lower the blinds are located below the intercom in the kitchen/living room, and below the light switches in the bathroom.",
-    "el.t":"Appliances","el.tag":"To update",
-    "el.wash":"Washer and dryer","el.washv":"[To be completed with real model after inspection]",
-    "el.coffee":"Coffee machine, kettle, toaster","el.coffeev":"[To be completed with real model after inspection]",
+    "blind.v":"Buttons are below the intercom in the kitchen/living room and next to the light switches in the bedroom and bathroom. Each group controls the blinds in that zone.",
+    "garage.l":"Garage",
+    "garage.v":"From outside: press button 1 on the key ring remote. From inside: illuminated up-arrow button on the wall panel. The door opens and closes automatically.",
+    "el.t":"Appliances","el.tag":"Instructions",
+    "el.wash":"Washer and dryer","el.washv":"Turn the dial to the programme: Cotton 40° for normal use, Quick 15 min for lightly soiled items, Wash+Dry to dry after washing. Detergent capsules are on the shelf to the right of the machine. Press Play/Pause to start.",
+    "el.coffee":"Coffee machine","el.coffeev":"Lift the lever to open the capsule compartment. Insert an A Modo Mio capsule (find them in the glass jar next to the machine) and lower the lever. Press the side button and wait for the light to stop flashing: coffee is dispensed automatically. The machine switches off on its own after 9 minutes.",
+    "el.kettle":"Kettle and toaster","el.kettlev":"Kettle: fill with water only up to the MAX level, press the side button. Switches off automatically when boiling. Toaster: insert bread, set browning with the dial (1 light, 7 dark), push down the lever. Press STOP to cancel.",
     "el.oven":"Oven, dishwasher, microwave","el.ovenv":"[To be completed with real model after inspection]",
-    "el.tv":"Smart TV and streaming","el.tvv":"Press Home on the remote. Netflix and YouTube are already installed, select the Guests profile.",
-    "el.bath":"Bathroom and toiletries","el.bathv":"In the shower you'll find two bottles: shower/shampoo and body soap. Hand soap is on the sink. Towels of various sizes on the designated shelf. Hair dryer under the sink.",
+    "el.bath":"Bathroom and water heater","el.bathv":"Water heater: ON/OFF button to turn on, + and - for temperature, 2h/4h for the timer. Switch it off at check-out if you turned it on. In the shower you will find shampoo and body wash. Hand soap on the sink. Towels on the wooden unit next to the sink. Hair dryer in the drawer under the sink.",
     "rif.t":"Waste sorting","rif.where":"Where to find the bins",
-    "rif.wherev":"In the parking area, inside the building.",
-    "rif.yellow":"Yellow — paper and cardboard","rif.blue":"Blue — glass, plastic and aluminium",
-    "rif.grey":"Grey — general waste","rif.brown":"Brown — organic waste",
-    "rif.cal":"Collection days: [to be added from the municipal calendar]",
+    "rif.wherev":"The four bins for this apartment are at parking space no.3, next to the wall. Do not use the other bins in the garage, they belong to other residents.",
+    "rif.yellow":"Yellow PAPER · paper and cardboard","rif.blue":"Blue GLASS PLASTIC CANS · bottles, jars, cans",
+    "rif.grey":"Grey DRY · general waste","rif.brown":"Brown · organic (food scraps, coffee grounds, peel)",
+    "rif.cal":"How it works: check the Contarina calendar (contarina.it) to see which type is collected the following day. The evening before, by 21:00, take the right bin outside the building and place it on the pavement under the letterboxes. In the morning, after collection, bring it back to parking space no.3.",
     "info.t":"Practical info","info.tax":"Tourist tax",
     "info.taxv":"4 euros per person per night (from 1 July 2024). Children under 16 exempt. Paid at check-in.",
     "info.cir":"Registration details",
@@ -805,20 +813,21 @@ var T={
     "badge":"4,98 · 125 reseñas","h1":"Suite en el Centro · Terraza y Aparcamiento",
     "loc":"Treviso, centro histórico · a pocos pasos de la Catedral y la Piazza dei Signori",
     "host":"Anfitrión: Ardit","facts":"2 huéspedes · 1 dormitorio · 1 cama matrimonial · 1 baño",
-    "arrivo.t":"Llegada y salida","arrivo.s":"Check-in, aparcamiento, acceso",
+    "arrivo.t":"Llegada y salida","arrivo.s":"Check-in, garaje, acceso",
     "arrivo.ci":"Check-in","arrivo.co":"Check-out","arrivo.cov":"Antes de las 10:00",
     "arrivo.gl":"Huéspedes máx.","arrivo.gv":"2 personas",
     "arrivo.acc":"Acceso al apartamento",
-    "arrivo.s1":"[Paso 1: telefonillo — nombre/número que llamar]",
-    "arrivo.s2":"[Paso 2: subir al piso — ej. segundo piso, escalera A]",
-    "arrivo.s3":"[Paso 3: puerta — número de apartamento y dónde están las llaves]",
-    "arrivo.park":"Aparcamiento","arrivo.parkv":"Plaza de aparcamiento privada y cubierta dentro del edificio. El mando de la puerta ya está en el llavero que recibes en el check-in.",
-    "arrivo.how":"Cómo llegar","arrivo.howv":"La estación de tren de Treviso está a unos 10 minutos a pie. En coche, seguir las indicaciones hacia el centro histórico.",
+    "arrivo.intro":"El check-in es siempre en persona con Ardit, que entrega las llaves a la llegada.",
+    "arrivo.s1":"Usar el telefonillo de abajo: buscar el número de la propiedad",
+    "arrivo.s2":"Subir al piso 1. En el rellano girar a la derecha: el apartamento es la puerta de enfrente. Desde el ascensor es la puerta que tenéis delante.",
+    "arrivo.s3":"Las llaves están en la mesa del salón.",
+    "arrivo.park":"Garaje","arrivo.garagev":"El garaje se abre pulsando el botón 1 del mando del llavero. La puerta se abre y se cierra sola.",
+    "arrivo.how":"Cómo llegar","arrivo.howv":"Via Angelo Garbizza 11, Treviso. La estación está a 10 minutos a pie. En coche seguir las indicaciones hacia el centro histórico.",
     "arrivo.coh":"Al hacer el check-out",
-    "arrivo.co1":"Cerrar todas las ventanas y la puerta con llave",
-    "arrivo.co2":"Apagar luces, TV y termostatos",
-    "arrivo.co3":"Dejar las llaves donde se indique",
-    "arrivo.co4":"Bajar las persianas si quieres dejar el apartamento fresco",
+    "arrivo.co1":"El botón bajo el telefonillo (icono casa + flecha derecha) apaga todas las luces y baja todas las persianas de una vez.",
+    "arrivo.co2":"Apagad las lámparas conectadas a enchufes y la TV si están encendidas.",
+    "arrivo.co3":"Si habéis encendido el calentador, apagadlo antes de salir.",
+    "arrivo.co4":"Dejad las llaves en la mesa del salón.",
     "wifi.t":"Wi-Fi","wifi.s":"Red y contraseña","wifi.sp":"Velocidad",
     "wifi.spv":"736 Mbps, ideal para streaming, videollamadas y teletrabajo.",
     "wifi.ssid":"Nombre de la red","wifi.pw":"Contraseña",
@@ -832,25 +841,26 @@ var T={
     "regole.t":"Normas de la casa",
     "reg.1":"Check-in 15:00 - 02:00, check-out antes de las 10:00",
     "reg.2":"Máximo 2 huéspedes","reg.3":"Se admiten mascotas",
-    "reg.4":"[Política de fumadores: ej. prohibido fumar dentro, permitido en terraza]",
-    "reg.5":"[Horario de silencio: ej. después de las 23:00]",
+    "reg.4":"Prohibido fumar en el interior. Solo se permite en la terraza.",
     "reg.6":"La zona de dormir es diáfana, sin puerta separada del salón.",
     "clima.t":"Clima y persianas",
     "clima.l":"Calefacción y refrigeración",
-    "clima.v":"Sistema de suelo radiante con termostato de mando giratorio en cada habitación. Gira el mando a la derecha para aumentar la temperatura, a la izquierda para disminuirla. Las rejillas regulan la humedad.",
+    "clima.v":"Sistema de suelo radiante con termostatos digitales th-Tune en la pared: uno en la entrada y otro en el dormitorio. Girad el mando en sentido horario para subir la temperatura, antihorario para bajarla. La temperatura aparece en el display. Es mejor no apagarlos: dejad siempre una temperatura base.",
     "blind.l":"Persianas eléctricas",
-    "blind.v":"Los botones para subir y bajar las persianas están debajo del telefonillo en la cocina/salón, y debajo de los interruptores de luz en el baño.",
-    "el.t":"Electrodomésticos","el.tag":"Por actualizar",
-    "el.wash":"Lavadora y secadora","el.washv":"[Por completar con el modelo real tras la visita]",
-    "el.coffee":"Cafetera, hervidor, tostadora","el.coffeev":"[Por completar con el modelo real tras la visita]",
+    "blind.v":"Los botones están debajo del telefonillo en la cocina/salón y junto a los interruptores de luz en el dormitorio y baño. Cada grupo controla las persianas de esa zona.",
+    "garage.l":"Garaje",
+    "garage.v":"Desde fuera: botón 1 del mando del llavero. Desde dentro: flecha arriba iluminada en el panel de la pared. La puerta se abre y se cierra sola.",
+    "el.t":"Electrodomésticos","el.tag":"Instrucciones",
+    "el.wash":"Lavadora y secadora","el.washv":"Girad el mando al programa: Algodón 40° para uso normal, Rápido 15 min para ropa poco sucia, Lavar+Secar para secar tras el lavado. Las cápsulas de detergente están en la estantería a la derecha. Pulsad Play/Pausa para iniciar.",
+    "el.coffee":"Cafetera","el.coffeev":"Levantad la palanca para abrir el compartimento de cápsulas. Inserted una cápsula A Modo Mio (están en el tarro de cristal junto a la máquina) y bajad la palanca. Pulsad el botón lateral y esperad que la luz deje de parpadear: el café sale automáticamente. La máquina se apaga sola a los 9 minutos.",
+    "el.kettle":"Hervidor y tostadora","el.kettlev":"Hervidor: llenad solo con agua hasta el nivel MAX, pulsad el botón lateral. Se apaga solo al hervir. Tostadora: insertad el pan, elegid el tostado con el mando (1 claro, 7 oscuro), bajad la palanca. Pulsad STOP para cancelar.",
     "el.oven":"Horno, lavavajillas, microondas","el.ovenv":"[Por completar con el modelo real tras la visita]",
-    "el.tv":"Smart TV y streaming","el.tvv":"Pulsa Home en el mando. Netflix y YouTube ya están instalados, selecciona el perfil Huéspedes.",
-    "el.bath":"Baño y artículos de aseo","el.bathv":"En la ducha encontrarás dos frascos: gel/champú y jabón corporal. En el lavabo hay jabón de manos. Toallas de varios tamaños en el estante. Secador bajo el lavabo.",
+    "el.bath":"Baño y calentador","el.bathv":"Calentador: botón ON/OFF para encender, + y - para la temperatura, 2h/4h para el temporizador. Apagadlo al hacer el check-out si lo habéis encendido. En la ducha encontraréis champú y gel corporal. Jabón de manos en el lavabo. Toallas en el mueble de madera junto al lavabo. Secador en el cajón bajo el lavabo.",
     "rif.t":"Reciclaje","rif.where":"Dónde están los contenedores",
-    "rif.wherev":"En la zona de aparcamiento, dentro del edificio.",
-    "rif.yellow":"Amarillo — papel y cartón","rif.blue":"Azul — vidrio, plástico y aluminio",
-    "rif.grey":"Gris — residuos generales","rif.brown":"Marrón — residuos orgánicos",
-    "rif.cal":"Días de recogida: [añadir del calendario municipal]",
+    "rif.wherev":"Los cuatro contenedores de este apartamento están en la plaza n.3, junto a la pared. No uséis los otros del garaje, son de otros vecinos.",
+    "rif.yellow":"Amarillo PAPEL · papel y cartón","rif.blue":"Azul VIDRIO PLÁSTICO LATAS · botellas, tarros, latas",
+    "rif.grey":"Gris SECO · residuos generales","rif.brown":"Marrón · orgánico (restos de comida, posos de café, pieles)",
+    "rif.cal":"Cómo funciona: consultad el calendario de Contarina (contarina.it) para saber qué tipo recogen al día siguiente. La tarde anterior, antes de las 21:00, sacad el contenedor correspondiente fuera del edificio y colocadlo en la acera bajo los buzones. Por la mañana, después de la recogida, volved a dejarlo en la plaza n.3.",
     "info.t":"Información práctica","info.tax":"Tasa turística",
     "info.taxv":"4 euros por persona por noche (desde el 1 de julio de 2024). Menores de 16 años exentos. Se paga en el check-in.",
     "info.cir":"Datos de registro",
