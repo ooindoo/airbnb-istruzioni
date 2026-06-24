@@ -345,7 +345,7 @@ var spy=new IntersectionObserver(function(entries){
   entries.forEach(function(e){
     if(e.isIntersecting){var l=tabMap[e.target.id];if(l){tabs.forEach(function(t){t.classList.remove('on');});l.classList.add('on');}}
   });
-},{rootMargin:'-45% 0px -50% 0px'});
+},{rootMargin:'-20% 0px -60% 0px'});
 document.querySelectorAll('.card[id]').forEach(function(c){spy.observe(c);});
 
 // FAB
