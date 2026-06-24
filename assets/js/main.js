@@ -374,6 +374,7 @@ var saved=localStorage.getItem('lang');
 if(saved&&T[saved]){lang=saved;}
 function applyLang(l){
   if(!T[l])return;
+  var scrollPos=window.scrollY;
   lang=l;
   document.documentElement.lang=l;
   document.querySelectorAll('[data-t]').forEach(function(el){
@@ -382,6 +383,7 @@ function applyLang(l){
   });
   document.querySelectorAll('.lb').forEach(function(b){b.classList.toggle('on',b.getAttribute('data-lang')===l);});
   localStorage.setItem('lang',l);
+  window.scrollTo(0,scrollPos);
 }
 document.querySelectorAll('.lb').forEach(function(b){b.addEventListener('click',function(){applyLang(b.getAttribute('data-lang'));});});
 applyLang(lang);
