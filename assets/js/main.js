@@ -278,6 +278,8 @@ var T={
 };
 
 var lang='it';
+var saved=localStorage.getItem('lang');
+if(saved&&T[saved]){lang=saved;}
 function applyLang(l){
   if(!T[l])return;
   lang=l;
@@ -287,8 +289,10 @@ function applyLang(l){
     if(T[l][k]!==undefined)el.textContent=T[l][k];
   });
   document.querySelectorAll('.lb').forEach(function(b){b.classList.toggle('on',b.getAttribute('data-lang')===l);});
+  localStorage.setItem('lang',l);
 }
 document.querySelectorAll('.lb').forEach(function(b){b.addEventListener('click',function(){applyLang(b.getAttribute('data-lang'));});});
+applyLang(lang);
 
 document.getElementById('printBtn').addEventListener('click',function(){window.print();});
 
