@@ -56,6 +56,7 @@ body{font-family:'Inter',system-ui,sans-serif;color:var(--dk);background:#F2F2F2
 @media(min-width:700px){
   .grid{display:grid;grid-template-columns:1fr 1fr;gap:16px;}
   .grid .card.full{grid-column:1/-1;}
+  .pc{width:calc(25% - 10px);}
 }
 
 /* CARDS */
@@ -83,11 +84,11 @@ body{font-family:'Inter',system-ui,sans-serif;color:var(--dk);background:#F2F2F2
 .stat .l{color:var(--gy);font-size:.72rem;margin-top:3px;}
 
 /* ROWS */
-.row{padding:13px 0;border-bottom:1px solid var(--bd);}
+.row{padding:18px 0;border-bottom:1px solid var(--bd);}
 .row:last-child{border-bottom:none;}
 .row .lbl{font-weight:600;display:flex;align-items:center;gap:10px;margin-bottom:5px;font-size:.92rem;}
 .row .lbl svg{color:var(--gy);width:18px;height:18px;}
-.row .val{color:var(--gy);font-size:.86rem;line-height:1.6;padding-left:28px;}
+.row .val{color:var(--gy);font-size:.86rem;line-height:1.75;padding-left:28px;}
 .row .vrow{display:flex;align-items:center;justify-content:space-between;gap:10px;padding-left:28px;}
 .row .vrow .val{padding-left:0;}
 .ph{color:#c0392b;font-style:italic;}
@@ -104,7 +105,7 @@ body{font-family:'Inter',system-ui,sans-serif;color:var(--dk);background:#F2F2F2
 .more-btn[aria-expanded=true] .less{display:inline;}
 
 /* CHECKLIST */
-ul.cl{list-style:none;display:flex;flex-direction:column;gap:10px;}
+ul.cl{list-style:none;display:flex;flex-direction:column;gap:14px;}
 ul.cl li{display:flex;align-items:flex-start;gap:10px;font-size:.89rem;line-height:1.55;}
 ul.cl li svg{color:var(--gy);width:17px;height:17px;margin-top:2px;flex:0 0 auto;}
 
@@ -118,7 +119,7 @@ ul.cl li svg{color:var(--gy);width:17px;height:17px;margin-top:2px;flex:0 0 auto
 /* HSCROLL */
 .hs{display:flex;gap:12px;overflow-x:auto;padding-bottom:6px;scroll-snap-type:x mandatory;-webkit-overflow-scrolling:touch;scrollbar-width:none;margin:0 -2px 6px;}
 .hs::-webkit-scrollbar{display:none;}
-.pc{flex:0 0 auto;width:166px;scroll-snap-align:start;border:1px solid var(--bd);border-radius:16px;padding:14px;background:var(--wh);}
+.pc{flex:0 0 auto;width:calc(50% - 8px);min-width:140px;scroll-snap-align:start;border:1px solid var(--bd);border-radius:16px;padding:14px;background:var(--wh);}
 .pc svg{color:var(--r);width:20px;height:20px;margin-bottom:10px;}
 .pc .pn{font-weight:700;font-size:.88rem;margin-bottom:4px;line-height:1.3;}
 .pc .pd{color:var(--gy);font-size:.79rem;line-height:1.45;}
@@ -379,7 +380,7 @@ footer svg{color:var(--r);width:14px;height:14px;}
         <div class="coll" id="clima-c"><div class="coll-in"><div class="sc">
           <div class="row">
             <div class="lbl"><svg class="icon"><use href="#i-therm"/></svg> <span data-t="clima.l">Riscaldamento e raffreddamento</span></div>
-            <div class="val" data-t="clima.v">Sistema a pavimento con termostati a parete: uno in ingresso e uno in camera. Girate la manopola in senso orario per alzare la temperatura, antiorario per abbassarla. La temperatura impostata compare sul display. Meglio non spegnerli: lasciate sempre una temperatura di base impostata.</div>
+            <div class="val" data-t="clima.v">Sistema a pavimento con termostati a parete: uno in ingresso, uno in camera e uno in bagno. Girate la manopola in senso orario per alzare la temperatura, antiorario per abbassarla. La temperatura impostata compare sul display. Meglio non spegnerli: lasciate sempre una temperatura di base impostata.</div>
           </div>
           <div class="row">
             <div class="lbl"><svg class="icon"><use href="#i-blind"/></svg> <span data-t="blind.l">Tapparelle elettriche</span></div>
@@ -409,10 +410,6 @@ footer svg{color:var(--r);width:14px;height:14px;}
           <div class="row">
             <div class="lbl"><svg class="icon"><use href="#i-coffee"/></svg> <span data-t="el.kettle">Bollitore e tostapane</span></div>
             <div class="val" data-t="el.kettlev">Bollitore: riempite solo con acqua fino al livello MAX, premete il tasto laterale. Si spegne da solo a ebollizione. Tostapane: inserite il pane, scegliete la doratura con la manopola (1 chiaro, 7 scuro), abbassate la leva. Premete STOP per interrompere.</div>
-          </div>
-          <div class="row">
-            <div class="lbl"><svg class="icon"><use href="#i-home"/></svg> <span data-t="el.oven">Forno, lavastoviglie, microonde</span></div>
-            <div class="val ph" data-t="el.ovenv">[Da completare con modello reale dopo sopralluogo]</div>
           </div>
           <div class="row">
             <div class="lbl"><svg class="icon"><use href="#i-shower"/></svg> <span data-t="el.bath">Bagno e scaldabagno</span></div>
@@ -448,12 +445,8 @@ footer svg{color:var(--r);width:14px;height:14px;}
         </button>
         <div class="coll" id="info-c"><div class="coll-in"><div class="sc">
           <div class="row">
-            <div class="lbl"><svg class="icon"><use href="#i-euro"/></svg> <span data-t="info.tax">Tassa di soggiorno</span></div>
-            <div class="val" data-t="info.taxv">4 euro a persona per notte (in vigore dal 1° luglio 2024). Minori di 16 anni esenti. Il pagamento avviene al check-in in contanti o carta.</div>
-          </div>
-          <div class="row">
-            <div class="lbl" data-t="info.cir">Dati di registrazione</div>
-            <div class="val">CIR: IT026086B4ZU2EAGAL</div>
+            <div class="lbl"><svg class="icon"><use href="#i-info"/></svg> <span data-t="info.tax">Tassa di soggiorno</span></div>
+            <div class="val" data-t="info.taxv">4 euro a persona per notte (dal 1 luglio 2024). Minori di 16 anni esenti. Si paga al check-in in contanti.</div>
           </div>
         </div></div></div>
       </div>
@@ -471,7 +464,6 @@ footer svg{color:var(--r);width:14px;height:14px;}
     <div class="coll" id="dint-c"><div class="coll-in"><div class="cc">
 
       <!-- PUNTI DI INTERESSE -->
-      <h3 data-t="dint.poi">Punti di interesse</h3>
       <div class="hs">
         <div class="pc"><svg class="icon"><use href="#i-pin"/></svg><div class="pn" data-t="poi.1n">Duomo e Piazza dei Signori</div><div class="pd" data-t="poi.1d">3 min a piedi. Cuore del centro storico.</div></div>
         <div class="pc"><svg class="icon"><use href="#i-pin"/></svg><div class="pn" data-t="poi.2n">Chiesa di San Nicolò</div><div class="pd" data-t="poi.2d">2 min a piedi. Visibile dalla terrazza.</div></div>
@@ -480,7 +472,7 @@ footer svg{color:var(--r);width:14px;height:14px;}
         <div class="pc"><svg class="icon"><use href="#i-train"/></svg><div class="pn" data-t="poi.5n">Stazione di Treviso</div><div class="pd" data-t="poi.5d">10 min a piedi. Venezia in 30 min.</div></div>
       </div>
 
-      <h3 data-t="dint.rist">Top 5 ristoranti</h3>
+      <h3 data-t="dint.rist" style="border-top:1px solid var(--bd);padding-top:16px;">Top 5 ristoranti</h3>
       <div class="plist">
         <div class="pitem"><div class="pname"><svg class="icon"><use href="#i-fork"/></svg><span data-t="r1.n">Le Beccherie</span></div><div class="pdesc" data-t="r1.d">Piazza Ancilotto 11 · 4 min a piedi. Ristorante storico del 1939, uno dei luoghi d'origine del tiramisù. Cucina veneta tradizionale d'eccellenza.</div></div>
         <div class="pitem"><div class="pname"><svg class="icon"><use href="#i-fork"/></svg><span data-t="r2.n">Osteria Contemporanea</span></div><div class="pdesc" data-t="r2.d">Centro storico · 6 min a piedi. Cucina creativa con ingredienti locali, ottima cura dei piatti. Molto apprezzata dai locali.</div></div>
@@ -489,7 +481,7 @@ footer svg{color:var(--r);width:14px;height:14px;}
         <div class="pitem"><div class="pname"><svg class="icon"><use href="#i-fork"/></svg><span data-t="r5.n">Pierre Trattoria Sartoriale</span></div><div class="pdesc" data-t="r5.d">Centro · 8 min a piedi. Cucina creativa con materie prime locali, menu stagionale che cambia spesso. Ottima presentazione dei piatti.</div></div>
       </div>
 
-      <h3 data-t="dint.cic">Top 5 aperitivo e cicchetti</h3>
+      <h3 data-t="dint.cic" style="border-top:1px solid var(--bd);padding-top:16px;">Top 5 aperitivo e cicchetti</h3>
       <p style="font-size:.82rem;color:var(--gy);margin-bottom:10px;" data-t="cic.intro">Il rito dell'aperitivo a Treviso: uno spritz o un'ombra di vino con cicchetti (piccoli bocconi tipici). L'Isola della Pescheria è il centro della vita serale.</p>
       <div class="plist">
         <div class="pitem"><div class="pname"><svg class="icon"><use href="#i-glass"/></svg><span data-t="c1.n">Antica Osteria Al Botegon</span></div><div class="pdesc" data-t="c1.d">Viale Burchiellati 7 · 6 min a piedi. Dal 1890, l'istituzione dell'aperitivo trevigiano. Polpette fatte a mano, nervetti, baccalà, bogoi. Sempre animato.</div></div>
@@ -499,7 +491,7 @@ footer svg{color:var(--r);width:14px;height:14px;}
         <div class="pitem"><div class="pname"><svg class="icon"><use href="#i-glass"/></svg><span data-t="c5.n">Bottega Abbiati</span></div><div class="pdesc" data-t="c5.d">Zona Pescheria · 5 min a piedi. Enoteca raffinata con cicchetti gourmet: acciughe con burrata e pesto, baccalà, proposte creative abbinate a vini ricercati.</div></div>
       </div>
 
-      <h3 data-t="dint.col">Top 5 colazioni</h3>
+      <h3 data-t="dint.col" style="border-top:1px solid var(--bd);padding-top:16px;">Top 5 colazioni</h3>
       <div class="plist">
         <div class="pitem"><div class="pname"><svg class="icon"><use href="#i-coffee"/></svg><span data-t="b1.n">Taste Coffee</span></div><div class="pdesc" data-t="b1.d">Ponte Malvasia · 3 min a piedi. Specialty coffee di alta qualità, estrazione lenta e metodi manuali. Il posto giusto per chi ama il caffè vero.</div></div>
         <div class="pitem"><div class="pname"><svg class="icon"><use href="#i-coffee"/></svg><span data-t="b2.n">Bloom Caffetteria</span></div><div class="pdesc" data-t="b2.d">Via San Liberale 10 · 5 min a piedi. Ispirato ai caffè letterari, specialty coffee, cold brew, tè internazionali. Anche spazio co-working.</div></div>
@@ -508,17 +500,17 @@ footer svg{color:var(--r);width:14px;height:14px;}
         <div class="pitem"><div class="pname"><svg class="icon"><use href="#i-coffee"/></svg><span data-t="b5.n">Giardino Bistrot</span></div><div class="pdesc" data-t="b5.d">Viale Cesare Battisti 35 · 7 min a piedi. Piccolo bistrot biologico con dolci artigianali, torte e centrifughe. Mostre di artisti locali a rotazione.</div></div>
       </div>
 
-      <h3 data-t="dint.ev">Eventi estate 2026</h3>
+      <h3 data-t="dint.ev" style="border-top:1px solid var(--bd);padding-top:16px;">Eventi estate 2026</h3>
       <div class="elist">
         <div class="eitem">
           <div class="edate" data-t="ev1.d">10 — 25 luglio 2026</div>
           <div class="etitle" data-t="ev1.t">Suoni di Marca sulle Mura</div>
-          <div class="edesc" data-t="ev1.v">Concerti estivi sulle mura storiche di Treviso. Uno degli appuntamenti musicali più attesi dell'estate trevigiana, con artisti italiani e internazionali in un contesto unico all'aperto.</div>
+          <div class="edesc" data-t="ev1.v">Concerti ogni sera dal 10 al 25 luglio sulle Mura di Treviso. Ingresso a offerta libera. Area concerti, percorso del gusto e mostra mercato aperti dalle 18:00.</div>
         </div>
         <div class="eitem">
-          <div class="edate" data-t="ev2.d">14 marzo — 1 novembre 2026</div>
+          <div class="edate" data-t="ev2.d">14 marzo - 1 novembre 2026</div>
           <div class="etitle" data-t="ev2.t">Nino Springolo — Museo Bailo</div>
-          <div class="edesc" data-t="ev2.v">Grande retrospettiva dedicata a Nino Springolo (1886-1975), pittore veneto. Al Museo Bailo, raggiungibile a piedi dall'appartamento.</div>
+          <div class="edesc" data-t="ev2.v">Circa 100 opere di Nino Springolo, Gino Rossi e Arturo Martini al Museo Bailo. Aperto tutti i giorni tranne il lunedi, ore 10-18. Biglietto 10 euro intero, 8 euro ridotto.</div>
         </div>
         <div class="eitem">
           <div class="edate" data-t="ev3.d">Luglio — agosto 2026</div>
@@ -557,7 +549,7 @@ footer svg{color:var(--r);width:14px;height:14px;}
       </div>
       <div class="row">
         <div class="lbl" data-t="cont.hosp">Ospedale più vicino</div>
-        <div class="val"><a href="https://maps.app.goo.gl/ospedale" target="_blank" rel="noopener" style="color:var(--r);font-weight:600;">Ca' Foncello · Via Ospedale 1, Treviso</a> · circa 15 min a piedi</div>
+        <div class="val"><a href="https://maps.app.goo.gl/ospedale" target="_blank" rel="noopener" style="color:var(--r);font-weight:600;">Ca' Foncello · Via Ospedale 1, Treviso</a> · circa 30 min a piedi o 5 in auto</div>
       </div>
       <div class="row">
         <div class="lbl" data-t="cont.pharm">Farmacia più vicina</div>
@@ -623,7 +615,7 @@ var T={
     "reg.4":"Vietato fumare all'interno. Consentito solo in terrazza.",
     "clima.t":"Clima e tapparelle",
     "clima.l":"Riscaldamento e raffreddamento",
-    "clima.v":"Sistema a pavimento con termostati a parete: uno in ingresso e uno in camera. Girate la manopola in senso orario per alzare la temperatura, antiorario per abbassarla. La temperatura impostata compare sul display. Meglio non spegnerli: lasciate sempre una temperatura di base impostata.",
+    "clima.v":"Sistema a pavimento con termostati a parete: uno in ingresso, uno in camera e uno in bagno. Girate la manopola in senso orario per alzare la temperatura, antiorario per abbassarla. La temperatura impostata compare sul display. Meglio non spegnerli: lasciate sempre una temperatura di base impostata.",
     "blind.l":"Tapparelle elettriche",
     "blind.v":"I pulsanti si trovano sotto al citofono in cucina/soggiorno e di fianco agli interruttori luce in camera e bagno. Ogni gruppo controlla le tapparelle della zona corrispondente.",
     "garage.l":"Garage",
@@ -632,7 +624,6 @@ var T={
     "el.wash":"Lavatrice e asciugatrice","el.washv":"Girate la manopola sul programma: Cotone 40° per uso normale, Rapido 15 min per capi leggeri, Lava+Asciuga per asciugare dopo il lavaggio. Il detersivo (capsule) si trova sul piano a destra della lavatrice. Premete Play/Pausa per avviare.",
     "el.coffee":"Macchina da caffè","el.coffeev":"Sollevate la leva in alto per aprire il vano capsule. Inserite una capsula A Modo Mio (le trovate nel barattolo di vetro accanto alla macchina) e abbassate la leva. Premete il tasto laterale e attendete che la spia smetta di lampeggiare: il caffè viene erogato automaticamente. La macchina si spegne da sola dopo 9 minuti.",
     "el.kettle":"Bollitore e tostapane","el.kettlev":"Bollitore: riempite solo con acqua fino al livello MAX, premete il tasto laterale. Si spegne da solo a ebollizione. Tostapane: inserite il pane, scegliete la doratura con la manopola (1 chiaro, 7 scuro), abbassate la leva. Premete STOP per interrompere.",
-    "el.oven":"Forno, lavastoviglie, microonde","el.ovenv":"[Da completare con modello reale dopo sopralluogo]",
     "el.bath":"Bagno e scaldabagno","el.bathv":"Scaldabagno: tasto ON/OFF per accendere, + e - per la temperatura, tasto 2h/4h per il timer. Spegnetelo al check-out se lo avete acceso. Sul mobile in legno di fianco al lavandino trovate shampoo, sapone corpo e asciugamani. Sapone mani sul lavandino. Asciugacapelli nel cassetto sotto il lavandino.",
     "rif.t":"Raccolta differenziata","rif.where":"Dove si trovano i contenitori",
     "rif.wherev":"I quattro contenitori di questo appartamento si trovano nel posto auto n.3, accanto alla parete. Non usate gli altri nel garage, appartengono ai vicini.",
@@ -642,8 +633,7 @@ var T={
     "rif.grey":"⚫ Grigio · secco non riciclabile",
     "rif.cal":"Come funziona: controllate il calendario Contarina (contarina.it) per sapere quale tipologia raccolgono il giorno successivo. La sera prima, entro le 21:00, portate il bidone corrispondente fuori dal palazzo e posizionatelo sul marciapiede sotto le cassette della posta. La mattina, dopo il passaggio, rimettetelo nel posto auto n.3.",
     "info.t":"Info pratiche","info.tax":"Tassa di soggiorno",
-    "info.taxv":"4 euro a persona per notte (dal 1° luglio 2024). Minori di 16 anni esenti. Si paga al check-in.",
-    "info.cir":"Dati di registrazione",
+    "info.taxv":"4 euro a persona per notte (dal 1 luglio 2024). Minori di 16 anni esenti. Si paga al check-in in contanti.",
     "dint.t":"Dintorni","dint.s":"Punti di interesse, cibo, eventi","dint.poi":"Punti di interesse",
     "poi.1n":"Duomo e Piazza dei Signori","poi.1d":"3 min a piedi. Cuore del centro storico.",
     "poi.2n":"Chiesa di San Nicolò","poi.2d":"2 min a piedi. Visibile dalla terrazza.",
@@ -670,8 +660,8 @@ var T={
     "b4.n":"Caffè e Cioccolato","b4.d":"Via Pola 4 · 3 min. A due passi dal Duomo. Pasticceria artigianale e area esterna.",
     "b5.n":"Giardino Bistrot","b5.d":"Viale C. Battisti 35 · 7 min. Biologico, dolci artigianali, mostre di artisti locali.",
     "dint.ev":"Eventi estate 2026",
-    "ev1.d":"10 — 25 luglio 2026","ev1.t":"Suoni di Marca sulle Mura","ev1.v":"Concerti estivi sulle mura storiche di Treviso con artisti italiani e internazionali. Uno degli eventi musicali più attesi dell'estate.",
-    "ev2.d":"14 marzo — 1 novembre 2026","ev2.t":"Nino Springolo — Museo Bailo","ev2.v":"Grande retrospettiva sul pittore veneto. Al Museo Bailo, raggiungibile a piedi.",
+    "ev1.d":"10 — 25 luglio 2026","ev1.t":"Suoni di Marca sulle Mura","ev1.v":"Concerti ogni sera dal 10 al 25 luglio sulle Mura di Treviso. Ingresso a offerta libera. Area concerti, percorso del gusto e mostra mercato aperti dalle 18:00.",
+    "ev2.d":"14 marzo - 1 novembre 2026","ev2.t":"Nino Springolo — Museo Bailo","ev2.v":"Circa 100 opere di Nino Springolo, Gino Rossi e Arturo Martini al Museo Bailo. Aperto tutti i giorni tranne il lunedi, ore 10-18. Biglietto 10 euro intero, 8 euro ridotto.",
     "ev3.d":"Luglio — agosto 2026","ev3.t":"Imago Mundi — Gallerie delle Prigioni","ev3.v":"Esposizioni a cadenza settimanale di arte contemporanea internazionale nel cuore del centro storico.",
     "ev4.d":"Estate 2026","ev4.t":"Cinema all'aperto — Giardino Turroni","ev4.v":"Proiezioni serali gratuite nel giardino del Cinema Turroni. Portate qualcosa su cui sedervi.",
     "cont.t":"Contatti","cont.s":"Host, emergenze, assistenza",
@@ -718,7 +708,7 @@ var T={
     "reg.4":"No smoking inside. Smoking is allowed on the terrace only.",
     "clima.t":"Climate and blinds",
     "clima.l":"Heating and cooling",
-    "clima.v":"Underfloor system with thermostats on the wall: one at the entrance and one in the bedroom. Turn the dial clockwise to raise the temperature, anticlockwise to lower it. The set temperature shows on the display. It is best not to switch them off: always leave a base temperature set.",
+    "clima.v":"Underfloor system with thermostats on the wall: one at the entrance, one in the bedroom and one in the bathroom. Turn the dial clockwise to raise the temperature, anticlockwise to lower it. The set temperature shows on the display. It is best not to switch them off: always leave a base temperature set.",
     "blind.l":"Electric blinds",
     "blind.v":"Buttons are below the intercom in the kitchen/living room and next to the light switches in the bedroom and bathroom. Each group controls the blinds in that zone.",
     "garage.l":"Garage",
@@ -727,7 +717,6 @@ var T={
     "el.wash":"Washer and dryer","el.washv":"Turn the dial to the programme: Cotton 40° for normal use, Quick 15 min for lightly soiled items, Wash+Dry to dry after washing. Detergent capsules are on the shelf to the right of the machine. Press Play/Pause to start.",
     "el.coffee":"Coffee machine","el.coffeev":"Lift the lever to open the capsule compartment. Insert an A Modo Mio capsule (find them in the glass jar next to the machine) and lower the lever. Press the side button and wait for the light to stop flashing: coffee is dispensed automatically. The machine switches off on its own after 9 minutes.",
     "el.kettle":"Kettle and toaster","el.kettlev":"Kettle: fill with water only up to the MAX level, press the side button. Switches off automatically when boiling. Toaster: insert bread, set browning with the dial (1 light, 7 dark), push down the lever. Press STOP to cancel.",
-    "el.oven":"Oven, dishwasher, microwave","el.ovenv":"[To be completed with real model after inspection]",
     "el.bath":"Bathroom and water heater","el.bathv":"Water heater: ON/OFF button to turn on, + and - for temperature, 2h/4h for the timer. Switch it off at check-out if you turned it on. On the wooden unit next to the sink you will find shampoo, body wash and towels. Hand soap on the sink. Hair dryer in the drawer under the sink.",
     "rif.t":"Waste sorting","rif.where":"Where to find the bins",
     "rif.wherev":"The four bins for this apartment are at parking space no.3, next to the wall. Do not use the other bins in the garage, they belong to other residents.",
@@ -737,8 +726,7 @@ var T={
     "rif.grey":"⚫ Grey · general non-recyclable waste",
     "rif.cal":"How it works: check the Contarina calendar (contarina.it) to see which type is collected the following day. The evening before, by 21:00, take the right bin outside the building and place it on the pavement under the letterboxes. In the morning, after collection, bring it back to parking space no.3.",
     "info.t":"Practical info","info.tax":"Tourist tax",
-    "info.taxv":"4 euros per person per night (from 1 July 2024). Children under 16 exempt. Paid at check-in.",
-    "info.cir":"Registration details",
+    "info.taxv":"4 euros per person per night (from 1 July 2024). Children under 16 exempt. Paid at check-in in cash.",
     "dint.t":"Surroundings","dint.s":"Points of interest, food, events","dint.poi":"Points of interest",
     "poi.1n":"Cathedral and Piazza dei Signori","poi.1d":"3 min walk. Heart of the historic centre.",
     "poi.2n":"Church of San Nicolò","poi.2d":"2 min walk. Visible from the terrace.",
@@ -765,8 +753,8 @@ var T={
     "b4.n":"Caffè e Cioccolato","b4.d":"Via Pola 4 · 3 min. Steps from the Cathedral. Artisan pastries and outdoor seating.",
     "b5.n":"Giardino Bistrot","b5.d":"Viale C. Battisti 35 · 7 min. Organic bistrot with artisan cakes and rotating local art exhibitions.",
     "dint.ev":"Events summer 2026",
-    "ev1.d":"10 — 25 July 2026","ev1.t":"Suoni di Marca sulle Mura","ev1.v":"Summer concerts on the historic city walls with Italian and international artists. One of the most anticipated events of the summer.",
-    "ev2.d":"14 March — 1 November 2026","ev2.t":"Nino Springolo — Museo Bailo","ev2.v":"Major retrospective on the Venetian painter. At Museo Bailo, reachable on foot.",
+    "ev1.d":"10 — 25 July 2026","ev1.t":"Suoni di Marca sulle Mura","ev1.v":"Concerts every evening from 10 to 25 July on the Walls of Treviso. Free-will entry. Concert area, food trail and market open from 18:00.",
+    "ev2.d":"14 March - 1 November 2026","ev2.t":"Nino Springolo — Museo Bailo","ev2.v":"Around 100 works by Nino Springolo, Gino Rossi and Arturo Martini at Museo Bailo. Open every day except Monday, 10:00–18:00. Ticket €10 full price, €8 reduced.",
     "ev3.d":"July — August 2026","ev3.t":"Imago Mundi — Gallerie delle Prigioni","ev3.v":"Weekly international contemporary art exhibitions in the historic city centre.",
     "ev4.d":"Summer 2026","ev4.t":"Open-air cinema — Giardino Turroni","ev4.v":"Free evening screenings in the garden of Cinema Turroni. Bring something to sit on.",
     "cont.t":"Contact","cont.s":"Host, emergencies, support",
@@ -812,7 +800,7 @@ var T={
     "reg.4":"Prohibido fumar en el interior. Solo se permite en la terraza.",
     "clima.t":"Clima y persianas",
     "clima.l":"Calefacción y refrigeración",
-    "clima.v":"Sistema de suelo radiante con termostatos en la pared: uno en la entrada y otro en el dormitorio. Girad el mando en sentido horario para subir la temperatura, antihorario para bajarla. La temperatura aparece en el display. Es mejor no apagarlos: dejad siempre una temperatura base.",
+    "clima.v":"Sistema de suelo radiante con termostatos en la pared: uno en la entrada, uno en el dormitorio y uno en el baño. Girad el mando en sentido horario para subir la temperatura, antihorario para bajarla. La temperatura aparece en el display. Es mejor no apagarlos: dejad siempre una temperatura base.",
     "blind.l":"Persianas eléctricas",
     "blind.v":"Los botones están debajo del telefonillo en la cocina/salón y junto a los interruptores de luz en el dormitorio y baño. Cada grupo controla las persianas de esa zona.",
     "garage.l":"Garaje",
@@ -821,7 +809,6 @@ var T={
     "el.wash":"Lavadora y secadora","el.washv":"Girad el mando al programa: Algodón 40° para uso normal, Rápido 15 min para ropa poco sucia, Lavar+Secar para secar tras el lavado. Las cápsulas de detergente están en la estantería a la derecha. Pulsad Play/Pausa para iniciar.",
     "el.coffee":"Cafetera","el.coffeev":"Levantad la palanca para abrir el compartimento de cápsulas. Inserted una cápsula A Modo Mio (están en el tarro de cristal junto a la máquina) y bajad la palanca. Pulsad el botón lateral y esperad que la luz deje de parpadear: el café sale automáticamente. La máquina se apaga sola a los 9 minutos.",
     "el.kettle":"Hervidor y tostadora","el.kettlev":"Hervidor: llenad solo con agua hasta el nivel MAX, pulsad el botón lateral. Se apaga solo al hervir. Tostadora: insertad el pan, elegid el tostado con el mando (1 claro, 7 oscuro), bajad la palanca. Pulsad STOP para cancelar.",
-    "el.oven":"Horno, lavavajillas, microondas","el.ovenv":"[Por completar con el modelo real tras la visita]",
     "el.bath":"Baño y calentador","el.bathv":"Calentador: botón ON/OFF para encender, + y - para la temperatura, 2h/4h para el temporizador. Apagadlo al hacer el check-out si lo habéis encendido. En el mueble de madera junto al lavabo encontraréis champú, gel corporal y toallas. Jabón de manos en el lavabo. Secador en el cajón bajo el lavabo.",
     "rif.t":"Reciclaje","rif.where":"Dónde están los contenedores",
     "rif.wherev":"Los cuatro contenedores de este apartamento están en la plaza n.3, junto a la pared. No uséis los otros del garaje, son de otros vecinos.",
@@ -831,8 +818,7 @@ var T={
     "rif.grey":"⚫ Gris · residuos secos no reciclables",
     "rif.cal":"Cómo funciona: consultad el calendario de Contarina (contarina.it) para saber qué tipo recogen al día siguiente. La tarde anterior, antes de las 21:00, sacad el contenedor correspondiente fuera del edificio y colocadlo en la acera bajo los buzones. Por la mañana, después de la recogida, volved a dejarlo en la plaza n.3.",
     "info.t":"Información práctica","info.tax":"Tasa turística",
-    "info.taxv":"4 euros por persona por noche (desde el 1 de julio de 2024). Menores de 16 años exentos. Se paga en el check-in.",
-    "info.cir":"Datos de registro",
+    "info.taxv":"4 euros por persona por noche (desde el 1 de julio de 2024). Menores de 16 años exentos. Se paga en el check-in en efectivo.",
     "dint.t":"Alrededores","dint.s":"Puntos de interés, gastronomía, eventos","dint.poi":"Puntos de interés",
     "poi.1n":"Catedral y Piazza dei Signori","poi.1d":"3 min a pie. Corazón del centro histórico.",
     "poi.2n":"Iglesia de San Nicolò","poi.2d":"2 min a pie. Visible desde la terraza.",
@@ -859,8 +845,8 @@ var T={
     "b4.n":"Caffè e Cioccolato","b4.d":"Via Pola 4 · 3 min. A pasos de la Catedral. Pastelería artesanal y terraza exterior.",
     "b5.n":"Giardino Bistrot","b5.d":"Viale C. Battisti 35 · 7 min. Bistró ecológico con dulces artesanales y exposiciones de artistas locales.",
     "dint.ev":"Eventos verano 2026",
-    "ev1.d":"10 — 25 julio 2026","ev1.t":"Suoni di Marca sulle Mura","ev1.v":"Conciertos de verano en las murallas históricas con artistas italianos e internacionales. Uno de los eventos más esperados del verano.",
-    "ev2.d":"14 marzo — 1 noviembre 2026","ev2.t":"Nino Springolo — Museo Bailo","ev2.v":"Gran retrospectiva del pintor véneto. En el Museo Bailo, al que se puede llegar a pie.",
+    "ev1.d":"10 — 25 julio 2026","ev1.t":"Suoni di Marca sulle Mura","ev1.v":"Conciertos cada noche del 10 al 25 de julio en las Murallas de Treviso. Entrada a precio libre. Área de conciertos, ruta gastronómica y feria abiertos desde las 18:00.",
+    "ev2.d":"14 marzo - 1 noviembre 2026","ev2.t":"Nino Springolo — Museo Bailo","ev2.v":"Unas 100 obras de Nino Springolo, Gino Rossi y Arturo Martini en el Museo Bailo. Abierto todos los días excepto el lunes, de 10:00 a 18:00. Entrada 10 euros precio normal, 8 euros reducida.",
     "ev3.d":"Julio — agosto 2026","ev3.t":"Imago Mundi — Gallerie delle Prigioni","ev3.v":"Exposiciones semanales de arte contemporáneo internacional en el centro histórico.",
     "ev4.d":"Verano 2026","ev4.t":"Cine al aire libre — Giardino Turroni","ev4.v":"Proyecciones nocturnas gratuitas en el jardín del Cinema Turroni. Lleva algo en lo que sentarte.",
     "cont.t":"Contacto","cont.s":"Anfitrión, emergencias, asistencia",
@@ -892,6 +878,15 @@ document.getElementById('printBtn').addEventListener('click',function(){window.p
 function bindToggle(btn){
   btn.addEventListener('click',function(){
     var ex=btn.getAttribute('aria-expanded')==='true';
+    if(!ex && btn.classList.contains('cs')){
+      document.querySelectorAll('.cs').forEach(function(other){
+        if(other!==btn && other.getAttribute('aria-expanded')==='true'){
+          other.setAttribute('aria-expanded','false');
+          var oc=document.getElementById(other.getAttribute('aria-controls'));
+          if(oc)oc.classList.remove('open');
+        }
+      });
+    }
     btn.setAttribute('aria-expanded',String(!ex));
     var c=document.getElementById(btn.getAttribute('aria-controls'));
     if(c)c.classList.toggle('open',!ex);
