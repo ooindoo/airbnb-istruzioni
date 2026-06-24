@@ -57,18 +57,41 @@
   <button class="print-btn" id="printBtn" aria-label="Stampa"><svg class="icon"><use href="#i-print"/></svg></button>
 </div>
 
-<div class="wrap">
-  <div class="tblock">
-    <h1 data-t="h1">Suite in Centro · Terrazza e Parcheggio</h1>
-    <p class="loc"><svg class="icon"><use href="#i-pin"/></svg> <a href="https://maps.app.goo.gl/Z9DmmkNHEfbMJPvF7" target="_blank" rel="noopener" data-t="loc">Treviso, centro storico · a pochi passi dal Duomo e da Piazza dei Signori</a></p>
-    <div class="meta"><span style="color:var(--gy)" data-t="host">Ospitato da Ardit</span></div>
-    <div class="hero-times">
-      <span><strong>Check-in</strong> 15:00 – 02:00</span>
-      <span><strong>Check-out</strong> entro 10:00</span>
-    </div>
+<!-- HERO-STRIP -->
+<div class="hero-strip">
+  <div class="hero-strip-name" data-t="h1">Suite in Centro · Terrazza e Parcheggio</div>
+  <div class="hero-strip-meta">
+    <span class="hero-strip-badge"><svg class="icon" style="width:13px;height:13px;fill:#FF385C;stroke:none;"><use href="#i-star"/></svg> <span data-t="badge">4,98 · 125 recensioni</span></span>
+    <span class="hero-strip-sep">·</span>
+    <span class="hero-strip-time"><strong>Check-in</strong> 15:00–02:00</span>
+    <span class="hero-strip-sep">·</span>
+    <span class="hero-strip-time"><strong>Check-out</strong> entro 10:00</span>
+    <span class="hero-strip-sep">·</span>
+    <span class="hero-strip-time" data-t="arrivo.gv">Max 2 ospiti</span>
   </div>
+</div>
 
-  <div class="grid" style="margin-top:20px;">
+<!-- QUICK-BAR -->
+<div class="quick-bar">
+  <div class="qpill">
+    <svg class="icon" style="width:16px;height:16px;color:var(--r);"><use href="#i-wifi"/></svg>
+    <span id="wifi-pw-quick" data-t="wifi.pwv">2024SuiteTrevisoWiFi</span>
+    <button class="cpbtn" data-copy="wifi-pw-quick" aria-label="Copia password Wi-Fi" style="width:32px;height:32px;background:none;border:none;cursor:pointer;display:flex;align-items:center;justify-content:center;color:var(--gy);flex:0 0 auto;">
+      <svg class="icon" style="width:16px;height:16px;"><use href="#i-copy"/></svg>
+    </button>
+  </div>
+  <a class="qpill" href="tel:+393805897356" style="text-decoration:none;color:inherit;">
+    <svg class="icon" style="width:16px;height:16px;color:var(--r);"><use href="#i-phone"/></svg>
+    <span>+39 380 589 7356</span>
+  </a>
+  <div class="qpill">
+    <svg class="icon" style="width:16px;height:16px;color:var(--r);"><use href="#i-key"/></svg>
+    <span>Check-in 15:00</span>
+  </div>
+</div>
+
+<div class="wrap">
+  <div class="grid">
 
   <!-- ARRIVO -->
   <div class="card" id="arrivo">
@@ -113,12 +136,12 @@
 
   <!-- WIFI -->
   <div class="card" id="wifi">
-    <button class="cs" aria-expanded="true" aria-controls="wifi-c">
+    <button class="cs" aria-expanded="false" aria-controls="wifi-c">
       <svg class="icon lead"><use href="#i-wifi"/></svg>
       <span class="st"><span class="title" data-t="wifi.t">Wi-Fi</span><span class="sub" data-t="wifi.s">Rete e password</span></span>
       <svg class="icon chv"><use href="#i-chv"/></svg>
     </button>
-    <div class="coll open" id="wifi-c"><div class="coll-in"><div class="cc">
+    <div class="coll" id="wifi-c"><div class="coll-in"><div class="cc">
       <div class="row">
         <div class="lbl" data-t="wifi.sp">Velocità</div>
         <div class="val" data-t="wifi.spv">736 Mbps, ideale per streaming, videochiamate e smart working.</div>
@@ -133,8 +156,10 @@
       <div class="row">
         <div class="lbl"><svg class="icon"><use href="#i-wifi"/></svg> <span data-t="wifi.pw">Password</span></div>
         <div class="vrow">
-          <span class="val" id="wifi-pw" style="font-family:monospace;font-size:1rem;font-weight:700;color:var(--dk);letter-spacing:.04em;">2024SuiteTrevisoWiFi</span>
-          <button class="cpbtn" data-copy="wifi-pw" aria-label="Copia password"><svg class="icon"><use href="#i-copy"/></svg></button>
+          <span class="val" id="wifi-pw" style="font-family:monospace;font-size:1rem;font-weight:700;color:var(--dk);letter-spacing:.05em;" data-t="wifi.pwv">2024SuiteTrevisoWiFi</span>
+          <button class="cpbtn" data-copy="wifi-pw" aria-label="Copia password" style="width:52px;height:52px;">
+            <svg class="icon"><use href="#i-copy"/></svg>
+          </button>
         </div>
       </div>
     </div></div></div>
@@ -246,7 +271,7 @@
             <li><svg class="icon"><use href="#i-check"/></svg> <span data-t="rif.blue"><strong style="color:var(--dk)">🔵 Blu</strong> · vetro, plastica e lattine</span></li>
             <li><svg class="icon"><use href="#i-check"/></svg> <span data-t="rif.grey"><strong style="color:var(--dk)">⚫ Grigio</strong> · secco non riciclabile</span></li>
           </ul>
-          <p style="margin-top:12px;font-size:.83rem;color:var(--gy);">Come funziona: controllate il <a href="https://contarina.it/files/ecocalendari/1_allegato_alta_Treviso_CU_2026.pdf" target="_blank" rel="noopener" style="color:var(--r);font-weight:600;">calendario Contarina</a> per sapere quale tipologia raccolgono il giorno successivo. La sera prima, <strong>entro le 21:00</strong>, portate il bidone corrispondente fuori dal palazzo e posizionatelo sul marciapiede sotto le cassette della posta. La mattina, dopo il passaggio, rimettetelo nel posto auto n.3.</p>
+          <p style="margin-top:12px;font-size:.83rem;color:var(--gy);" data-t="rif.cal">Come funziona: controllate il <a href="https://contarina.it/files/ecocalendari/1_allegato_alta_Treviso_CU_2026.pdf" target="_blank" rel="noopener" style="color:var(--r);font-weight:600;">calendario Contarina</a> per sapere quale tipologia raccolgono il giorno successivo. La sera prima, <strong>entro le 21:00</strong>, portate il bidone corrispondente fuori dal palazzo e posizionatelo sul marciapiede sotto le cassette della posta. La mattina, dopo il passaggio, rimettetelo nel posto auto n.3.</p>
         </div></div></div>
       </div>
 
@@ -355,9 +380,9 @@
         <a class="btn" href="https://wa.me/393805897356" target="_blank" rel="noopener"><svg class="icon"><use href="#i-chat"/></svg> WhatsApp</a>
         <a class="btn ol" href="tel:+393805897356"><svg class="icon"><use href="#i-phone"/></svg> <span data-t="cont.call">Chiama</span></a>
       </div>
-      <div class="row">
-        <div class="lbl" data-t="cont.em">Emergenze (Italia)</div>
-        <div class="val">112 — polizia, ambulanza, vigili del fuoco.</div>
+      <div style="background:#fff0f0;border-radius:14px;padding:14px 16px;margin-bottom:14px;display:flex;align-items:center;gap:12px;">
+        <span style="font-size:1.6rem;font-weight:800;color:#c0392b;">112</span>
+        <span style="font-size:.87rem;color:#c0392b;font-weight:600;" data-t="cont.em">Emergenze — polizia, ambulanza, vigili del fuoco</span>
       </div>
       <div class="row">
         <div class="lbl" data-t="cont.hosp">Ospedale più vicino</div>
