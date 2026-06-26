@@ -217,7 +217,7 @@ body {
 }
 .card-body.open { grid-template-rows: 1fr; }
 .card-inner { overflow: hidden; min-height: 0; }
-.card-content { padding: 0 16px 20px; }
+.card-content { padding: 16px 16px 20px; }
 
 /* ── STATS ROW ── */
 .stats {
