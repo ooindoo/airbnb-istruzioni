@@ -1,20 +1,27 @@
-const { put, list } = require('@vercel/blob');
+const { put, get } = require('@vercel/blob');
 
 const METADATA_PATH = 'gestione/metadata.json';
+
+async function streamToBuffer(stream) {
+  const chunks = [];
+  for await (const chunk of stream) {
+    chunks.push(Buffer.isBuffer(chunk) ? chunk : Buffer.from(chunk));
+  }
+  return Buffer.concat(chunks);
+}
 
 async function readMetadata() {
   const token = process.env.BLOB_READ_WRITE_TOKEN;
   try {
-    const { blobs } = await list({ prefix: METADATA_PATH, token });
-    if (!blobs.length) return [];
-
-    // Bearer auth for private blob reads (OIDC automatic in Vercel Functions)
-    const res = await fetch(blobs[0].url, {
-      headers: { Authorization: `Bearer ${token}` }
-    });
-    if (!res.ok) return [];
-    return await res.json();
-  } catch {
+    const { stream } = await get(METADATA_PATH, { access: 'private', token });
+    const buf = await streamToBuffer(stream);
+    return JSON.parse(buf.toString('utf-8'));
+  } catch (e) {
+    // File doesn't exist yet on first run — return empty list
+    if (e?.name === 'BlobNotFoundError' || e?.message?.includes('not found')) {
+      return [];
+    }
+    console.error('readMetadata error:', e?.message);
     return [];
   }
 }

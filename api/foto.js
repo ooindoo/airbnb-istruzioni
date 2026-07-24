@@ -1,3 +1,4 @@
+const { get } = require('@vercel/blob');
 const { requireAuth } = require('./_auth');
 const { readMetadata } = require('./_metadata');
 
@@ -11,19 +12,24 @@ module.exports = async (req, res) => {
 
   const docs = await readMetadata();
   const doc = docs.find(d => d.id === id);
-  if (!doc || !doc.fotoBlobUrl) return res.status(404).end();
+  if (!doc?.fotoBlobPath) return res.status(404).end();
 
-  // Fetch private blob — Bearer token for both local dev and production
-  // (Vercel Functions also support automatic OIDC; token is the universal fallback)
-  const blobRes = await fetch(doc.fotoBlobUrl, {
-    headers: { Authorization: `Bearer ${process.env.BLOB_READ_WRITE_TOKEN}` }
-  });
+  try {
+    const { stream } = await get(doc.fotoBlobPath, {
+      access: 'private',
+      token: process.env.BLOB_READ_WRITE_TOKEN
+    });
 
-  if (!blobRes.ok) return res.status(502).end();
+    const chunks = [];
+    for await (const chunk of stream) {
+      chunks.push(Buffer.isBuffer(chunk) ? chunk : Buffer.from(chunk));
+    }
 
-  const buffer = await blobRes.arrayBuffer();
-
-  res.setHeader('Content-Type', doc.mimeType || 'image/jpeg');
-  res.setHeader('Cache-Control', 'private, max-age=300');
-  res.status(200).end(Buffer.from(buffer));
+    res.setHeader('Content-Type', doc.mimeType || 'image/jpeg');
+    res.setHeader('Cache-Control', 'private, max-age=300');
+    res.status(200).end(Buffer.concat(chunks));
+  } catch (e) {
+    console.error('foto proxy error:', e?.message);
+    res.status(502).end();
+  }
 };
