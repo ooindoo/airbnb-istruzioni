@@ -14,7 +14,9 @@ async function readMetadata() {
   const token = process.env.BLOB_READ_WRITE_TOKEN;
   try {
     // get() returns null (not throws) when the file doesn't exist in v2.6+
-    const result = await get(METADATA_PATH, { access: 'private', token });
+    // useCache:false required — private blob reads are cached by default and
+    // can serve a stale copy right after a writeMetadata() overwrite
+    const result = await get(METADATA_PATH, { access: 'private', token, useCache: false });
     if (!result) return [];
     const buf = await streamToBuffer(result.stream);
     return JSON.parse(buf.toString('utf-8'));

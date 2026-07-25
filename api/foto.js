@@ -17,7 +17,8 @@ module.exports = async (req, res) => {
   try {
     const { stream } = await get(doc.fotoBlobPath, {
       access: 'private',
-      token: process.env.BLOB_READ_WRITE_TOKEN
+      token: process.env.BLOB_READ_WRITE_TOKEN,
+      useCache: false
     });
 
     const chunks = [];
