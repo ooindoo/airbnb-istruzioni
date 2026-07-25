@@ -160,13 +160,6 @@ body {
 .badge-ok .badge-count { color: #2A7A45; }
 
 /* ── CARD ── */
-.card {
-  background: var(--white);
-  border: 1px solid var(--border);
-  border-radius: var(--radius);
-  overflow: hidden;
-}
-
 .section-label {
   font-size: 12px;
   font-weight: 700;
@@ -176,17 +169,18 @@ body {
   margin-bottom: 14px;
 }
 
-/* ── UPLOAD ── */
-.upload-card {
+/* ── FORM ── */
+.form-card {
   background: var(--white);
   border: 1.5px dashed var(--border);
   border-radius: var(--radius);
   padding: 20px 16px;
 }
-.upload-fields { display: flex; flex-direction: column; gap: 10px; margin-bottom: 14px; }
+.form-row { display: flex; flex-direction: column; gap: 10px; margin-bottom: 14px; }
+.form-row-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 14px; }
 .field-label { font-size: 13px; font-weight: 600; display: block; margin-bottom: 5px; }
 
-.field-sm {
+.field-sm, select.field-sm {
   width: 100%;
   padding: 10px 12px;
   border: 1px solid var(--border);
@@ -199,8 +193,43 @@ body {
 }
 .field-sm:focus { outline: none; border-color: var(--black); background: var(--white); }
 
-#file-input { display: none; }
-.file-btn {
+.guest-block {
+  border-top: 1px solid var(--border-inner);
+  padding-top: 14px;
+  margin-top: 4px;
+}
+.guest-title {
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--black);
+  margin-bottom: 12px;
+}
+
+.mini-divider {
+  font-size: 11px;
+  font-weight: 700;
+  color: var(--gray);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  margin: 14px 0 8px;
+  padding-top: 12px;
+  border-top: 1px dashed var(--border-inner);
+}
+
+.checkbox-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 14px;
+  font-weight: 600;
+  margin-top: 2px;
+}
+.checkbox-row input[type="checkbox"] { width: 18px; height: 18px; flex-shrink: 0; }
+
+.fattura-fields { display: none; flex-direction: column; gap: 10px; margin-top: 10px; }
+.fattura-fields.open { display: flex; }
+
+.outline-btn {
   width: 100%;
   min-height: 52px;
   display: flex;
@@ -216,20 +245,25 @@ body {
   font-weight: 700;
   cursor: pointer;
   transition: background 0.15s;
+  margin-top: 4px;
 }
-.file-btn:active { background: var(--surface); }
+.outline-btn:active { background: var(--surface); }
 
-.file-preview {
-  width: 100%;
-  max-height: 220px;
-  object-fit: cover;
-  border-radius: var(--radius-sm);
-  border: 1px solid var(--border);
-  margin-top: 10px;
-  display: none;
+.remove-guest-btn {
+  background: none;
+  border: none;
+  font: inherit;
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--gray);
+  cursor: pointer;
+  padding: 10px 0 2px;
+  text-align: left;
 }
-.upload-error { font-size: 13px; color: var(--red); margin-top: 8px; display: none; }
-.upload-submit { margin-top: 12px; }
+.remove-guest-btn:active { color: var(--red); }
+
+.form-error { font-size: 13px; color: var(--red); margin-top: 8px; display: none; }
+.form-submit { margin-top: 16px; }
 
 /* ── SPINNER ── */
 .spinner {
@@ -242,6 +276,17 @@ body {
   display: none;
 }
 .spinner.on { display: inline-block; }
+.spinner-inline {
+  width: 14px;
+  height: 14px;
+  border: 2px solid rgba(0,0,0,0.15);
+  border-top-color: currentColor;
+  border-radius: 50%;
+  animation: spin 0.7s linear infinite;
+  display: none;
+  flex-shrink: 0;
+}
+.spinner-inline.on { display: inline-block; }
 @keyframes spin { to { transform: rotate(360deg); } }
 
 /* ── DOC CARD ── */
@@ -259,35 +304,25 @@ body {
   align-items: center;
   gap: 12px;
   padding: 14px 16px;
+  cursor: pointer;
 }
-.doc-thumb {
-  width: 54px;
-  height: 54px;
-  border-radius: 8px;
-  object-fit: cover;
-  flex-shrink: 0;
-  background: var(--surface);
-  border: 1px solid var(--border-inner);
-}
-.doc-thumb-ph {
-  width: 54px;
-  height: 54px;
+.doc-icon {
+  width: 40px;
+  height: 40px;
   border-radius: 8px;
   background: var(--surface);
   border: 1px solid var(--border-inner);
-  display: none;
+  display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 24px;
+  font-size: 20px;
   flex-shrink: 0;
 }
 .doc-info { flex: 1; min-width: 0; }
 .doc-name {
   font-size: 15px;
   font-weight: 700;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
+  line-height: 1.3;
 }
 .doc-date { font-size: 13px; color: var(--gray); margin-top: 2px; }
 .doc-badge {
@@ -299,7 +334,59 @@ body {
   white-space: nowrap;
 }
 .doc-badge.pending { background: #FFF0F3; color: var(--red); }
-.doc-badge.inviato { background: #EDF8F1; color: #2A7A45; }
+.doc-badge.inserito { background: #EDF8F1; color: #2A7A45; }
+
+.doc-chevron {
+  font-size: 13px;
+  color: var(--gray-light);
+  flex-shrink: 0;
+  transition: transform 0.18s;
+}
+.doc-card.open .doc-chevron { transform: rotate(180deg); }
+
+.doc-detail {
+  display: none;
+  padding: 0 16px 16px;
+  border-top: 1px solid var(--border-inner);
+}
+.doc-card.open .doc-detail { display: block; padding-top: 14px; }
+
+.guest-detail + .guest-detail {
+  border-top: 1px dashed var(--border-inner);
+  margin-top: 12px;
+  padding-top: 12px;
+}
+.guest-detail-title {
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--gray);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  margin-bottom: 6px;
+}
+.field-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: 12px;
+  padding: 5px 0;
+  font-size: 14px;
+  border-bottom: 1px solid var(--border-inner);
+}
+.field-row:last-child { border-bottom: none; }
+.field-k { color: var(--gray); flex-shrink: 0; }
+.field-v { font-weight: 600; text-align: right; word-break: break-word; user-select: text; }
+
+.fattura-label {
+  font-size: 11px;
+  font-weight: 700;
+  color: var(--gray);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  margin: 10px 0 4px;
+  padding-top: 10px;
+  border-top: 1px dashed var(--border-inner);
+}
 
 .doc-actions {
   display: flex;
@@ -321,13 +408,12 @@ body {
   transition: background 0.12s;
 }
 .doc-action:active { background: var(--surface); }
-.doc-action + .doc-action { border-left: 1px solid var(--border-inner); }
 .doc-action.confirm { color: #2A7A45; }
 .doc-action.delete { color: var(--red); }
-.doc-action:disabled { opacity: 0.45; cursor: default; }
+.doc-action:disabled { opacity: 0.6; cursor: default; }
 
-/* ── INVIATI TOGGLE ── */
-.inviati-toggle {
+/* ── INSERITI TOGGLE ── */
+.inseriti-toggle {
   background: none;
   border: none;
   font: inherit;
@@ -343,9 +429,9 @@ body {
   text-align: left;
 }
 .chv { display: inline-block; transition: transform 0.18s; }
-.inviati-toggle.open .chv { transform: rotate(180deg); }
-#inviati-list { display: none; flex-direction: column; gap: 10px; margin-top: 10px; }
-#inviati-list.open { display: flex; }
+.inseriti-toggle.open .chv { transform: rotate(180deg); }
+#inseriti-list { display: none; flex-direction: column; gap: 10px; margin-top: 10px; }
+#inseriti-list.open { display: flex; }
 
 /* ── EMPTY STATE ── */
 .empty {
@@ -399,7 +485,7 @@ body {
 <div id="app-screen">
   <header class="topbar">
     <div>
-      <div class="topbar-title">Documenti ospiti</div>
+      <div class="topbar-title">Check-in ospiti</div>
       <div class="topbar-sub">Suite in Centro · Treviso</div>
     </div>
     <button class="logout-btn" id="logout-btn">Esci</button>
@@ -412,50 +498,224 @@ body {
       <div class="badge-icon" id="badge-icon">⚠️</div>
       <div class="badge-body">
         <div class="badge-count" id="badge-count">—</div>
-        <div class="badge-label" id="badge-label">da inviare ad Alloggiati Web</div>
+        <div class="badge-label" id="badge-label">da inserire in Ross1000</div>
       </div>
     </div>
 
-    <!-- Carica nuovo documento -->
-    <div class="upload-card">
-      <div class="section-label">Nuovo documento</div>
-      <form id="upload-form" enctype="multipart/form-data">
-        <div class="upload-fields">
+    <!-- Nuovo check-in -->
+    <div class="form-card">
+      <div class="section-label">Nuovo check-in</div>
+      <form id="checkin-form">
+
+        <div class="form-row-2">
           <div>
-            <label class="field-label" for="f-ospite">Nome ospite</label>
-            <input type="text" id="f-ospite" name="ospite" class="field-sm"
-              placeholder="es. Mario Rossi" autocapitalize="words"/>
+            <label class="field-label" for="ci-checkin">Data arrivo</label>
+            <input type="date" id="ci-checkin" class="field-sm" required/>
           </div>
           <div>
-            <label class="field-label" for="f-checkin">Data check-in</label>
-            <input type="date" id="f-checkin" name="checkIn" class="field-sm"/>
+            <label class="field-label" for="ci-checkout">Data partenza</label>
+            <input type="date" id="ci-checkout" class="field-sm" required/>
           </div>
         </div>
 
-        <input type="file" id="file-input" name="foto" accept="image/*" capture="environment"/>
-        <button type="button" class="file-btn" id="file-btn">
-          📷&nbsp; Scatta / scegli foto documento
+        <!-- Ospite 1 -->
+        <div class="guest-block" id="guest-1" style="border-top:none;padding-top:0">
+          <div class="guest-title">Ospite 1</div>
+
+          <div class="form-row">
+            <div>
+              <label class="field-label" for="g1-sesso">Sesso</label>
+              <select id="g1-sesso" class="field-sm" required>
+                <option value="" disabled selected>Seleziona</option>
+                <option value="M">M</option>
+                <option value="F">F</option>
+              </select>
+            </div>
+          </div>
+          <div class="form-row-2">
+            <div>
+              <label class="field-label" for="g1-cognome">Cognome</label>
+              <input type="text" id="g1-cognome" class="field-sm" placeholder="es. Rossi" autocapitalize="words" required/>
+            </div>
+            <div>
+              <label class="field-label" for="g1-nome">Nome</label>
+              <input type="text" id="g1-nome" class="field-sm" placeholder="es. Mario" autocapitalize="words" required/>
+            </div>
+          </div>
+          <div class="form-row">
+            <div>
+              <label class="field-label" for="g1-dataNascita">Data di nascita</label>
+              <input type="date" id="g1-dataNascita" class="field-sm" required/>
+            </div>
+          </div>
+          <div class="form-row">
+            <div>
+              <label class="field-label" for="g1-cittadinanza">Cittadinanza</label>
+              <input type="text" id="g1-cittadinanza" class="field-sm" placeholder="es. Italia" required/>
+            </div>
+          </div>
+          <div class="form-row">
+            <div>
+              <label class="field-label" for="g1-luogoNascita">Stato/luogo di nascita</label>
+              <input type="text" id="g1-luogoNascita" class="field-sm" placeholder="es. Treviso" required/>
+            </div>
+          </div>
+          <div class="form-row">
+            <div>
+              <label class="field-label" for="g1-luogoResidenza">Stato/luogo di residenza</label>
+              <input type="text" id="g1-luogoResidenza" class="field-sm" placeholder="es. Milano" required/>
+            </div>
+          </div>
+          <div class="form-row-2">
+            <div>
+              <label class="field-label" for="g1-tipoDocumento">Tipo documento</label>
+              <select id="g1-tipoDocumento" class="field-sm" required>
+                <option value="" disabled selected>Seleziona</option>
+                <option>Carta d'identità</option>
+                <option>Passaporto</option>
+                <option>Patente</option>
+              </select>
+            </div>
+            <div>
+              <label class="field-label" for="g1-numeroDocumento">Numero documento</label>
+              <input type="text" id="g1-numeroDocumento" class="field-sm" placeholder="es. AB1234567" required/>
+            </div>
+          </div>
+          <div class="form-row">
+            <div>
+              <label class="field-label" for="g1-luogoRilascio">Stato/luogo di rilascio</label>
+              <input type="text" id="g1-luogoRilascio" class="field-sm" placeholder="es. Treviso" required/>
+            </div>
+          </div>
+
+          <div class="mini-divider">Per fattura</div>
+          <label class="checkbox-row">
+            <input type="checkbox" id="g1-fatturaCheck"/>
+            Residente in Italia (per fattura)
+          </label>
+          <div class="fattura-fields" id="g1-fatturaFields">
+            <div>
+              <label class="field-label" for="g1-indirizzoResidenza">Indirizzo di residenza completo</label>
+              <input type="text" id="g1-indirizzoResidenza" class="field-sm" placeholder="Via, numero civico, CAP, città"/>
+            </div>
+            <div>
+              <label class="field-label" for="g1-codiceFiscale">Codice Fiscale</label>
+              <input type="text" id="g1-codiceFiscale" class="field-sm" placeholder="es. RSSMRA80A01L407K" autocapitalize="characters"/>
+            </div>
+          </div>
+        </div>
+
+        <button type="button" class="outline-btn" id="add-guest-btn">
+          + Aggiungi secondo ospite
         </button>
-        <img id="file-preview" class="file-preview" alt="Anteprima"/>
 
-        <div class="upload-error" id="upload-error"></div>
+        <!-- Ospite 2 (nascosto finché non aggiunto) -->
+        <div class="guest-block" id="guest-2" style="display:none">
+          <div class="guest-title">Ospite 2</div>
 
-        <button type="submit" class="btn-red upload-submit" id="upload-btn" disabled>
-          <span class="spinner" id="upload-spinner"></span>
-          <span id="upload-label">Carica documento</span>
+          <div class="form-row">
+            <div>
+              <label class="field-label" for="g2-sesso">Sesso</label>
+              <select id="g2-sesso" class="field-sm">
+                <option value="" disabled selected>Seleziona</option>
+                <option value="M">M</option>
+                <option value="F">F</option>
+              </select>
+            </div>
+          </div>
+          <div class="form-row-2">
+            <div>
+              <label class="field-label" for="g2-cognome">Cognome</label>
+              <input type="text" id="g2-cognome" class="field-sm" placeholder="es. Bianchi" autocapitalize="words"/>
+            </div>
+            <div>
+              <label class="field-label" for="g2-nome">Nome</label>
+              <input type="text" id="g2-nome" class="field-sm" placeholder="es. Anna" autocapitalize="words"/>
+            </div>
+          </div>
+          <div class="form-row">
+            <div>
+              <label class="field-label" for="g2-dataNascita">Data di nascita</label>
+              <input type="date" id="g2-dataNascita" class="field-sm"/>
+            </div>
+          </div>
+          <div class="form-row">
+            <div>
+              <label class="field-label" for="g2-cittadinanza">Cittadinanza</label>
+              <input type="text" id="g2-cittadinanza" class="field-sm" placeholder="es. Italia"/>
+            </div>
+          </div>
+          <div class="form-row">
+            <div>
+              <label class="field-label" for="g2-luogoNascita">Stato/luogo di nascita</label>
+              <input type="text" id="g2-luogoNascita" class="field-sm" placeholder="es. Treviso"/>
+            </div>
+          </div>
+          <div class="form-row">
+            <div>
+              <label class="field-label" for="g2-luogoResidenza">Stato/luogo di residenza</label>
+              <input type="text" id="g2-luogoResidenza" class="field-sm" placeholder="es. Milano"/>
+            </div>
+          </div>
+          <div class="form-row-2">
+            <div>
+              <label class="field-label" for="g2-tipoDocumento">Tipo documento</label>
+              <select id="g2-tipoDocumento" class="field-sm">
+                <option value="" disabled selected>Seleziona</option>
+                <option>Carta d'identità</option>
+                <option>Passaporto</option>
+                <option>Patente</option>
+              </select>
+            </div>
+            <div>
+              <label class="field-label" for="g2-numeroDocumento">Numero documento</label>
+              <input type="text" id="g2-numeroDocumento" class="field-sm" placeholder="es. AB1234567"/>
+            </div>
+          </div>
+          <div class="form-row">
+            <div>
+              <label class="field-label" for="g2-luogoRilascio">Stato/luogo di rilascio</label>
+              <input type="text" id="g2-luogoRilascio" class="field-sm" placeholder="es. Treviso"/>
+            </div>
+          </div>
+
+          <div class="mini-divider">Per fattura</div>
+          <label class="checkbox-row">
+            <input type="checkbox" id="g2-fatturaCheck"/>
+            Residente in Italia (per fattura)
+          </label>
+          <div class="fattura-fields" id="g2-fatturaFields">
+            <div>
+              <label class="field-label" for="g2-indirizzoResidenza">Indirizzo di residenza completo</label>
+              <input type="text" id="g2-indirizzoResidenza" class="field-sm" placeholder="Via, numero civico, CAP, città"/>
+            </div>
+            <div>
+              <label class="field-label" for="g2-codiceFiscale">Codice Fiscale</label>
+              <input type="text" id="g2-codiceFiscale" class="field-sm" placeholder="es. RSSMRA80A01L407K" autocapitalize="characters"/>
+            </div>
+          </div>
+
+          <button type="button" class="remove-guest-btn" id="remove-guest-btn">− Rimuovi secondo ospite</button>
+        </div>
+
+        <div class="form-error" id="form-error"></div>
+
+        <button type="submit" class="btn-red form-submit" id="checkin-btn">
+          <span class="spinner" id="checkin-spinner"></span>
+          <span id="checkin-label">Registra check-in</span>
         </button>
       </form>
     </div>
 
-    <!-- Lista da inviare -->
+    <!-- Lista da inserire -->
     <div id="pending-list"></div>
 
-    <!-- Sezione inviati (nascosta se vuota) -->
-    <div id="inviati-section" style="display:none">
-      <button class="inviati-toggle" id="inviati-toggle">
-        Già inviati ad Alloggiati Web <span class="chv">▾</span>
+    <!-- Sezione inseriti (nascosta se vuota) -->
+    <div id="inseriti-section" style="display:none">
+      <button class="inseriti-toggle" id="inseriti-toggle">
+        Già inseriti in Ross1000 <span class="chv">▾</span>
       </button>
-      <div id="inviati-list"></div>
+      <div id="inseriti-list"></div>
     </div>
 
   </div>
@@ -528,7 +788,7 @@ function showLogin() {
 function showApp() {
   $('login-screen').style.display = 'none';
   $('app-screen').style.display = 'block';
-  $('f-checkin').value = new Date().toISOString().split('T')[0];
+  $('ci-checkin').value = new Date().toISOString().split('T')[0];
   loadDocs();
 }
 
@@ -562,107 +822,134 @@ $('logout-btn').addEventListener('click', () => {
   showLogin();
 });
 
-// ── FILE PICKER ──
+// ── SECONDO OSPITE ──
 
-$('file-btn').addEventListener('click', () => $('file-input').click());
+let secondGuestAdded = false;
+const g2RequiredFields = ['g2-sesso', 'g2-cognome', 'g2-nome', 'g2-dataNascita',
+  'g2-cittadinanza', 'g2-luogoNascita', 'g2-luogoResidenza', 'g2-tipoDocumento',
+  'g2-numeroDocumento', 'g2-luogoRilascio'];
 
-$('file-input').addEventListener('change', () => {
-  const file = $('file-input').files[0];
-  if (!file) return;
+$('add-guest-btn').addEventListener('click', () => {
+  secondGuestAdded = true;
+  $('guest-2').style.display = 'block';
+  $('add-guest-btn').style.display = 'none';
+  g2RequiredFields.forEach(id => $(id).required = true);
+});
 
-  const reader = new FileReader();
-  reader.onload = ev => {
-    $('file-preview').src = ev.target.result;
-    $('file-preview').style.display = 'block';
+$('remove-guest-btn').addEventListener('click', () => {
+  secondGuestAdded = false;
+  $('guest-2').style.display = 'none';
+  $('add-guest-btn').style.display = 'flex';
+  g2RequiredFields.forEach(id => { $(id).required = false; $(id).value = ''; });
+  $('g2-fatturaCheck').checked = false;
+  $('g2-fatturaFields').classList.remove('open');
+  $('g2-indirizzoResidenza').value = '';
+  $('g2-codiceFiscale').value = '';
+});
+
+// ── CHECKBOX "PER FATTURA" ──
+
+['g1', 'g2'].forEach(prefix => {
+  $(`${prefix}-fatturaCheck`).addEventListener('change', e => {
+    $(`${prefix}-fatturaFields`).classList.toggle('open', e.target.checked);
+  });
+});
+
+// ── NUOVO CHECK-IN ──
+
+function collectGuest(prefix) {
+  return {
+    sesso: $(`${prefix}-sesso`).value,
+    cognome: $(`${prefix}-cognome`).value.trim(),
+    nome: $(`${prefix}-nome`).value.trim(),
+    dataNascita: $(`${prefix}-dataNascita`).value,
+    cittadinanza: $(`${prefix}-cittadinanza`).value.trim(),
+    luogoNascita: $(`${prefix}-luogoNascita`).value.trim(),
+    luogoResidenza: $(`${prefix}-luogoResidenza`).value.trim(),
+    tipoDocumento: $(`${prefix}-tipoDocumento`).value,
+    numeroDocumento: $(`${prefix}-numeroDocumento`).value.trim(),
+    luogoRilascio: $(`${prefix}-luogoRilascio`).value.trim(),
+    indirizzoResidenza: $(`${prefix}-fatturaCheck`).checked
+      ? ($(`${prefix}-indirizzoResidenza`).value.trim() || null) : null,
+    codiceFiscale: $(`${prefix}-fatturaCheck`).checked
+      ? ($(`${prefix}-codiceFiscale`).value.trim() || null) : null
   };
-  reader.readAsDataURL(file);
-  $('upload-btn').disabled = false;
-});
-
-// ── UPLOAD ──
-
-$('upload-form').addEventListener('submit', async e => {
-  e.preventDefault();
-  const file = $('file-input').files[0];
-  if (!file) return;
-
-  // Compress client-side if > 2 MB
-  let uploadFile = file;
-  if (file.size > 2 * 1024 * 1024) {
-    try { uploadFile = await compressImage(file, 1600, 0.82); } catch { /* keep original */ }
-  }
-
-  setUploadBusy(true);
-  $('upload-error').style.display = 'none';
-
-  try {
-    const fd = new FormData();
-    fd.append('foto', uploadFile, uploadFile.name || 'documento.jpg');
-    fd.append('ospite', $('f-ospite').value.trim());
-    fd.append('checkIn', $('f-checkin').value);
-
-    const res = await apiFetch('/api/upload', { method: 'POST', body: fd });
-    if (!res.ok) {
-      const err = await res.json().catch(() => ({}));
-      throw new Error(err.error || 'Errore durante il caricamento');
-    }
-
-    toast('✓ Documento caricato');
-    e.target.reset();
-    $('file-preview').style.display = 'none';
-    $('upload-btn').disabled = true;
-    $('f-checkin').value = new Date().toISOString().split('T')[0];
-    await loadDocs();
-  } catch (err) {
-    if (err.message !== 'session') {
-      $('upload-error').textContent = err.message;
-      $('upload-error').style.display = 'block';
-    }
-  } finally {
-    setUploadBusy(false);
-  }
-});
-
-function setUploadBusy(busy) {
-  $('upload-btn').disabled = busy;
-  $('upload-spinner').classList.toggle('on', busy);
-  $('upload-label').textContent = busy ? 'Caricamento…' : 'Carica documento';
 }
 
-function compressImage(file, maxPx, quality) {
-  return new Promise((resolve, reject) => {
-    const img = new Image();
-    const url = URL.createObjectURL(file);
-    img.onload = () => {
-      URL.revokeObjectURL(url);
-      let w = img.width, h = img.height;
-      if (w > maxPx || h > maxPx) {
-        if (w > h) { h = Math.round(h * maxPx / w); w = maxPx; }
-        else { w = Math.round(w * maxPx / h); h = maxPx; }
-      }
-      const canvas = document.createElement('canvas');
-      canvas.width = w; canvas.height = h;
-      canvas.getContext('2d').drawImage(img, 0, 0, w, h);
-      canvas.toBlob(blob => blob ? resolve(blob) : reject(), 'image/jpeg', quality);
-    };
-    img.onerror = reject;
-    img.src = url;
-  });
+function resetCheckinForm() {
+  $('checkin-form').reset();
+  $('ci-checkin').value = new Date().toISOString().split('T')[0];
+  $('remove-guest-btn').click();
+  $('g1-fatturaFields').classList.remove('open');
+}
+
+$('checkin-form').addEventListener('submit', async e => {
+  e.preventDefault();
+
+  const checkIn = $('ci-checkin').value;
+  const checkOut = $('ci-checkout').value;
+  const ospiti = [collectGuest('g1')];
+  if (secondGuestAdded) ospiti.push(collectGuest('g2'));
+
+  setCheckinBusy(true);
+  $('form-error').style.display = 'none';
+
+  try {
+    const res = await apiFetch('/api/checkin', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ checkIn, checkOut, ospiti })
+    });
+    if (!res.ok) {
+      const err = await res.json().catch(() => ({}));
+      throw new Error(err.error || 'Errore durante la registrazione');
+    }
+    const { id } = await res.json();
+
+    docsCache.unshift({
+      id,
+      checkIn,
+      checkOut,
+      ospiti,
+      stato: 'pending',
+      createdAt: new Date().toISOString()
+    });
+    render();
+
+    toast('✓ Check-in registrato');
+    resetCheckinForm();
+  } catch (err) {
+    if (err.message !== 'session') {
+      $('form-error').textContent = err.message;
+      $('form-error').style.display = 'block';
+    }
+  } finally {
+    setCheckinBusy(false);
+  }
+});
+
+function setCheckinBusy(busy) {
+  $('checkin-btn').disabled = busy;
+  $('checkin-spinner').classList.toggle('on', busy);
+  $('checkin-label').textContent = busy ? 'Registrazione in corso...' : 'Registra check-in';
 }
 
 // ── DOCS ──
+
+let docsCache = [];
 
 async function loadDocs() {
   try {
     const res = await apiFetch('/api/documenti');
     if (!res.ok) return;
-    render(await res.json());
+    docsCache = await res.json();
+    render();
   } catch {}
 }
 
-function render(docs) {
-  const pending = docs.filter(d => d.stato === 'pending');
-  const inviati = docs.filter(d => d.stato === 'inviato');
+function render() {
+  const pending = docsCache.filter(d => d.stato === 'pending');
+  const inseriti = docsCache.filter(d => d.stato === 'inserito');
 
   // Badge
   const badge = $('badge');
@@ -670,23 +957,23 @@ function render(docs) {
     badge.classList.add('badge-ok');
     $('badge-icon').textContent = '✅';
     $('badge-count').textContent = 'Tutto in ordine';
-    $('badge-label').textContent = 'nessun documento in attesa';
+    $('badge-label').textContent = 'nessun check-in da inserire';
   } else {
     badge.classList.remove('badge-ok');
     $('badge-icon').textContent = '⚠️';
     $('badge-count').textContent = pending.length === 1
-      ? '1 documento' : `${pending.length} documenti`;
-    $('badge-label').textContent = 'da inviare ad Alloggiati Web';
+      ? '1 check-in' : `${pending.length} check-in`;
+    $('badge-label').textContent = 'da inserire in Ross1000';
   }
 
   // Pending list
   const pendingList = $('pending-list');
   if (pending.length === 0) {
-    if (docs.length === 0) {
+    if (docsCache.length === 0) {
       pendingList.innerHTML = `
         <div class="empty">
-          <div class="empty-icon">🪪</div>
-          <p>Nessun documento caricato.<br/>Usa il form sopra per aggiungere il primo.</p>
+          <div class="empty-icon">📋</div>
+          <p>Nessun check-in registrato.<br/>Usa il form sopra per aggiungere il primo.</p>
         </div>`;
     } else {
       pendingList.innerHTML = '';
@@ -695,92 +982,185 @@ function render(docs) {
     pendingList.innerHTML = pending.map(docCard).join('');
   }
 
-  // Inviati section
-  const sec = $('inviati-section');
-  const list = $('inviati-list');
-  if (inviati.length === 0) {
+  // Inseriti section
+  const sec = $('inseriti-section');
+  const list = $('inseriti-list');
+  if (inseriti.length === 0) {
     sec.style.display = 'none';
   } else {
     sec.style.display = 'block';
-    list.innerHTML = inviati.map(docCard).join('');
+    list.innerHTML = inseriti.map(docCard).join('');
   }
 
   bindActions();
 }
 
+function guestFieldRows(o) {
+  const rows = [
+    ['Sesso', o.sesso],
+    ['Cognome', o.cognome],
+    ['Nome', o.nome],
+    ['Data di nascita', fmtDate(o.dataNascita)],
+    ['Cittadinanza', o.cittadinanza],
+    ['Stato/luogo di nascita', o.luogoNascita],
+    ['Stato/luogo di residenza', o.luogoResidenza],
+    ['Tipo documento', o.tipoDocumento],
+    ['Numero documento', o.numeroDocumento],
+    ['Stato/luogo di rilascio', o.luogoRilascio]
+  ].map(([k, v]) => `
+    <div class="field-row">
+      <span class="field-k">${esc(k)}</span>
+      <span class="field-v">${esc(v || '—')}</span>
+    </div>`).join('');
+
+  let fattura = '';
+  if (o.indirizzoResidenza || o.codiceFiscale) {
+    fattura = `<div class="fattura-label">Per fattura</div>`;
+    if (o.indirizzoResidenza) {
+      fattura += `
+      <div class="field-row">
+        <span class="field-k">Indirizzo di residenza</span>
+        <span class="field-v">${esc(o.indirizzoResidenza)}</span>
+      </div>`;
+    }
+    if (o.codiceFiscale) {
+      fattura += `
+      <div class="field-row">
+        <span class="field-k">Codice Fiscale</span>
+        <span class="field-v">${esc(o.codiceFiscale)}</span>
+      </div>`;
+    }
+  }
+
+  return rows + fattura;
+}
+
+function guestNames(ospiti) {
+  const names = ospiti.map(o => `${o.cognome || ''} ${o.nome || ''}`.trim()).filter(Boolean);
+  return names.join(' e ') || 'Ospite non specificato';
+}
+
 function docCard(doc) {
   const isPending = doc.stato === 'pending';
-  const badgeCls = isPending ? 'pending' : 'inviato';
-  const badgeTxt = isPending ? 'Da inviare' : 'Inviato ✓';
+  const badgeCls = isPending ? 'pending' : 'inserito';
+  const badgeTxt = isPending ? 'Da inserire' : 'Inserito ✓';
 
   const actionBtn = isPending
-    ? `<button class="doc-action confirm" data-action="invia" data-id="${doc.id}">✓ Segna come inviato</button>`
-    : `<button class="doc-action delete" data-action="elimina" data-id="${doc.id}">🗑 Elimina documento</button>`;
+    ? `<button class="doc-action confirm" data-action="inserisci" data-id="${doc.id}">
+        <span class="spinner-inline"></span>
+        <span class="doc-action-label">✓ Segna come inserito in Ross1000</span>
+      </button>`
+    : `<button class="doc-action delete" data-action="elimina" data-id="${doc.id}">
+        <span class="spinner-inline"></span>
+        <span class="doc-action-label">🗑 Elimina documento</span>
+      </button>`;
+
+  const detail = (doc.ospiti || []).map((o, i) => `
+    <div class="guest-detail">
+      <div class="guest-detail-title">Ospite ${i + 1}</div>
+      ${guestFieldRows(o)}
+    </div>`).join('');
 
   return `
 <div class="doc-card" id="card-${doc.id}">
-  <div class="doc-header">
-    <img class="doc-thumb" src="/api/foto?id=${doc.id}" alt="Documento"
-      onerror="this.style.display='none';this.nextElementSibling.style.display='flex'"/>
-    <div class="doc-thumb-ph">🪪</div>
+  <div class="doc-header" data-toggle="${doc.id}">
+    <div class="doc-icon">📋</div>
     <div class="doc-info">
-      <div class="doc-name">${esc(doc.ospite || 'Ospite non specificato')}</div>
-      <div class="doc-date">Check-in: ${fmtDate(doc.checkIn)}</div>
+      <div class="doc-name">${esc(guestNames(doc.ospiti || []))}</div>
+      <div class="doc-date">${fmtDate(doc.checkIn)} → ${fmtDate(doc.checkOut)}</div>
     </div>
     <div class="doc-badge ${badgeCls}">${badgeTxt}</div>
+    <div class="doc-chevron">▾</div>
   </div>
+  <div class="doc-detail">${detail}</div>
   <div class="doc-actions">${actionBtn}</div>
 </div>`;
 }
 
+function setActionBusy(btn, busy, label) {
+  const spinner = btn.querySelector('.spinner-inline');
+  const labelEl = btn.querySelector('.doc-action-label');
+  btn.disabled = busy;
+  spinner?.classList.toggle('on', busy);
+  if (labelEl) {
+    if (busy) {
+      labelEl.dataset.original = labelEl.textContent;
+      labelEl.textContent = label;
+    } else if (labelEl.dataset.original) {
+      labelEl.textContent = labelEl.dataset.original;
+    }
+  }
+}
+
 function bindActions() {
-  document.querySelectorAll('[data-action="invia"]').forEach(btn => {
-    btn.addEventListener('click', async () => {
+  document.querySelectorAll('[data-toggle]').forEach(header => {
+    header.addEventListener('click', () => {
+      $(`card-${header.dataset.toggle}`)?.classList.toggle('open');
+    });
+  });
+
+  document.querySelectorAll('[data-action="inserisci"]').forEach(btn => {
+    btn.addEventListener('click', async e => {
+      e.stopPropagation();
       const id = btn.dataset.id;
-      $(`card-${id}`).classList.add('fading');
+      const card = $(`card-${id}`);
+      card?.classList.add('fading');
+      setActionBusy(btn, true, 'Salvataggio...');
       try {
         const res = await apiFetch('/api/stato', {
           method: 'PATCH',
           headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ id, stato: 'inviato' })
+          body: JSON.stringify({ id, stato: 'inserito' })
         });
         if (!res.ok) throw new Error();
-        toast('✓ Segnato come inviato');
-        await loadDocs();
+        const doc = docsCache.find(d => d.id === id);
+        if (doc) {
+          doc.stato = 'inserito';
+          doc.inseritoAt = new Date().toISOString();
+        }
+        toast('✓ Segnato come inserito');
+        render();
       } catch (err) {
         if (err.message !== 'session') {
           toast('Errore — riprova');
-          $(`card-${id}`)?.classList.remove('fading');
+          card?.classList.remove('fading');
+          setActionBusy(btn, false);
         }
       }
     });
   });
 
   document.querySelectorAll('[data-action="elimina"]').forEach(btn => {
-    btn.addEventListener('click', async () => {
-      if (!confirm('Eliminare definitivamente questo documento?')) return;
+    btn.addEventListener('click', async e => {
+      e.stopPropagation();
+      if (!confirm('Eliminare definitivamente questo check-in?')) return;
       const id = btn.dataset.id;
-      $(`card-${id}`).classList.add('fading');
+      const card = $(`card-${id}`);
+      card?.classList.add('fading');
+      setActionBusy(btn, true, 'Eliminazione...');
       try {
         const res = await apiFetch(`/api/elimina?id=${id}`, { method: 'DELETE' });
         if (!res.ok) throw new Error();
-        toast('Documento eliminato');
-        await loadDocs();
+        const idx = docsCache.findIndex(d => d.id === id);
+        if (idx !== -1) docsCache.splice(idx, 1);
+        toast('Check-in eliminato');
+        render();
       } catch (err) {
         if (err.message !== 'session') {
           toast('Errore — riprova');
-          $(`card-${id}`)?.classList.remove('fading');
+          card?.classList.remove('fading');
+          setActionBusy(btn, false);
         }
       }
     });
   });
 }
 
-// ── INVIATI TOGGLE ──
+// ── INSERITI TOGGLE ──
 
-$('inviati-toggle').addEventListener('click', () => {
-  $('inviati-list').classList.toggle('open');
-  $('inviati-toggle').classList.toggle('open');
+$('inseriti-toggle').addEventListener('click', () => {
+  $('inseriti-list').classList.toggle('open');
+  $('inseriti-toggle').classList.toggle('open');
 });
 </script>
 </body>

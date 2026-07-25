@@ -14,7 +14,7 @@ module.exports = async (req, res) => {
   }
 
   const { id, stato } = parsed;
-  if (!id || !['pending', 'inviato'].includes(stato)) {
+  if (!id || !['pending', 'inserito'].includes(stato)) {
     return res.status(400).json({ error: 'Parametri non validi' });
   }
 
@@ -23,7 +23,7 @@ module.exports = async (req, res) => {
   if (!doc) return res.status(404).json({ error: 'Documento non trovato' });
 
   doc.stato = stato;
-  if (stato === 'inviato') doc.inviatoAt = new Date().toISOString();
+  if (stato === 'inserito') doc.inseritoAt = new Date().toISOString();
 
   await writeMetadata(docs);
 

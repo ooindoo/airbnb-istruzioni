@@ -1,4 +1,3 @@
-const { del } = require('@vercel/blob');
 const { requireAuth } = require('./_auth');
 const { readMetadata, writeMetadata } = require('./_metadata');
 
@@ -13,17 +12,6 @@ module.exports = async (req, res) => {
   const docs = await readMetadata();
   const idx = docs.findIndex(d => d.id === id);
   if (idx === -1) return res.status(404).json({ error: 'Documento non trovato' });
-
-  const doc = docs[idx];
-
-  // Delete the photo blob (non-blocking failure is acceptable)
-  if (doc.fotoBlobUrl) {
-    try {
-      await del(doc.fotoBlobUrl, { token: process.env.BLOB_READ_WRITE_TOKEN });
-    } catch (e) {
-      console.error('Blob delete failed:', e.message);
-    }
-  }
 
   docs.splice(idx, 1);
   await writeMetadata(docs);
