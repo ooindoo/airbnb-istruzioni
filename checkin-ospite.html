@@ -101,11 +101,15 @@ body {
 .checkbox-row {
   display: flex;
   align-items: center;
-  gap: 8px;
+  gap: 10px;
   font-size: 14px;
   font-weight: 600;
   margin-top: 2px;
+  padding: 10px 4px;
+  cursor: pointer;
+  border-radius: var(--radius-sm);
 }
+.checkbox-row:active { background: var(--surface); }
 .checkbox-row input[type="checkbox"] { width: 18px; height: 18px; flex-shrink: 0; }
 
 .fattura-fields { display: none; flex-direction: column; gap: 10px; margin-top: 10px; }
@@ -274,7 +278,6 @@ body {
               <option value="" disabled selected>Seleziona</option>
               <option>Carta d'identità</option>
               <option>Passaporto</option>
-              <option>Patente</option>
             </select>
           </div>
           <div>
@@ -289,10 +292,9 @@ body {
           </div>
         </div>
 
-        <div class="mini-divider">Per fattura</div>
         <label class="checkbox-row">
           <input type="checkbox" id="g1-fatturaCheck"/>
-          Residente in Italia (per fattura)
+          Sei residente in Italia?
         </label>
         <div class="fattura-fields" id="g1-fatturaFields">
           <div>
@@ -365,7 +367,6 @@ body {
               <option value="" disabled selected>Seleziona</option>
               <option>Carta d'identità</option>
               <option>Passaporto</option>
-              <option>Patente</option>
             </select>
           </div>
           <div>
@@ -380,10 +381,9 @@ body {
           </div>
         </div>
 
-        <div class="mini-divider">Per fattura</div>
         <label class="checkbox-row">
           <input type="checkbox" id="g2-fatturaCheck"/>
-          Residente in Italia (per fattura)
+          Sei residente in Italia?
         </label>
         <div class="fattura-fields" id="g2-fatturaFields">
           <div>
@@ -474,6 +474,50 @@ $('remove-guest-btn').addEventListener('click', () => {
   });
 });
 
+// ── VALIDAZIONE ──
+// Controllo esplicito indipendente dagli attributi "required": alcuni
+// browser/webview non bloccano il submit in modo affidabile quando il
+// form passa da nascosto a visibile dinamicamente.
+
+const ROSS1000_FIELDS = [
+  ['sesso', 'Sesso'], ['cognome', 'Cognome'], ['nome', 'Nome'],
+  ['dataNascita', 'Data di nascita'], ['cittadinanza', 'Cittadinanza'],
+  ['luogoNascita', 'Stato/luogo di nascita'], ['luogoResidenza', 'Stato/luogo di residenza'],
+  ['tipoDocumento', 'Tipo documento'], ['numeroDocumento', 'Numero documento'],
+  ['luogoRilascio', 'Stato/luogo di rilascio']
+];
+
+function validateGuest(prefix, guestLabel) {
+  for (const [field, label] of ROSS1000_FIELDS) {
+    const el = $(`${prefix}-${field}`);
+    if (!el.value || !el.value.trim()) {
+      return `${guestLabel}: il campo "${label}" è obbligatorio.`;
+    }
+  }
+  if ($(`${prefix}-fatturaCheck`).checked) {
+    const indirizzo = $(`${prefix}-indirizzoResidenza`).value.trim();
+    const cf = $(`${prefix}-codiceFiscale`).value.trim();
+    if (!indirizzo || !cf) {
+      return `${guestLabel}: indirizzo di residenza e Codice Fiscale sono entrambi obbligatori.`;
+    }
+  }
+  return null;
+}
+
+function validateForm() {
+  if (!$('ci-checkin').value) return 'Inserisci la data di arrivo.';
+  if (!$('ci-checkout').value) return 'Inserisci la data di partenza.';
+
+  let err = validateGuest('g1', 'Ospite 1');
+  if (err) return err;
+
+  if (secondGuestAdded) {
+    err = validateGuest('g2', 'Ospite 2');
+    if (err) return err;
+  }
+  return null;
+}
+
 // ── INVIO ──
 
 function collectGuest(prefix) {
@@ -503,6 +547,13 @@ function setCheckinBusy(busy) {
 
 $('checkin-form').addEventListener('submit', async e => {
   e.preventDefault();
+
+  const validationError = validateForm();
+  if (validationError) {
+    $('form-error').textContent = validationError;
+    $('form-error').style.display = 'block';
+    return;
+  }
 
   const checkIn = $('ci-checkin').value;
   const checkOut = $('ci-checkout').value;

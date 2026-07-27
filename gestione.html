@@ -759,7 +759,6 @@ function guestEditFields(docId, n, o) {
             <option value="" ${!o.tipoDocumento ? 'selected' : ''} disabled>Seleziona</option>
             <option ${o.tipoDocumento === "Carta d'identità" ? 'selected' : ''}>Carta d'identità</option>
             <option ${o.tipoDocumento === 'Passaporto' ? 'selected' : ''}>Passaporto</option>
-            <option ${o.tipoDocumento === 'Patente' ? 'selected' : ''}>Patente</option>
           </select>
         </div>
         <div><label class="field-label">Numero documento</label><input type="text" id="${pfx}-numeroDocumento" class="field-sm" value="${esc(o.numeroDocumento || '')}" ${req}/></div>

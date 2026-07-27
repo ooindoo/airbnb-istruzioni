@@ -4,7 +4,17 @@ const REQUIRED_FIELDS = [
 ];
 
 function isValidGuest(o) {
-  return !!o && REQUIRED_FIELDS.every(f => typeof o[f] === 'string' && o[f].trim() !== '');
+  if (!o || !REQUIRED_FIELDS.every(f => typeof o[f] === 'string' && o[f].trim() !== '')) {
+    return false;
+  }
+
+  // Indirizzo di residenza e Codice Fiscale sono facoltativi, ma se presenti
+  // devono esserlo entrambi insieme — non uno dei due soltanto.
+  const hasIndirizzo = !!(o.indirizzoResidenza && String(o.indirizzoResidenza).trim());
+  const hasCodiceFiscale = !!(o.codiceFiscale && String(o.codiceFiscale).trim());
+  if (hasIndirizzo !== hasCodiceFiscale) return false;
+
+  return true;
 }
 
 function sanitizeGuest(o) {
