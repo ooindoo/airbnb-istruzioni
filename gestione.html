@@ -169,13 +169,7 @@ body {
   margin-bottom: 14px;
 }
 
-/* ── FORM ── */
-.form-card {
-  background: var(--white);
-  border: 1.5px dashed var(--border);
-  border-radius: var(--radius);
-  padding: 20px 16px;
-}
+/* ── FORM (riusato per la modifica in-place) ── */
 .form-row { display: flex; flex-direction: column; gap: 10px; margin-bottom: 14px; }
 .form-row-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 14px; }
 .field-label { font-size: 13px; font-weight: 600; display: block; margin-bottom: 5px; }
@@ -263,7 +257,6 @@ body {
 .remove-guest-btn:active { color: var(--red); }
 
 .form-error { font-size: 13px; color: var(--red); margin-top: 8px; display: none; }
-.form-submit { margin-top: 16px; }
 
 /* ── SPINNER ── */
 .spinner {
@@ -351,6 +344,11 @@ body {
 }
 .doc-card.open .doc-detail { display: block; padding-top: 14px; }
 
+.edit-body {
+  padding: 14px 16px 16px;
+  border-top: 1px solid var(--border-inner);
+}
+
 .guest-detail + .guest-detail {
   border-top: 1px dashed var(--border-inner);
   margin-top: 12px;
@@ -408,9 +406,13 @@ body {
   transition: background 0.12s;
 }
 .doc-action:active { background: var(--surface); }
+.doc-action + .doc-action { border-left: 1px solid var(--border-inner); }
 .doc-action.confirm { color: #2A7A45; }
 .doc-action.delete { color: var(--red); }
 .doc-action:disabled { opacity: 0.6; cursor: default; }
+
+.edit-actions { display: flex; gap: 10px; margin-top: 16px; }
+.edit-actions .outline-btn, .edit-actions .btn-red { margin-top: 0; }
 
 /* ── INSERITI TOGGLE ── */
 .inseriti-toggle {
@@ -502,211 +504,6 @@ body {
       </div>
     </div>
 
-    <!-- Nuovo check-in -->
-    <div class="form-card">
-      <div class="section-label">Nuovo check-in</div>
-      <form id="checkin-form">
-
-        <div class="form-row-2">
-          <div>
-            <label class="field-label" for="ci-checkin">Data arrivo</label>
-            <input type="date" id="ci-checkin" class="field-sm" required/>
-          </div>
-          <div>
-            <label class="field-label" for="ci-checkout">Data partenza</label>
-            <input type="date" id="ci-checkout" class="field-sm" required/>
-          </div>
-        </div>
-
-        <!-- Ospite 1 -->
-        <div class="guest-block" id="guest-1" style="border-top:none;padding-top:0">
-          <div class="guest-title">Ospite 1</div>
-
-          <div class="form-row">
-            <div>
-              <label class="field-label" for="g1-sesso">Sesso</label>
-              <select id="g1-sesso" class="field-sm" required>
-                <option value="" disabled selected>Seleziona</option>
-                <option value="M">M</option>
-                <option value="F">F</option>
-              </select>
-            </div>
-          </div>
-          <div class="form-row-2">
-            <div>
-              <label class="field-label" for="g1-cognome">Cognome</label>
-              <input type="text" id="g1-cognome" class="field-sm" placeholder="es. Rossi" autocapitalize="words" required/>
-            </div>
-            <div>
-              <label class="field-label" for="g1-nome">Nome</label>
-              <input type="text" id="g1-nome" class="field-sm" placeholder="es. Mario" autocapitalize="words" required/>
-            </div>
-          </div>
-          <div class="form-row">
-            <div>
-              <label class="field-label" for="g1-dataNascita">Data di nascita</label>
-              <input type="date" id="g1-dataNascita" class="field-sm" required/>
-            </div>
-          </div>
-          <div class="form-row">
-            <div>
-              <label class="field-label" for="g1-cittadinanza">Cittadinanza</label>
-              <input type="text" id="g1-cittadinanza" class="field-sm" placeholder="es. Italia" required/>
-            </div>
-          </div>
-          <div class="form-row">
-            <div>
-              <label class="field-label" for="g1-luogoNascita">Stato/luogo di nascita</label>
-              <input type="text" id="g1-luogoNascita" class="field-sm" placeholder="es. Treviso" required/>
-            </div>
-          </div>
-          <div class="form-row">
-            <div>
-              <label class="field-label" for="g1-luogoResidenza">Stato/luogo di residenza</label>
-              <input type="text" id="g1-luogoResidenza" class="field-sm" placeholder="es. Milano" required/>
-            </div>
-          </div>
-          <div class="form-row-2">
-            <div>
-              <label class="field-label" for="g1-tipoDocumento">Tipo documento</label>
-              <select id="g1-tipoDocumento" class="field-sm" required>
-                <option value="" disabled selected>Seleziona</option>
-                <option>Carta d'identità</option>
-                <option>Passaporto</option>
-                <option>Patente</option>
-              </select>
-            </div>
-            <div>
-              <label class="field-label" for="g1-numeroDocumento">Numero documento</label>
-              <input type="text" id="g1-numeroDocumento" class="field-sm" placeholder="es. AB1234567" required/>
-            </div>
-          </div>
-          <div class="form-row">
-            <div>
-              <label class="field-label" for="g1-luogoRilascio">Stato/luogo di rilascio</label>
-              <input type="text" id="g1-luogoRilascio" class="field-sm" placeholder="es. Treviso" required/>
-            </div>
-          </div>
-
-          <div class="mini-divider">Per fattura</div>
-          <label class="checkbox-row">
-            <input type="checkbox" id="g1-fatturaCheck"/>
-            Residente in Italia (per fattura)
-          </label>
-          <div class="fattura-fields" id="g1-fatturaFields">
-            <div>
-              <label class="field-label" for="g1-indirizzoResidenza">Indirizzo di residenza completo</label>
-              <input type="text" id="g1-indirizzoResidenza" class="field-sm" placeholder="Via, numero civico, CAP, città"/>
-            </div>
-            <div>
-              <label class="field-label" for="g1-codiceFiscale">Codice Fiscale</label>
-              <input type="text" id="g1-codiceFiscale" class="field-sm" placeholder="es. RSSMRA80A01L407K" autocapitalize="characters"/>
-            </div>
-          </div>
-        </div>
-
-        <button type="button" class="outline-btn" id="add-guest-btn">
-          + Aggiungi secondo ospite
-        </button>
-
-        <!-- Ospite 2 (nascosto finché non aggiunto) -->
-        <div class="guest-block" id="guest-2" style="display:none">
-          <div class="guest-title">Ospite 2</div>
-
-          <div class="form-row">
-            <div>
-              <label class="field-label" for="g2-sesso">Sesso</label>
-              <select id="g2-sesso" class="field-sm">
-                <option value="" disabled selected>Seleziona</option>
-                <option value="M">M</option>
-                <option value="F">F</option>
-              </select>
-            </div>
-          </div>
-          <div class="form-row-2">
-            <div>
-              <label class="field-label" for="g2-cognome">Cognome</label>
-              <input type="text" id="g2-cognome" class="field-sm" placeholder="es. Bianchi" autocapitalize="words"/>
-            </div>
-            <div>
-              <label class="field-label" for="g2-nome">Nome</label>
-              <input type="text" id="g2-nome" class="field-sm" placeholder="es. Anna" autocapitalize="words"/>
-            </div>
-          </div>
-          <div class="form-row">
-            <div>
-              <label class="field-label" for="g2-dataNascita">Data di nascita</label>
-              <input type="date" id="g2-dataNascita" class="field-sm"/>
-            </div>
-          </div>
-          <div class="form-row">
-            <div>
-              <label class="field-label" for="g2-cittadinanza">Cittadinanza</label>
-              <input type="text" id="g2-cittadinanza" class="field-sm" placeholder="es. Italia"/>
-            </div>
-          </div>
-          <div class="form-row">
-            <div>
-              <label class="field-label" for="g2-luogoNascita">Stato/luogo di nascita</label>
-              <input type="text" id="g2-luogoNascita" class="field-sm" placeholder="es. Treviso"/>
-            </div>
-          </div>
-          <div class="form-row">
-            <div>
-              <label class="field-label" for="g2-luogoResidenza">Stato/luogo di residenza</label>
-              <input type="text" id="g2-luogoResidenza" class="field-sm" placeholder="es. Milano"/>
-            </div>
-          </div>
-          <div class="form-row-2">
-            <div>
-              <label class="field-label" for="g2-tipoDocumento">Tipo documento</label>
-              <select id="g2-tipoDocumento" class="field-sm">
-                <option value="" disabled selected>Seleziona</option>
-                <option>Carta d'identità</option>
-                <option>Passaporto</option>
-                <option>Patente</option>
-              </select>
-            </div>
-            <div>
-              <label class="field-label" for="g2-numeroDocumento">Numero documento</label>
-              <input type="text" id="g2-numeroDocumento" class="field-sm" placeholder="es. AB1234567"/>
-            </div>
-          </div>
-          <div class="form-row">
-            <div>
-              <label class="field-label" for="g2-luogoRilascio">Stato/luogo di rilascio</label>
-              <input type="text" id="g2-luogoRilascio" class="field-sm" placeholder="es. Treviso"/>
-            </div>
-          </div>
-
-          <div class="mini-divider">Per fattura</div>
-          <label class="checkbox-row">
-            <input type="checkbox" id="g2-fatturaCheck"/>
-            Residente in Italia (per fattura)
-          </label>
-          <div class="fattura-fields" id="g2-fatturaFields">
-            <div>
-              <label class="field-label" for="g2-indirizzoResidenza">Indirizzo di residenza completo</label>
-              <input type="text" id="g2-indirizzoResidenza" class="field-sm" placeholder="Via, numero civico, CAP, città"/>
-            </div>
-            <div>
-              <label class="field-label" for="g2-codiceFiscale">Codice Fiscale</label>
-              <input type="text" id="g2-codiceFiscale" class="field-sm" placeholder="es. RSSMRA80A01L407K" autocapitalize="characters"/>
-            </div>
-          </div>
-
-          <button type="button" class="remove-guest-btn" id="remove-guest-btn">− Rimuovi secondo ospite</button>
-        </div>
-
-        <div class="form-error" id="form-error"></div>
-
-        <button type="submit" class="btn-red form-submit" id="checkin-btn">
-          <span class="spinner" id="checkin-spinner"></span>
-          <span id="checkin-label">Registra check-in</span>
-        </button>
-      </form>
-    </div>
-
     <!-- Lista da inserire -->
     <div id="pending-list"></div>
 
@@ -788,7 +585,6 @@ function showLogin() {
 function showApp() {
   $('login-screen').style.display = 'none';
   $('app-screen').style.display = 'block';
-  $('ci-checkin').value = new Date().toISOString().split('T')[0];
   loadDocs();
 }
 
@@ -822,121 +618,10 @@ $('logout-btn').addEventListener('click', () => {
   showLogin();
 });
 
-// ── SECONDO OSPITE ──
-
-let secondGuestAdded = false;
-const g2RequiredFields = ['g2-sesso', 'g2-cognome', 'g2-nome', 'g2-dataNascita',
-  'g2-cittadinanza', 'g2-luogoNascita', 'g2-luogoResidenza', 'g2-tipoDocumento',
-  'g2-numeroDocumento', 'g2-luogoRilascio'];
-
-$('add-guest-btn').addEventListener('click', () => {
-  secondGuestAdded = true;
-  $('guest-2').style.display = 'block';
-  $('add-guest-btn').style.display = 'none';
-  g2RequiredFields.forEach(id => $(id).required = true);
-});
-
-$('remove-guest-btn').addEventListener('click', () => {
-  secondGuestAdded = false;
-  $('guest-2').style.display = 'none';
-  $('add-guest-btn').style.display = 'flex';
-  g2RequiredFields.forEach(id => { $(id).required = false; $(id).value = ''; });
-  $('g2-fatturaCheck').checked = false;
-  $('g2-fatturaFields').classList.remove('open');
-  $('g2-indirizzoResidenza').value = '';
-  $('g2-codiceFiscale').value = '';
-});
-
-// ── CHECKBOX "PER FATTURA" ──
-
-['g1', 'g2'].forEach(prefix => {
-  $(`${prefix}-fatturaCheck`).addEventListener('change', e => {
-    $(`${prefix}-fatturaFields`).classList.toggle('open', e.target.checked);
-  });
-});
-
-// ── NUOVO CHECK-IN ──
-
-function collectGuest(prefix) {
-  return {
-    sesso: $(`${prefix}-sesso`).value,
-    cognome: $(`${prefix}-cognome`).value.trim(),
-    nome: $(`${prefix}-nome`).value.trim(),
-    dataNascita: $(`${prefix}-dataNascita`).value,
-    cittadinanza: $(`${prefix}-cittadinanza`).value.trim(),
-    luogoNascita: $(`${prefix}-luogoNascita`).value.trim(),
-    luogoResidenza: $(`${prefix}-luogoResidenza`).value.trim(),
-    tipoDocumento: $(`${prefix}-tipoDocumento`).value,
-    numeroDocumento: $(`${prefix}-numeroDocumento`).value.trim(),
-    luogoRilascio: $(`${prefix}-luogoRilascio`).value.trim(),
-    indirizzoResidenza: $(`${prefix}-fatturaCheck`).checked
-      ? ($(`${prefix}-indirizzoResidenza`).value.trim() || null) : null,
-    codiceFiscale: $(`${prefix}-fatturaCheck`).checked
-      ? ($(`${prefix}-codiceFiscale`).value.trim() || null) : null
-  };
-}
-
-function resetCheckinForm() {
-  $('checkin-form').reset();
-  $('ci-checkin').value = new Date().toISOString().split('T')[0];
-  $('remove-guest-btn').click();
-  $('g1-fatturaFields').classList.remove('open');
-}
-
-$('checkin-form').addEventListener('submit', async e => {
-  e.preventDefault();
-
-  const checkIn = $('ci-checkin').value;
-  const checkOut = $('ci-checkout').value;
-  const ospiti = [collectGuest('g1')];
-  if (secondGuestAdded) ospiti.push(collectGuest('g2'));
-
-  setCheckinBusy(true);
-  $('form-error').style.display = 'none';
-
-  try {
-    const res = await apiFetch('/api/checkin', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ checkIn, checkOut, ospiti })
-    });
-    if (!res.ok) {
-      const err = await res.json().catch(() => ({}));
-      throw new Error(err.error || 'Errore durante la registrazione');
-    }
-    const { id } = await res.json();
-
-    docsCache.unshift({
-      id,
-      checkIn,
-      checkOut,
-      ospiti,
-      stato: 'pending',
-      createdAt: new Date().toISOString()
-    });
-    render();
-
-    toast('✓ Check-in registrato');
-    resetCheckinForm();
-  } catch (err) {
-    if (err.message !== 'session') {
-      $('form-error').textContent = err.message;
-      $('form-error').style.display = 'block';
-    }
-  } finally {
-    setCheckinBusy(false);
-  }
-});
-
-function setCheckinBusy(busy) {
-  $('checkin-btn').disabled = busy;
-  $('checkin-spinner').classList.toggle('on', busy);
-  $('checkin-label').textContent = busy ? 'Registrazione in corso...' : 'Registra check-in';
-}
-
 // ── DOCS ──
 
 let docsCache = [];
+let editingIds = new Set();
 
 async function loadDocs() {
   try {
@@ -973,7 +658,7 @@ function render() {
       pendingList.innerHTML = `
         <div class="empty">
           <div class="empty-icon">📋</div>
-          <p>Nessun check-in registrato.<br/>Usa il form sopra per aggiungere il primo.</p>
+          <p>Nessun check-in registrato.<br/>Condividi il link di check-in con l'ospite per iniziare.</p>
         </div>`;
     } else {
       pendingList.innerHTML = '';
@@ -1040,12 +725,196 @@ function guestNames(ospiti) {
   return names.join(' e ') || 'Ospite non specificato';
 }
 
+// ── MODIFICA (edit in-place) ──
+
+function guestEditFields(docId, n, o) {
+  o = o || {};
+  const pfx = `ef-${docId}-g${n}`;
+  const hasFattura = !!(o.indirizzoResidenza || o.codiceFiscale);
+  const req = n === 1 ? 'required' : '';
+  return `
+    <div class="guest-block" ${n === 1 ? 'style="border-top:none;padding-top:0"' : ''}>
+      <div class="guest-title">Ospite ${n}</div>
+      <div class="form-row">
+        <div>
+          <label class="field-label">Sesso</label>
+          <select id="${pfx}-sesso" class="field-sm" ${req}>
+            <option value="" ${!o.sesso ? 'selected' : ''} disabled>Seleziona</option>
+            <option value="M" ${o.sesso === 'M' ? 'selected' : ''}>M</option>
+            <option value="F" ${o.sesso === 'F' ? 'selected' : ''}>F</option>
+          </select>
+        </div>
+      </div>
+      <div class="form-row-2">
+        <div><label class="field-label">Cognome</label><input type="text" id="${pfx}-cognome" class="field-sm" value="${esc(o.cognome || '')}" ${req}/></div>
+        <div><label class="field-label">Nome</label><input type="text" id="${pfx}-nome" class="field-sm" value="${esc(o.nome || '')}" ${req}/></div>
+      </div>
+      <div class="form-row"><div><label class="field-label">Data di nascita</label><input type="date" id="${pfx}-dataNascita" class="field-sm" value="${o.dataNascita || ''}" ${req}/></div></div>
+      <div class="form-row"><div><label class="field-label">Cittadinanza</label><input type="text" id="${pfx}-cittadinanza" class="field-sm" value="${esc(o.cittadinanza || '')}" ${req}/></div></div>
+      <div class="form-row"><div><label class="field-label">Stato/luogo di nascita</label><input type="text" id="${pfx}-luogoNascita" class="field-sm" value="${esc(o.luogoNascita || '')}" ${req}/></div></div>
+      <div class="form-row"><div><label class="field-label">Stato/luogo di residenza</label><input type="text" id="${pfx}-luogoResidenza" class="field-sm" value="${esc(o.luogoResidenza || '')}" ${req}/></div></div>
+      <div class="form-row-2">
+        <div><label class="field-label">Tipo documento</label>
+          <select id="${pfx}-tipoDocumento" class="field-sm" ${req}>
+            <option value="" ${!o.tipoDocumento ? 'selected' : ''} disabled>Seleziona</option>
+            <option ${o.tipoDocumento === "Carta d'identità" ? 'selected' : ''}>Carta d'identità</option>
+            <option ${o.tipoDocumento === 'Passaporto' ? 'selected' : ''}>Passaporto</option>
+            <option ${o.tipoDocumento === 'Patente' ? 'selected' : ''}>Patente</option>
+          </select>
+        </div>
+        <div><label class="field-label">Numero documento</label><input type="text" id="${pfx}-numeroDocumento" class="field-sm" value="${esc(o.numeroDocumento || '')}" ${req}/></div>
+      </div>
+      <div class="form-row"><div><label class="field-label">Stato/luogo di rilascio</label><input type="text" id="${pfx}-luogoRilascio" class="field-sm" value="${esc(o.luogoRilascio || '')}" ${req}/></div></div>
+
+      <div class="mini-divider">Per fattura</div>
+      <label class="checkbox-row"><input type="checkbox" id="${pfx}-fatturaCheck" ${hasFattura ? 'checked' : ''}/> Residente in Italia (per fattura)</label>
+      <div class="fattura-fields ${hasFattura ? 'open' : ''}" id="${pfx}-fatturaFields">
+        <div><label class="field-label">Indirizzo di residenza completo</label><input type="text" id="${pfx}-indirizzoResidenza" class="field-sm" value="${esc(o.indirizzoResidenza || '')}"/></div>
+        <div><label class="field-label">Codice Fiscale</label><input type="text" id="${pfx}-codiceFiscale" class="field-sm" value="${esc(o.codiceFiscale || '')}" autocapitalize="characters"/></div>
+      </div>
+      ${n === 2 ? `<button type="button" class="remove-guest-btn" data-remove-edit-guest="${docId}">− Rimuovi secondo ospite</button>` : ''}
+    </div>`;
+}
+
+function editFormHTML(doc) {
+  const docId = doc.id;
+  const o1 = doc.ospiti?.[0] || {};
+  const o2 = doc.ospiti?.[1];
+  return `
+  <div class="edit-body">
+    <div class="form-row-2">
+      <div><label class="field-label">Data arrivo</label><input type="date" id="ef-${docId}-checkin" class="field-sm" value="${doc.checkIn || ''}" required/></div>
+      <div><label class="field-label">Data partenza</label><input type="date" id="ef-${docId}-checkout" class="field-sm" value="${doc.checkOut || ''}" required/></div>
+    </div>
+    ${guestEditFields(docId, 1, o1)}
+    <button type="button" class="outline-btn" id="ef-${docId}-addguest" style="${o2 ? 'display:none' : ''}">
+      + Aggiungi secondo ospite
+    </button>
+    <div id="ef-${docId}-guest2wrap" style="${o2 ? '' : 'display:none'}">
+      ${guestEditFields(docId, 2, o2 || {})}
+    </div>
+    <div class="form-error" id="ef-${docId}-error"></div>
+    <div class="edit-actions">
+      <button type="button" class="outline-btn" data-cancel-edit="${docId}">Annulla</button>
+      <button type="button" class="btn-red" data-save-edit="${docId}">
+        <span class="spinner" id="ef-${docId}-spinner"></span>
+        <span id="ef-${docId}-savelabel">Salva modifiche</span>
+      </button>
+    </div>
+  </div>`;
+}
+
+function bindEditForm(docId) {
+  const doc = docsCache.find(d => d.id === docId);
+  if (!doc) return;
+
+  let editingSecondGuest = !!doc.ospiti?.[1];
+  const g2FieldSuffixes = ['sesso', 'cognome', 'nome', 'dataNascita', 'cittadinanza',
+    'luogoNascita', 'luogoResidenza', 'tipoDocumento', 'numeroDocumento', 'luogoRilascio'];
+
+  const addBtn = $(`ef-${docId}-addguest`);
+  const wrap = $(`ef-${docId}-guest2wrap`);
+
+  addBtn?.addEventListener('click', () => {
+    editingSecondGuest = true;
+    wrap.style.display = 'block';
+    addBtn.style.display = 'none';
+    g2FieldSuffixes.forEach(f => { const el = $(`ef-${docId}-g2-${f}`); if (el) el.required = true; });
+  });
+
+  document.querySelector(`[data-remove-edit-guest="${docId}"]`)?.addEventListener('click', () => {
+    editingSecondGuest = false;
+    wrap.style.display = 'none';
+    addBtn.style.display = 'flex';
+    g2FieldSuffixes.forEach(f => { const el = $(`ef-${docId}-g2-${f}`); if (el) { el.required = false; el.value = ''; } });
+    const fc = $(`ef-${docId}-g2-fatturaCheck`);
+    if (fc) fc.checked = false;
+    $(`ef-${docId}-g2-fatturaFields`)?.classList.remove('open');
+  });
+
+  ['g1', 'g2'].forEach(g => {
+    $(`ef-${docId}-${g}-fatturaCheck`)?.addEventListener('change', e => {
+      $(`ef-${docId}-${g}-fatturaFields`)?.classList.toggle('open', e.target.checked);
+    });
+  });
+
+  document.querySelector(`[data-cancel-edit="${docId}"]`)?.addEventListener('click', () => {
+    editingIds.delete(docId);
+    render();
+  });
+
+  document.querySelector(`[data-save-edit="${docId}"]`)?.addEventListener('click', async () => {
+    const collect = g => ({
+      sesso: $(`ef-${docId}-${g}-sesso`).value,
+      cognome: $(`ef-${docId}-${g}-cognome`).value.trim(),
+      nome: $(`ef-${docId}-${g}-nome`).value.trim(),
+      dataNascita: $(`ef-${docId}-${g}-dataNascita`).value,
+      cittadinanza: $(`ef-${docId}-${g}-cittadinanza`).value.trim(),
+      luogoNascita: $(`ef-${docId}-${g}-luogoNascita`).value.trim(),
+      luogoResidenza: $(`ef-${docId}-${g}-luogoResidenza`).value.trim(),
+      tipoDocumento: $(`ef-${docId}-${g}-tipoDocumento`).value,
+      numeroDocumento: $(`ef-${docId}-${g}-numeroDocumento`).value.trim(),
+      luogoRilascio: $(`ef-${docId}-${g}-luogoRilascio`).value.trim(),
+      indirizzoResidenza: $(`ef-${docId}-${g}-fatturaCheck`).checked
+        ? ($(`ef-${docId}-${g}-indirizzoResidenza`).value.trim() || null) : null,
+      codiceFiscale: $(`ef-${docId}-${g}-fatturaCheck`).checked
+        ? ($(`ef-${docId}-${g}-codiceFiscale`).value.trim() || null) : null
+    });
+
+    const checkIn = $(`ef-${docId}-checkin`).value;
+    const checkOut = $(`ef-${docId}-checkout`).value;
+    const ospiti = [collect('g1')];
+    if (editingSecondGuest) ospiti.push(collect('g2'));
+
+    const errorEl = $(`ef-${docId}-error`);
+    const saveBtn = document.querySelector(`[data-save-edit="${docId}"]`);
+    const spinner = $(`ef-${docId}-spinner`);
+    const label = $(`ef-${docId}-savelabel`);
+
+    saveBtn.disabled = true;
+    spinner.classList.add('on');
+    label.textContent = 'Salvataggio...';
+    errorEl.style.display = 'none';
+
+    try {
+      const res = await apiFetch('/api/modifica', {
+        method: 'PATCH',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ id: docId, checkIn, checkOut, ospiti })
+      });
+      if (!res.ok) {
+        const err = await res.json().catch(() => ({}));
+        throw new Error(err.error || 'Errore durante il salvataggio');
+      }
+
+      const target = docsCache.find(d => d.id === docId);
+      if (target) {
+        target.checkIn = checkIn;
+        target.checkOut = checkOut;
+        target.ospiti = ospiti;
+      }
+      editingIds.delete(docId);
+      toast('✓ Modifiche salvate');
+      render();
+    } catch (err) {
+      if (err.message !== 'session') {
+        errorEl.textContent = err.message;
+        errorEl.style.display = 'block';
+        saveBtn.disabled = false;
+        spinner.classList.remove('on');
+        label.textContent = 'Salva modifiche';
+      }
+    }
+  });
+}
+
 function docCard(doc) {
   const isPending = doc.stato === 'pending';
   const badgeCls = isPending ? 'pending' : 'inserito';
   const badgeTxt = isPending ? 'Da inserire' : 'Inserito ✓';
+  const isEditing = editingIds.has(doc.id);
 
-  const actionBtn = isPending
+  const primaryActionBtn = isPending
     ? `<button class="doc-action confirm" data-action="inserisci" data-id="${doc.id}">
         <span class="spinner-inline"></span>
         <span class="doc-action-label">✓ Segna come inserito in Ross1000</span>
@@ -1055,14 +924,20 @@ function docCard(doc) {
         <span class="doc-action-label">🗑 Elimina documento</span>
       </button>`;
 
-  const detail = (doc.ospiti || []).map((o, i) => `
-    <div class="guest-detail">
-      <div class="guest-detail-title">Ospite ${i + 1}</div>
-      ${guestFieldRows(o)}
-    </div>`).join('');
+  const modificaBtn = `<button class="doc-action" data-action="modifica" data-id="${doc.id}">✏️ Modifica</button>`;
+
+  const bodyHTML = isEditing
+    ? editFormHTML(doc)
+    : `
+    <div class="doc-detail">${(doc.ospiti || []).map((o, i) => `
+      <div class="guest-detail">
+        <div class="guest-detail-title">Ospite ${i + 1}</div>
+        ${guestFieldRows(o)}
+      </div>`).join('')}</div>
+    <div class="doc-actions">${primaryActionBtn}${modificaBtn}</div>`;
 
   return `
-<div class="doc-card" id="card-${doc.id}">
+<div class="doc-card ${isEditing ? 'open' : ''}" id="card-${doc.id}">
   <div class="doc-header" data-toggle="${doc.id}">
     <div class="doc-icon">📋</div>
     <div class="doc-info">
@@ -1072,8 +947,7 @@ function docCard(doc) {
     <div class="doc-badge ${badgeCls}">${badgeTxt}</div>
     <div class="doc-chevron">▾</div>
   </div>
-  <div class="doc-detail">${detail}</div>
-  <div class="doc-actions">${actionBtn}</div>
+  ${bodyHTML}
 </div>`;
 }
 
@@ -1154,6 +1028,16 @@ function bindActions() {
       }
     });
   });
+
+  document.querySelectorAll('[data-action="modifica"]').forEach(btn => {
+    btn.addEventListener('click', e => {
+      e.stopPropagation();
+      editingIds.add(btn.dataset.id);
+      render();
+    });
+  });
+
+  editingIds.forEach(id => bindEditForm(id));
 }
 
 // ── INSERITI TOGGLE ──
