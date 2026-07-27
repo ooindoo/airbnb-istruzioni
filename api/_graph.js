@@ -67,6 +67,44 @@ async function findFileId(accessToken) {
   return data.id;
 }
 
+async function setDateColumnsFormat(accessToken, fileId, tableRowIndex) {
+  // La riga aggiunta con rows/add è indirizzabile per index all'interno
+  // della tabella — recupero il suo range per risalire al numero di riga
+  // effettivo nel foglio.
+  const rangeRes = await fetch(
+    `https://graph.microsoft.com/v1.0/me/drive/items/${fileId}/workbook/tables/${TABLE_NAME}/rows/${tableRowIndex}/range`,
+    { headers: { Authorization: `Bearer ${accessToken}` } }
+  );
+  const rangeData = await rangeRes.json();
+  if (!rangeRes.ok) {
+    throw new Error(`Lettura range riga fallita: ${rangeData.error?.message || rangeRes.status}`);
+  }
+
+  // address es. "CheckIn!A5:N5" -> foglio + numero di riga
+  const [sheetName, cellRange] = rangeData.address.split('!');
+  const rowMatch = cellRange?.match(/(\d+)/);
+  if (!sheetName || !rowMatch) {
+    throw new Error(`Formato indirizzo range inatteso: ${rangeData.address}`);
+  }
+  const dateRangeAddress = `A${rowMatch[1]}:B${rowMatch[1]}`;
+
+  const formatRes = await fetch(
+    `https://graph.microsoft.com/v1.0/me/drive/items/${fileId}/workbook/worksheets/${encodeURIComponent(sheetName)}/range(address='${dateRangeAddress}')`,
+    {
+      method: 'PATCH',
+      headers: {
+        Authorization: `Bearer ${accessToken}`,
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({ numberFormat: [['dd/mm/yyyy', 'dd/mm/yyyy']] })
+    }
+  );
+  if (!formatRes.ok) {
+    const data = await formatRes.json().catch(() => ({}));
+    throw new Error(`Impostazione formato data fallita: ${data.error?.message || formatRes.status}`);
+  }
+}
+
 async function appendRowToExcel(rowData) {
   const accessToken = await getAccessToken();
   const fileId = await findFileId(accessToken);
@@ -100,10 +138,14 @@ async function appendRowToExcel(rowData) {
     }
   );
 
+  const added = await res.json().catch(() => ({}));
   if (!res.ok) {
-    const data = await res.json().catch(() => ({}));
-    throw new Error(`Aggiunta riga Excel fallita: ${data.error?.message || res.status}`);
+    throw new Error(`Aggiunta riga Excel fallita: ${added.error?.message || res.status}`);
   }
+
+  // Forza il formato italiano sulle colonne data, indipendentemente
+  // dalle impostazioni regionali di default del file.
+  await setDateColumnsFormat(accessToken, fileId, added.index);
 }
 
 module.exports = { getAccessToken, appendRowToExcel };
