@@ -107,10 +107,73 @@ body {
 /* ── APP ── */
 #app-screen { display: none; }
 
+/* ── TOPBAR (identica a index.html) — solo stile, selettore lingua disabilitato ── */
+.icon {
+  display: inline-block;
+  flex-shrink: 0;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.7;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  vertical-align: middle;
+}
 .topbar {
   position: sticky;
   top: 0;
   z-index: 50;
+  background: var(--white);
+  border-bottom: 1px solid var(--border);
+  padding: 10px 16px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: 56px;
+}
+.lang-sw {
+  display: flex;
+  align-items: center;
+  gap: 2px;
+  background: var(--surface);
+  border-radius: 999px;
+  padding: 4px;
+}
+.lb {
+  background: none;
+  border: none;
+  font: inherit;
+  font-weight: 600;
+  font-size: 13px;
+  color: var(--gray);
+  padding: 6px 12px;
+  border-radius: 999px;
+  cursor: pointer;
+  min-width: 44px;
+  min-height: 36px;
+  line-height: 1;
+}
+.lb.active { background: var(--black); color: var(--white); }
+.lb:disabled { cursor: default; opacity: 1; }
+.print-btn {
+  width: 44px;
+  height: 44px;
+  border: none;
+  background: var(--surface);
+  border-radius: 50%;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--black);
+  flex-shrink: 0;
+}
+.print-btn:hover { background: var(--border); }
+
+/* ── BARRA PAGINA (titolo + logout) ── */
+.dash-topbar {
+  position: sticky;
+  top: 56px;
+  z-index: 49;
   background: var(--white);
   border-bottom: 1px solid var(--border);
   padding: 0 16px;
@@ -470,6 +533,10 @@ body {
 </head>
 <body>
 
+<svg style="display:none" aria-hidden="true">
+  <symbol id="i-print" viewBox="0 0 24 24"><path d="M7 9V4h10v5"/><rect x="5" y="9" width="14" height="7" rx="1"/><path d="M7 16v4h10v-4"/></symbol>
+</svg>
+
 <!-- ── LOGIN ── -->
 <div id="login-screen">
   <div class="login-logo">🏠</div>
@@ -486,6 +553,18 @@ body {
 <!-- ── APP ── -->
 <div id="app-screen">
   <header class="topbar">
+    <div class="lang-sw" role="group" aria-label="Language">
+      <button class="lb active" data-lang="it" disabled>IT</button>
+      <button class="lb" data-lang="en" disabled>EN</button>
+      <button class="lb" data-lang="es" disabled>ES</button>
+      <button class="lb" data-lang="de" disabled>DE</button>
+    </div>
+    <button class="print-btn" id="printBtn" aria-label="Stampa">
+      <svg class="icon" width="20" height="20"><use href="#i-print"/></svg>
+    </button>
+  </header>
+
+  <header class="dash-topbar">
     <div>
       <div class="topbar-title">Check-in ospiti</div>
       <div class="topbar-sub">Suite in Centro · Treviso</div>
@@ -617,6 +696,11 @@ $('logout-btn').addEventListener('click', () => {
   $('login-pw').value = '';
   showLogin();
 });
+
+// ── STAMPA ──
+// Il selettore lingua nell'header è solo visivo (disabilitato) — la
+// dashboard resta sempre in italiano.
+document.getElementById('printBtn').addEventListener('click', () => window.print());
 
 // ── DOCS ──
 

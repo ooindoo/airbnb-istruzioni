@@ -17,6 +17,7 @@
   --white: #FFFFFF;
   --radius: 12px;
   --radius-sm: 8px;
+  --topbar-h: 56px;
 }
 
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
@@ -28,6 +29,70 @@ body {
   -webkit-font-smoothing: antialiased;
   min-height: 100dvh;
 }
+
+/* ── TOPBAR (identica a index.html) ── */
+.icon {
+  display: inline-block;
+  flex-shrink: 0;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.7;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  vertical-align: middle;
+}
+.topbar {
+  position: sticky;
+  top: 0;
+  z-index: 50;
+  background: var(--white);
+  border-bottom: 1px solid var(--border);
+  padding: 10px 16px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: var(--topbar-h);
+}
+.lang-sw {
+  display: flex;
+  align-items: center;
+  gap: 2px;
+  background: var(--surface);
+  border-radius: 999px;
+  padding: 4px;
+}
+.lb {
+  background: none;
+  border: none;
+  font: inherit;
+  font-weight: 600;
+  font-size: 13px;
+  color: var(--gray);
+  padding: 6px 12px;
+  border-radius: 999px;
+  cursor: pointer;
+  min-width: 44px;
+  min-height: 36px;
+  line-height: 1;
+}
+.lb.active {
+  background: var(--black);
+  color: var(--white);
+}
+.print-btn {
+  width: 44px;
+  height: 44px;
+  border: none;
+  background: var(--surface);
+  border-radius: 50%;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--black);
+  flex-shrink: 0;
+}
+.print-btn:hover { background: var(--border); }
 
 .content {
   max-width: 560px;
@@ -210,51 +275,70 @@ body {
 </head>
 <body>
 
+<svg style="display:none" aria-hidden="true">
+  <symbol id="i-print" viewBox="0 0 24 24"><path d="M7 9V4h10v5"/><rect x="5" y="9" width="14" height="7" rx="1"/><path d="M7 16v4h10v-4"/></symbol>
+</svg>
+
+<header class="topbar">
+  <div class="lang-sw" role="group" aria-label="Language">
+    <button class="lb active" data-lang="it">IT</button>
+    <button class="lb" data-lang="en">EN</button>
+    <button class="lb" data-lang="es">ES</button>
+    <button class="lb" data-lang="de">DE</button>
+  </div>
+  <button class="print-btn" id="printBtn" aria-label="Stampa">
+    <svg class="icon" width="20" height="20"><use href="#i-print"/></svg>
+  </button>
+</header>
+
 <div class="content">
   <div class="page-header">
-    <div class="page-title">Check-in ospiti</div>
+    <div class="page-title" data-t="page.title">Check-in ospiti</div>
     <div class="page-sub">Suite in Centro · Treviso</div>
   </div>
 
   <div class="status-screen" id="loading-screen">
     <div class="status-icon">⏳</div>
-    <div class="status-title">Verifica in corso…</div>
+    <div class="status-title" data-t="status.loading">Verifica in corso…</div>
   </div>
 
   <div class="status-screen" id="invalid-screen">
     <div class="status-icon">🔒</div>
-    <div class="status-title">Link non valido</div>
-    <div class="status-text">Questo link non è valido o è scaduto.<br/>Contatta la struttura per riceverne uno nuovo.</div>
+    <div class="status-title" data-t="status.invalid.title">Link non valido</div>
+    <div class="status-text">
+      <span data-t="status.invalid.text1">Questo link non è valido o è scaduto.</span><br/>
+      <span data-t="status.invalid.text2">Contatta la struttura per riceverne uno nuovo.</span>
+    </div>
   </div>
 
   <div class="status-screen" id="thanks-screen">
     <div class="status-icon">✅</div>
-    <div class="status-title">Grazie!</div>
-    <div class="status-text">I tuoi dati sono stati ricevuti correttamente.</div>
+    <div class="status-title" data-t="status.thanks.title">Grazie!</div>
+    <div class="status-text" data-t="status.thanks.text">I tuoi dati sono stati ricevuti correttamente.</div>
   </div>
 
   <div class="form-card" id="form-card">
     <form id="checkin-form">
       <div class="form-row-2">
         <div>
-          <label class="field-label" for="ci-checkin">Data arrivo</label>
+          <label class="field-label" for="ci-checkin" data-t="field.checkin">Data arrivo</label>
           <input type="date" id="ci-checkin" class="field-sm" required/>
         </div>
         <div>
-          <label class="field-label" for="ci-checkout">Data partenza</label>
+          <label class="field-label" for="ci-checkout" data-t="field.checkout">Data partenza</label>
           <input type="date" id="ci-checkout" class="field-sm" required/>
         </div>
       </div>
 
       <!-- Ospite 1 -->
       <div class="guest-block" id="guest-1" style="border-top:none;padding-top:0">
-        <div class="guest-title">Ospite 1</div>
+        <div class="guest-title" data-t="guest.1">Ospite 1</div>
 
         <div class="form-row">
           <div>
-            <label class="field-label" for="g1-sesso">Sesso</label>
+            <label class="field-label" for="g1-sesso" data-t="field.sesso">Sesso</label>
             <select id="g1-sesso" class="field-sm" autocomplete="section-ospite1 sex" required>
-              <option value="" disabled selected>Seleziona</option>
+              <option value="" disabled selected data-t="field.select">Seleziona</option>
               <option value="M">M</option>
               <option value="F">F</option>
             </select>
@@ -262,89 +346,89 @@ body {
         </div>
         <div class="form-row-2">
           <div>
-            <label class="field-label" for="g1-cognome">Cognome</label>
-            <input type="text" id="g1-cognome" class="field-sm" placeholder="es. Rossi" autocapitalize="words" autocomplete="section-ospite1 family-name" required/>
+            <label class="field-label" for="g1-cognome" data-t="field.cognome">Cognome</label>
+            <input type="text" id="g1-cognome" class="field-sm" placeholder="es. Rossi" data-t-placeholder="ph.cognome" autocapitalize="words" autocomplete="section-ospite1 family-name" required/>
           </div>
           <div>
-            <label class="field-label" for="g1-nome">Nome</label>
-            <input type="text" id="g1-nome" class="field-sm" placeholder="es. Mario" autocapitalize="words" autocomplete="section-ospite1 given-name" required/>
+            <label class="field-label" for="g1-nome" data-t="field.nome">Nome</label>
+            <input type="text" id="g1-nome" class="field-sm" placeholder="es. Mario" data-t-placeholder="ph.nome" autocapitalize="words" autocomplete="section-ospite1 given-name" required/>
           </div>
         </div>
         <div class="form-row">
           <div>
-            <label class="field-label" for="g1-dataNascita">Data di nascita</label>
+            <label class="field-label" for="g1-dataNascita" data-t="field.dataNascita">Data di nascita</label>
             <input type="date" id="g1-dataNascita" class="field-sm" autocomplete="section-ospite1 bday" required/>
           </div>
         </div>
         <div class="form-row">
           <div class="autocomplete-wrap">
-            <label class="field-label" for="g1-cittadinanza">Cittadinanza</label>
-            <input type="text" id="g1-cittadinanza" class="field-sm" placeholder="es. Italia" autocomplete="section-ospite1 country-name" required/>
+            <label class="field-label" for="g1-cittadinanza" data-t="field.cittadinanza">Cittadinanza</label>
+            <input type="text" id="g1-cittadinanza" class="field-sm" placeholder="es. Italia" data-t-placeholder="ph.cittadinanza" autocomplete="section-ospite1 country-name" required/>
             <div class="autocomplete-list" id="g1-cittadinanza-list"></div>
           </div>
         </div>
         <div class="form-row">
           <div>
-            <label class="field-label" for="g1-luogoNascita">Stato/luogo di nascita</label>
-            <input type="text" id="g1-luogoNascita" class="field-sm" placeholder="es. Treviso" required/>
+            <label class="field-label" for="g1-luogoNascita" data-t="field.luogoNascita">Stato/luogo di nascita</label>
+            <input type="text" id="g1-luogoNascita" class="field-sm" placeholder="es. Treviso" data-t-placeholder="ph.luogoNascita" required/>
           </div>
         </div>
         <div class="form-row">
           <div>
-            <label class="field-label" for="g1-luogoResidenza">Stato/luogo di residenza</label>
-            <input type="text" id="g1-luogoResidenza" class="field-sm" placeholder="es. Milano" required/>
+            <label class="field-label" for="g1-luogoResidenza" data-t="field.luogoResidenza">Stato/luogo di residenza</label>
+            <input type="text" id="g1-luogoResidenza" class="field-sm" placeholder="es. Milano" data-t-placeholder="ph.luogoResidenza" required/>
           </div>
         </div>
         <div class="form-row-2">
           <div>
-            <label class="field-label" for="g1-tipoDocumento">Tipo documento</label>
+            <label class="field-label" for="g1-tipoDocumento" data-t="field.tipoDocumento">Tipo documento</label>
             <select id="g1-tipoDocumento" class="field-sm" required>
-              <option value="" disabled selected>Seleziona</option>
-              <option>Carta d'identità</option>
-              <option>Passaporto</option>
+              <option value="" disabled selected data-t="field.select">Seleziona</option>
+              <option value="Carta d'identità" data-t="doc.ci">Carta d'identità</option>
+              <option value="Passaporto" data-t="doc.pp">Passaporto</option>
             </select>
           </div>
           <div>
-            <label class="field-label" for="g1-numeroDocumento">Numero documento</label>
-            <input type="text" id="g1-numeroDocumento" class="field-sm" placeholder="es. AB1234567" required/>
+            <label class="field-label" for="g1-numeroDocumento" data-t="field.numeroDocumento">Numero documento</label>
+            <input type="text" id="g1-numeroDocumento" class="field-sm" placeholder="es. AB1234567" data-t-placeholder="ph.numeroDocumento" required/>
           </div>
         </div>
         <div class="form-row">
           <div>
-            <label class="field-label" for="g1-luogoRilascio">Stato/luogo di rilascio</label>
-            <input type="text" id="g1-luogoRilascio" class="field-sm" placeholder="es. Treviso" required/>
+            <label class="field-label" for="g1-luogoRilascio" data-t="field.luogoRilascio">Stato/luogo di rilascio</label>
+            <input type="text" id="g1-luogoRilascio" class="field-sm" placeholder="es. Treviso" data-t-placeholder="ph.luogoRilascio" required/>
           </div>
         </div>
 
         <label class="checkbox-row">
           <input type="checkbox" id="g1-fatturaCheck"/>
-          Sei residente in Italia?
+          <span data-t="field.fatturaCheck">Sei residente in Italia?</span>
         </label>
         <div class="fattura-fields" id="g1-fatturaFields">
           <div>
-            <label class="field-label" for="g1-indirizzoResidenza">Indirizzo di residenza completo</label>
-            <input type="text" id="g1-indirizzoResidenza" class="field-sm" placeholder="Via, numero civico, CAP, città" autocomplete="section-ospite1 street-address"/>
+            <label class="field-label" for="g1-indirizzoResidenza" data-t="field.indirizzoResidenza">Indirizzo di residenza completo</label>
+            <input type="text" id="g1-indirizzoResidenza" class="field-sm" placeholder="Via, numero civico, CAP, città" data-t-placeholder="ph.indirizzoResidenza" autocomplete="section-ospite1 street-address"/>
           </div>
           <div>
-            <label class="field-label" for="g1-codiceFiscale">Codice Fiscale</label>
+            <label class="field-label" for="g1-codiceFiscale" data-t="field.codiceFiscale">Codice Fiscale</label>
             <input type="text" id="g1-codiceFiscale" class="field-sm" placeholder="es. RSSMRA80A01L407K" autocapitalize="characters"/>
           </div>
         </div>
       </div>
 
-      <button type="button" class="outline-btn" id="add-guest-btn">
+      <button type="button" class="outline-btn" id="add-guest-btn" data-t="btn.addGuest">
         + Aggiungi secondo ospite
       </button>
 
       <!-- Ospite 2 (nascosto finché non aggiunto) -->
       <div class="guest-block" id="guest-2" style="display:none">
-        <div class="guest-title">Ospite 2</div>
+        <div class="guest-title" data-t="guest.2">Ospite 2</div>
 
         <div class="form-row">
           <div>
-            <label class="field-label" for="g2-sesso">Sesso</label>
+            <label class="field-label" for="g2-sesso" data-t="field.sesso">Sesso</label>
             <select id="g2-sesso" class="field-sm" autocomplete="section-ospite2 sex">
-              <option value="" disabled selected>Seleziona</option>
+              <option value="" disabled selected data-t="field.select">Seleziona</option>
               <option value="M">M</option>
               <option value="F">F</option>
             </select>
@@ -352,83 +436,83 @@ body {
         </div>
         <div class="form-row-2">
           <div>
-            <label class="field-label" for="g2-cognome">Cognome</label>
-            <input type="text" id="g2-cognome" class="field-sm" placeholder="es. Bianchi" autocapitalize="words" autocomplete="section-ospite2 family-name"/>
+            <label class="field-label" for="g2-cognome" data-t="field.cognome">Cognome</label>
+            <input type="text" id="g2-cognome" class="field-sm" placeholder="es. Rossi" data-t-placeholder="ph.cognome" autocapitalize="words" autocomplete="section-ospite2 family-name"/>
           </div>
           <div>
-            <label class="field-label" for="g2-nome">Nome</label>
-            <input type="text" id="g2-nome" class="field-sm" placeholder="es. Anna" autocapitalize="words" autocomplete="section-ospite2 given-name"/>
+            <label class="field-label" for="g2-nome" data-t="field.nome">Nome</label>
+            <input type="text" id="g2-nome" class="field-sm" placeholder="es. Mario" data-t-placeholder="ph.nome" autocapitalize="words" autocomplete="section-ospite2 given-name"/>
           </div>
         </div>
         <div class="form-row">
           <div>
-            <label class="field-label" for="g2-dataNascita">Data di nascita</label>
+            <label class="field-label" for="g2-dataNascita" data-t="field.dataNascita">Data di nascita</label>
             <input type="date" id="g2-dataNascita" class="field-sm" autocomplete="section-ospite2 bday"/>
           </div>
         </div>
         <div class="form-row">
           <div class="autocomplete-wrap">
-            <label class="field-label" for="g2-cittadinanza">Cittadinanza</label>
-            <input type="text" id="g2-cittadinanza" class="field-sm" placeholder="es. Italia" autocomplete="section-ospite2 country-name"/>
+            <label class="field-label" for="g2-cittadinanza" data-t="field.cittadinanza">Cittadinanza</label>
+            <input type="text" id="g2-cittadinanza" class="field-sm" placeholder="es. Italia" data-t-placeholder="ph.cittadinanza" autocomplete="section-ospite2 country-name"/>
             <div class="autocomplete-list" id="g2-cittadinanza-list"></div>
           </div>
         </div>
         <div class="form-row">
           <div>
-            <label class="field-label" for="g2-luogoNascita">Stato/luogo di nascita</label>
-            <input type="text" id="g2-luogoNascita" class="field-sm" placeholder="es. Treviso"/>
+            <label class="field-label" for="g2-luogoNascita" data-t="field.luogoNascita">Stato/luogo di nascita</label>
+            <input type="text" id="g2-luogoNascita" class="field-sm" placeholder="es. Treviso" data-t-placeholder="ph.luogoNascita"/>
           </div>
         </div>
         <div class="form-row">
           <div>
-            <label class="field-label" for="g2-luogoResidenza">Stato/luogo di residenza</label>
-            <input type="text" id="g2-luogoResidenza" class="field-sm" placeholder="es. Milano"/>
+            <label class="field-label" for="g2-luogoResidenza" data-t="field.luogoResidenza">Stato/luogo di residenza</label>
+            <input type="text" id="g2-luogoResidenza" class="field-sm" placeholder="es. Milano" data-t-placeholder="ph.luogoResidenza"/>
           </div>
         </div>
         <div class="form-row-2">
           <div>
-            <label class="field-label" for="g2-tipoDocumento">Tipo documento</label>
+            <label class="field-label" for="g2-tipoDocumento" data-t="field.tipoDocumento">Tipo documento</label>
             <select id="g2-tipoDocumento" class="field-sm">
-              <option value="" disabled selected>Seleziona</option>
-              <option>Carta d'identità</option>
-              <option>Passaporto</option>
+              <option value="" disabled selected data-t="field.select">Seleziona</option>
+              <option value="Carta d'identità" data-t="doc.ci">Carta d'identità</option>
+              <option value="Passaporto" data-t="doc.pp">Passaporto</option>
             </select>
           </div>
           <div>
-            <label class="field-label" for="g2-numeroDocumento">Numero documento</label>
-            <input type="text" id="g2-numeroDocumento" class="field-sm" placeholder="es. AB1234567"/>
+            <label class="field-label" for="g2-numeroDocumento" data-t="field.numeroDocumento">Numero documento</label>
+            <input type="text" id="g2-numeroDocumento" class="field-sm" placeholder="es. AB1234567" data-t-placeholder="ph.numeroDocumento"/>
           </div>
         </div>
         <div class="form-row">
           <div>
-            <label class="field-label" for="g2-luogoRilascio">Stato/luogo di rilascio</label>
-            <input type="text" id="g2-luogoRilascio" class="field-sm" placeholder="es. Treviso"/>
+            <label class="field-label" for="g2-luogoRilascio" data-t="field.luogoRilascio">Stato/luogo di rilascio</label>
+            <input type="text" id="g2-luogoRilascio" class="field-sm" placeholder="es. Treviso" data-t-placeholder="ph.luogoRilascio"/>
           </div>
         </div>
 
         <label class="checkbox-row">
           <input type="checkbox" id="g2-fatturaCheck"/>
-          Sei residente in Italia?
+          <span data-t="field.fatturaCheck">Sei residente in Italia?</span>
         </label>
         <div class="fattura-fields" id="g2-fatturaFields">
           <div>
-            <label class="field-label" for="g2-indirizzoResidenza">Indirizzo di residenza completo</label>
-            <input type="text" id="g2-indirizzoResidenza" class="field-sm" placeholder="Via, numero civico, CAP, città" autocomplete="section-ospite2 street-address"/>
+            <label class="field-label" for="g2-indirizzoResidenza" data-t="field.indirizzoResidenza">Indirizzo di residenza completo</label>
+            <input type="text" id="g2-indirizzoResidenza" class="field-sm" placeholder="Via, numero civico, CAP, città" data-t-placeholder="ph.indirizzoResidenza" autocomplete="section-ospite2 street-address"/>
           </div>
           <div>
-            <label class="field-label" for="g2-codiceFiscale">Codice Fiscale</label>
+            <label class="field-label" for="g2-codiceFiscale" data-t="field.codiceFiscale">Codice Fiscale</label>
             <input type="text" id="g2-codiceFiscale" class="field-sm" placeholder="es. RSSMRA80A01L407K" autocapitalize="characters"/>
           </div>
         </div>
 
-        <button type="button" class="remove-guest-btn" id="remove-guest-btn">− Rimuovi secondo ospite</button>
+        <button type="button" class="remove-guest-btn" id="remove-guest-btn" data-t="btn.removeGuest">− Rimuovi secondo ospite</button>
       </div>
 
       <div class="form-error" id="form-error"></div>
 
       <button type="submit" class="btn-red form-submit" id="checkin-btn">
         <span class="spinner" id="checkin-spinner"></span>
-        <span id="checkin-label">Invia i tuoi dati</span>
+        <span id="checkin-label" data-t="btn.submit">Invia i tuoi dati</span>
       </button>
     </form>
   </div>
@@ -437,6 +521,163 @@ body {
 <script>
 const $ = id => document.getElementById(id);
 const codice = new URLSearchParams(location.search).get('codice');
+
+// ── TRADUZIONI ──
+// Stesso meccanismo di main.js (index.html): oggetto T per lingua, attributo
+// data-t per il testo, stessa chiave localStorage 'lang' (la preferenza
+// lingua è quindi condivisa con index.html). Non importiamo main.js
+// direttamente: contiene logica specifica di index.html (accordion, tabbar,
+// carousel) non applicabile qui. Estendiamo il pattern con data-t-placeholder
+// per tradurre anche i placeholder.
+
+const T = {
+  it: {
+    "page.title": "Check-in ospiti",
+    "status.loading": "Verifica in corso…",
+    "status.invalid.title": "Link non valido",
+    "status.invalid.text1": "Questo link non è valido o è scaduto.",
+    "status.invalid.text2": "Contatta la struttura per riceverne uno nuovo.",
+    "status.thanks.title": "Grazie!",
+    "status.thanks.text": "I tuoi dati sono stati ricevuti correttamente.",
+    "field.checkin": "Data arrivo", "field.checkout": "Data partenza",
+    "guest.label": "Ospite", "guest.1": "Ospite 1", "guest.2": "Ospite 2",
+    "field.select": "Seleziona",
+    "field.sesso": "Sesso", "field.cognome": "Cognome", "field.nome": "Nome",
+    "field.dataNascita": "Data di nascita", "field.cittadinanza": "Cittadinanza",
+    "field.luogoNascita": "Stato/luogo di nascita", "field.luogoResidenza": "Stato/luogo di residenza",
+    "field.tipoDocumento": "Tipo documento", "field.numeroDocumento": "Numero documento",
+    "field.luogoRilascio": "Stato/luogo di rilascio", "field.fatturaCheck": "Sei residente in Italia?",
+    "field.indirizzoResidenza": "Indirizzo di residenza completo", "field.codiceFiscale": "Codice Fiscale",
+    "doc.ci": "Carta d'identità", "doc.pp": "Passaporto",
+    "btn.addGuest": "+ Aggiungi secondo ospite", "btn.removeGuest": "− Rimuovi secondo ospite",
+    "btn.submit": "Invia i tuoi dati", "btn.submitBusy": "Invio in corso...",
+    "ph.cognome": "es. Rossi", "ph.nome": "es. Mario", "ph.cittadinanza": "es. Italia",
+    "ph.luogoNascita": "es. Treviso", "ph.luogoResidenza": "es. Milano",
+    "ph.numeroDocumento": "es. AB1234567", "ph.luogoRilascio": "es. Treviso",
+    "ph.indirizzoResidenza": "Via, numero civico, CAP, città",
+    "err.required": '{guest}: il campo "{field}" è obbligatorio.',
+    "err.fatturaIncomplete": "{guest}: indirizzo di residenza e Codice Fiscale sono entrambi obbligatori.",
+    "err.checkinMissing": "Inserisci la data di arrivo.", "err.checkoutMissing": "Inserisci la data di partenza.",
+    "err.submitGeneric": "Errore durante l'invio"
+  },
+  en: {
+    "page.title": "Guest check-in",
+    "status.loading": "Checking…",
+    "status.invalid.title": "Invalid link",
+    "status.invalid.text1": "This link is invalid or has expired.",
+    "status.invalid.text2": "Contact the property to get a new one.",
+    "status.thanks.title": "Thank you!",
+    "status.thanks.text": "Your details have been received successfully.",
+    "field.checkin": "Arrival date", "field.checkout": "Departure date",
+    "guest.label": "Guest", "guest.1": "Guest 1", "guest.2": "Guest 2",
+    "field.select": "Select",
+    "field.sesso": "Sex", "field.cognome": "Last name", "field.nome": "First name",
+    "field.dataNascita": "Date of birth", "field.cittadinanza": "Citizenship",
+    "field.luogoNascita": "State/place of birth", "field.luogoResidenza": "State/place of residence",
+    "field.tipoDocumento": "Document type", "field.numeroDocumento": "Document number",
+    "field.luogoRilascio": "State/place of issue", "field.fatturaCheck": "Are you a resident of Italy?",
+    "field.indirizzoResidenza": "Full residential address", "field.codiceFiscale": "Italian Tax Code (Codice Fiscale)",
+    "doc.ci": "ID card", "doc.pp": "Passport",
+    "btn.addGuest": "+ Add second guest", "btn.removeGuest": "− Remove second guest",
+    "btn.submit": "Submit your details", "btn.submitBusy": "Sending...",
+    "ph.cognome": "e.g. Smith", "ph.nome": "e.g. John", "ph.cittadinanza": "e.g. Italy",
+    "ph.luogoNascita": "e.g. Treviso", "ph.luogoResidenza": "e.g. Milan",
+    "ph.numeroDocumento": "e.g. AB1234567", "ph.luogoRilascio": "e.g. Treviso",
+    "ph.indirizzoResidenza": "Street, number, postal code, city",
+    "err.required": '{guest}: the field "{field}" is required.',
+    "err.fatturaIncomplete": "{guest}: residential address and Codice Fiscale are both required.",
+    "err.checkinMissing": "Enter the arrival date.", "err.checkoutMissing": "Enter the departure date.",
+    "err.submitGeneric": "Error while sending"
+  },
+  es: {
+    "page.title": "Registro de huéspedes",
+    "status.loading": "Verificando…",
+    "status.invalid.title": "Enlace no válido",
+    "status.invalid.text1": "Este enlace no es válido o ha caducado.",
+    "status.invalid.text2": "Contacta con el alojamiento para recibir uno nuevo.",
+    "status.thanks.title": "¡Gracias!",
+    "status.thanks.text": "Tus datos se han recibido correctamente.",
+    "field.checkin": "Fecha de llegada", "field.checkout": "Fecha de salida",
+    "guest.label": "Huésped", "guest.1": "Huésped 1", "guest.2": "Huésped 2",
+    "field.select": "Selecciona",
+    "field.sesso": "Sexo", "field.cognome": "Apellido", "field.nome": "Nombre",
+    "field.dataNascita": "Fecha de nacimiento", "field.cittadinanza": "Nacionalidad",
+    "field.luogoNascita": "Estado/lugar de nacimiento", "field.luogoResidenza": "Estado/lugar de residencia",
+    "field.tipoDocumento": "Tipo de documento", "field.numeroDocumento": "Número de documento",
+    "field.luogoRilascio": "Estado/lugar de expedición", "field.fatturaCheck": "¿Resides en Italia?",
+    "field.indirizzoResidenza": "Dirección de residencia completa", "field.codiceFiscale": "Código Fiscal italiano (Codice Fiscale)",
+    "doc.ci": "Documento de identidad", "doc.pp": "Pasaporte",
+    "btn.addGuest": "+ Añadir segundo huésped", "btn.removeGuest": "− Eliminar segundo huésped",
+    "btn.submit": "Enviar tus datos", "btn.submitBusy": "Enviando...",
+    "ph.cognome": "ej. García", "ph.nome": "ej. Juan", "ph.cittadinanza": "ej. Italia",
+    "ph.luogoNascita": "ej. Treviso", "ph.luogoResidenza": "ej. Milán",
+    "ph.numeroDocumento": "ej. AB1234567", "ph.luogoRilascio": "ej. Treviso",
+    "ph.indirizzoResidenza": "Calle, número, código postal, ciudad",
+    "err.required": '{guest}: el campo "{field}" es obligatorio.',
+    "err.fatturaIncomplete": "{guest}: la dirección de residencia y el Código Fiscal son ambos obligatorios.",
+    "err.checkinMissing": "Introduce la fecha de llegada.", "err.checkoutMissing": "Introduce la fecha de salida.",
+    "err.submitGeneric": "Error al enviar"
+  },
+  de: {
+    "page.title": "Gäste-Check-in",
+    "status.loading": "Überprüfung läuft…",
+    "status.invalid.title": "Ungültiger Link",
+    "status.invalid.text1": "Dieser Link ist ungültig oder abgelaufen.",
+    "status.invalid.text2": "Wende dich an die Unterkunft, um einen neuen zu erhalten.",
+    "status.thanks.title": "Danke!",
+    "status.thanks.text": "Deine Daten wurden erfolgreich empfangen.",
+    "field.checkin": "Anreisedatum", "field.checkout": "Abreisedatum",
+    "guest.label": "Gast", "guest.1": "Gast 1", "guest.2": "Gast 2",
+    "field.select": "Auswählen",
+    "field.sesso": "Geschlecht", "field.cognome": "Nachname", "field.nome": "Vorname",
+    "field.dataNascita": "Geburtsdatum", "field.cittadinanza": "Staatsangehörigkeit",
+    "field.luogoNascita": "Staat/Geburtsort", "field.luogoResidenza": "Staat/Wohnort",
+    "field.tipoDocumento": "Dokumenttyp", "field.numeroDocumento": "Dokumentnummer",
+    "field.luogoRilascio": "Ausstellungsstaat/-ort", "field.fatturaCheck": "Wohnst du in Italien?",
+    "field.indirizzoResidenza": "Vollständige Wohnadresse", "field.codiceFiscale": "Italienische Steuernummer (Codice Fiscale)",
+    "doc.ci": "Personalausweis", "doc.pp": "Reisepass",
+    "btn.addGuest": "+ Zweiten Gast hinzufügen", "btn.removeGuest": "− Zweiten Gast entfernen",
+    "btn.submit": "Deine Daten senden", "btn.submitBusy": "Wird gesendet...",
+    "ph.cognome": "z. B. Müller", "ph.nome": "z. B. Hans", "ph.cittadinanza": "z. B. Italien",
+    "ph.luogoNascita": "z. B. Treviso", "ph.luogoResidenza": "z. B. Mailand",
+    "ph.numeroDocumento": "z. B. AB1234567", "ph.luogoRilascio": "z. B. Treviso",
+    "ph.indirizzoResidenza": "Straße, Hausnummer, PLZ, Stadt",
+    "err.required": '{guest}: das Feld "{field}" ist erforderlich.',
+    "err.fatturaIncomplete": "{guest}: Wohnadresse und Codice Fiscale sind beide erforderlich.",
+    "err.checkinMissing": "Gib das Anreisedatum ein.", "err.checkoutMissing": "Gib das Abreisedatum ein.",
+    "err.submitGeneric": "Fehler beim Senden"
+  }
+};
+
+let lang = 'it';
+const savedLang = localStorage.getItem('lang');
+if (savedLang && T[savedLang]) lang = savedLang;
+
+function applyLang(l) {
+  if (!T[l]) return;
+  lang = l;
+  document.documentElement.lang = l;
+  document.querySelectorAll('[data-t]').forEach(el => {
+    const k = el.getAttribute('data-t');
+    if (T[l][k] !== undefined) el.textContent = T[l][k];
+  });
+  document.querySelectorAll('[data-t-placeholder]').forEach(el => {
+    const k = el.getAttribute('data-t-placeholder');
+    if (T[l][k] !== undefined) el.placeholder = T[l][k];
+  });
+  document.querySelectorAll('.lb').forEach(b => {
+    b.classList.toggle('active', b.getAttribute('data-lang') === l);
+  });
+  localStorage.setItem('lang', l);
+  setCheckinBusy(checkinBusy);
+}
+
+document.querySelectorAll('.lb').forEach(b => {
+  b.addEventListener('click', () => applyLang(b.getAttribute('data-lang')));
+});
+
+// ── STAMPA ──
+document.getElementById('printBtn').addEventListener('click', () => window.print());
 
 function showScreen(id) {
   ['loading-screen', 'invalid-screen', 'thanks-screen', 'form-card'].forEach(s => {
@@ -577,40 +818,41 @@ function setupCountryAutocomplete(prefix) {
 // browser/webview non bloccano il submit in modo affidabile quando il
 // form passa da nascosto a visibile dinamicamente.
 
-const ROSS1000_FIELDS = [
-  ['sesso', 'Sesso'], ['cognome', 'Cognome'], ['nome', 'Nome'],
-  ['dataNascita', 'Data di nascita'], ['cittadinanza', 'Cittadinanza'],
-  ['luogoNascita', 'Stato/luogo di nascita'], ['luogoResidenza', 'Stato/luogo di residenza'],
-  ['tipoDocumento', 'Tipo documento'], ['numeroDocumento', 'Numero documento'],
-  ['luogoRilascio', 'Stato/luogo di rilascio']
-];
+const ROSS1000_FIELD_KEYS = ['sesso', 'cognome', 'nome', 'dataNascita', 'cittadinanza',
+  'luogoNascita', 'luogoResidenza', 'tipoDocumento', 'numeroDocumento', 'luogoRilascio'];
 
-function validateGuest(prefix, guestLabel) {
-  for (const [field, label] of ROSS1000_FIELDS) {
+function guestLabel(prefix) {
+  return T[lang][prefix === 'g1' ? 'guest.1' : 'guest.2'];
+}
+
+function validateGuest(prefix) {
+  for (const field of ROSS1000_FIELD_KEYS) {
     const el = $(`${prefix}-${field}`);
     if (!el.value || !el.value.trim()) {
-      return `${guestLabel}: il campo "${label}" è obbligatorio.`;
+      return T[lang]['err.required']
+        .replace('{guest}', guestLabel(prefix))
+        .replace('{field}', T[lang][`field.${field}`]);
     }
   }
   if ($(`${prefix}-fatturaCheck`).checked) {
     const indirizzo = $(`${prefix}-indirizzoResidenza`).value.trim();
     const cf = $(`${prefix}-codiceFiscale`).value.trim();
     if (!indirizzo || !cf) {
-      return `${guestLabel}: indirizzo di residenza e Codice Fiscale sono entrambi obbligatori.`;
+      return T[lang]['err.fatturaIncomplete'].replace('{guest}', guestLabel(prefix));
     }
   }
   return null;
 }
 
 function validateForm() {
-  if (!$('ci-checkin').value) return 'Inserisci la data di arrivo.';
-  if (!$('ci-checkout').value) return 'Inserisci la data di partenza.';
+  if (!$('ci-checkin').value) return T[lang]['err.checkinMissing'];
+  if (!$('ci-checkout').value) return T[lang]['err.checkoutMissing'];
 
-  let err = validateGuest('g1', 'Ospite 1');
+  let err = validateGuest('g1');
   if (err) return err;
 
   if (secondGuestAdded) {
-    err = validateGuest('g2', 'Ospite 2');
+    err = validateGuest('g2');
     if (err) return err;
   }
   return null;
@@ -637,10 +879,13 @@ function collectGuest(prefix) {
   };
 }
 
+let checkinBusy = false;
+
 function setCheckinBusy(busy) {
+  checkinBusy = busy;
   $('checkin-btn').disabled = busy;
   $('checkin-spinner').classList.toggle('on', busy);
-  $('checkin-label').textContent = busy ? 'Invio in corso...' : 'Invia i tuoi dati';
+  $('checkin-label').textContent = busy ? T[lang]['btn.submitBusy'] : T[lang]['btn.submit'];
 }
 
 $('checkin-form').addEventListener('submit', async e => {
@@ -669,7 +914,7 @@ $('checkin-form').addEventListener('submit', async e => {
     });
     if (!res.ok) {
       const err = await res.json().catch(() => ({}));
-      throw new Error(err.error || 'Errore durante l\'invio');
+      throw new Error(err.error || T[lang]['err.submitGeneric']);
     }
 
     showScreen('thanks-screen');
@@ -680,6 +925,8 @@ $('checkin-form').addEventListener('submit', async e => {
     setCheckinBusy(false);
   }
 });
+
+applyLang(lang);
 </script>
 </body>
 </html>
