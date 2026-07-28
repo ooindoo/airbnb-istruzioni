@@ -29,26 +29,33 @@ module.exports = async (req, res) => {
   await writeMetadata(docs);
 
   if (stato === 'inserito') {
-    try {
-      const o = doc.ospiti?.[0] || {};
-      await appendRowToExcel({
-        checkIn: doc.checkIn,
-        checkOut: doc.checkOut,
-        sesso: o.sesso,
-        cognome: o.cognome,
-        nome: o.nome,
-        dataNascita: o.dataNascita,
-        cittadinanza: o.cittadinanza,
-        luogoNascita: o.luogoNascita,
-        luogoResidenza: o.luogoResidenza,
-        tipoDocumento: o.tipoDocumento,
-        numeroDocumento: o.numeroDocumento,
-        luogoRilascio: o.luogoRilascio,
-        indirizzoResidenza: o.indirizzoResidenza,
-        codiceFiscale: o.codiceFiscale
-      });
-    } catch (e) {
-      console.error('Push Excel fallito:', e.message);
+    const ospiti = doc.ospiti || [];
+    // Sequenziale, non in parallelo: ogni chiamata ruota il refresh token
+    // Graph su Blob, due chiamate concorrenti userebbero lo stesso token
+    // già consumato e la seconda fallirebbe.
+    for (let i = 0; i < ospiti.length; i++) {
+      const o = ospiti[i];
+      try {
+        await appendRowToExcel({
+          checkIn: doc.checkIn,
+          checkOut: doc.checkOut,
+          sesso: o.sesso,
+          cognome: o.cognome,
+          nome: o.nome,
+          dataNascita: o.dataNascita,
+          cittadinanza: o.cittadinanza,
+          luogoNascita: o.luogoNascita,
+          luogoResidenza: o.luogoResidenza,
+          tipoDocumento: o.tipoDocumento,
+          numeroDocumento: o.numeroDocumento,
+          luogoRilascio: o.luogoRilascio,
+          indirizzoResidenza: o.indirizzoResidenza,
+          codiceFiscale: o.codiceFiscale,
+          etichettaOspite: `Ospite ${i + 1}`
+        });
+      } catch (e) {
+        console.error(`Push Excel fallito per Ospite ${i + 1}:`, e.message);
+      }
     }
   }
 

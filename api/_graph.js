@@ -143,7 +143,8 @@ async function appendRowToExcel(rowData) {
     rowData.numeroDocumento,
     rowData.luogoRilascio,
     rowData.indirizzoResidenza,
-    rowData.codiceFiscale
+    rowData.codiceFiscale,
+    rowData.etichettaOspite
   ]];
 
   const res = await fetch(
