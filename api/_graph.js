@@ -67,18 +67,38 @@ async function findFileId(accessToken) {
   return data.id;
 }
 
-async function setDateColumnsFormat(accessToken, fileId, tableRowIndex) {
-  // La riga aggiunta con rows/add è indirizzabile per index all'interno
-  // della tabella — recupero il suo range per risalire al numero di riga
-  // effettivo nel foglio.
+function sleep(ms) {
+  return new Promise(resolve => setTimeout(resolve, ms));
+}
+
+async function fetchRowRange(accessToken, fileId, tableRowIndex, attempt = 1) {
+  const MAX_ATTEMPTS = 4;
+
   const rangeRes = await fetch(
     `https://graph.microsoft.com/v1.0/me/drive/items/${fileId}/workbook/tables/${TABLE_NAME}/rows/${tableRowIndex}/range`,
     { headers: { Authorization: `Bearer ${accessToken}` } }
   );
   const rangeData = await rangeRes.json();
+
   if (!rangeRes.ok) {
-    throw new Error(`Lettura range riga fallita: ${rangeData.error?.message || rangeRes.status}`);
+    // La riga appena aggiunta con rows/add può non essere immediatamente
+    // leggibile da una richiesta successiva (consistenza eventuale lato
+    // Excel Online) — ritento con backoff prima di arrendermi.
+    if (attempt < MAX_ATTEMPTS) {
+      await sleep(300 * attempt);
+      return fetchRowRange(accessToken, fileId, tableRowIndex, attempt + 1);
+    }
+    throw new Error(`Lettura range riga fallita dopo ${attempt} tentativi: ${rangeData.error?.message || rangeRes.status}`);
   }
+
+  return rangeData;
+}
+
+async function setDateColumnsFormat(accessToken, fileId, tableRowIndex) {
+  // La riga aggiunta con rows/add è indirizzabile per index all'interno
+  // della tabella — recupero il suo range per risalire al numero di riga
+  // effettivo nel foglio.
+  const rangeData = await fetchRowRange(accessToken, fileId, tableRowIndex);
 
   // address es. "CheckIn!A5:N5" -> foglio + numero di riga
   const [sheetName, cellRange] = rangeData.address.split('!');
@@ -144,7 +164,11 @@ async function appendRowToExcel(rowData) {
   }
 
   // Forza il formato italiano sulle colonne data, indipendentemente
-  // dalle impostazioni regionali di default del file.
+  // dalle impostazioni regionali di default del file. Piccola attesa
+  // preventiva: la riga appena creata non è sempre immediatamente
+  // leggibile da una richiesta successiva (consistenza eventuale lato
+  // Excel Online) — fetchRowRange() ritenta comunque in caso di errore.
+  await sleep(300);
   await setDateColumnsFormat(accessToken, fileId, added.index);
 }
 
