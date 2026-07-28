@@ -80,6 +80,29 @@ body {
 }
 .field-sm:focus { outline: none; border-color: var(--black); background: var(--white); }
 
+.autocomplete-wrap { position: relative; }
+.autocomplete-list {
+  position: absolute;
+  top: calc(100% + 4px);
+  left: 0;
+  right: 0;
+  background: var(--white);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  max-height: 190px;
+  overflow-y: auto;
+  z-index: 30;
+  display: none;
+  box-shadow: 0 4px 16px rgba(0,0,0,0.1);
+}
+.autocomplete-list.open { display: block; }
+.autocomplete-item {
+  padding: 10px 12px;
+  font-size: 14px;
+  cursor: pointer;
+}
+.autocomplete-item:active, .autocomplete-item.active { background: var(--surface); }
+
 .guest-block {
   border-top: 1px solid var(--border-inner);
   padding-top: 14px;
@@ -230,7 +253,7 @@ body {
         <div class="form-row">
           <div>
             <label class="field-label" for="g1-sesso">Sesso</label>
-            <select id="g1-sesso" class="field-sm" required>
+            <select id="g1-sesso" class="field-sm" autocomplete="section-ospite1 sex" required>
               <option value="" disabled selected>Seleziona</option>
               <option value="M">M</option>
               <option value="F">F</option>
@@ -240,23 +263,24 @@ body {
         <div class="form-row-2">
           <div>
             <label class="field-label" for="g1-cognome">Cognome</label>
-            <input type="text" id="g1-cognome" class="field-sm" placeholder="es. Rossi" autocapitalize="words" required/>
+            <input type="text" id="g1-cognome" class="field-sm" placeholder="es. Rossi" autocapitalize="words" autocomplete="section-ospite1 family-name" required/>
           </div>
           <div>
             <label class="field-label" for="g1-nome">Nome</label>
-            <input type="text" id="g1-nome" class="field-sm" placeholder="es. Mario" autocapitalize="words" required/>
+            <input type="text" id="g1-nome" class="field-sm" placeholder="es. Mario" autocapitalize="words" autocomplete="section-ospite1 given-name" required/>
           </div>
         </div>
         <div class="form-row">
           <div>
             <label class="field-label" for="g1-dataNascita">Data di nascita</label>
-            <input type="date" id="g1-dataNascita" class="field-sm" required/>
+            <input type="date" id="g1-dataNascita" class="field-sm" autocomplete="section-ospite1 bday" required/>
           </div>
         </div>
         <div class="form-row">
-          <div>
+          <div class="autocomplete-wrap">
             <label class="field-label" for="g1-cittadinanza">Cittadinanza</label>
-            <input type="text" id="g1-cittadinanza" class="field-sm" placeholder="es. Italia" required/>
+            <input type="text" id="g1-cittadinanza" class="field-sm" placeholder="es. Italia" autocomplete="section-ospite1 country-name" required/>
+            <div class="autocomplete-list" id="g1-cittadinanza-list"></div>
           </div>
         </div>
         <div class="form-row">
@@ -299,7 +323,7 @@ body {
         <div class="fattura-fields" id="g1-fatturaFields">
           <div>
             <label class="field-label" for="g1-indirizzoResidenza">Indirizzo di residenza completo</label>
-            <input type="text" id="g1-indirizzoResidenza" class="field-sm" placeholder="Via, numero civico, CAP, città"/>
+            <input type="text" id="g1-indirizzoResidenza" class="field-sm" placeholder="Via, numero civico, CAP, città" autocomplete="section-ospite1 street-address"/>
           </div>
           <div>
             <label class="field-label" for="g1-codiceFiscale">Codice Fiscale</label>
@@ -319,7 +343,7 @@ body {
         <div class="form-row">
           <div>
             <label class="field-label" for="g2-sesso">Sesso</label>
-            <select id="g2-sesso" class="field-sm">
+            <select id="g2-sesso" class="field-sm" autocomplete="section-ospite2 sex">
               <option value="" disabled selected>Seleziona</option>
               <option value="M">M</option>
               <option value="F">F</option>
@@ -329,23 +353,24 @@ body {
         <div class="form-row-2">
           <div>
             <label class="field-label" for="g2-cognome">Cognome</label>
-            <input type="text" id="g2-cognome" class="field-sm" placeholder="es. Bianchi" autocapitalize="words"/>
+            <input type="text" id="g2-cognome" class="field-sm" placeholder="es. Bianchi" autocapitalize="words" autocomplete="section-ospite2 family-name"/>
           </div>
           <div>
             <label class="field-label" for="g2-nome">Nome</label>
-            <input type="text" id="g2-nome" class="field-sm" placeholder="es. Anna" autocapitalize="words"/>
+            <input type="text" id="g2-nome" class="field-sm" placeholder="es. Anna" autocapitalize="words" autocomplete="section-ospite2 given-name"/>
           </div>
         </div>
         <div class="form-row">
           <div>
             <label class="field-label" for="g2-dataNascita">Data di nascita</label>
-            <input type="date" id="g2-dataNascita" class="field-sm"/>
+            <input type="date" id="g2-dataNascita" class="field-sm" autocomplete="section-ospite2 bday"/>
           </div>
         </div>
         <div class="form-row">
-          <div>
+          <div class="autocomplete-wrap">
             <label class="field-label" for="g2-cittadinanza">Cittadinanza</label>
-            <input type="text" id="g2-cittadinanza" class="field-sm" placeholder="es. Italia"/>
+            <input type="text" id="g2-cittadinanza" class="field-sm" placeholder="es. Italia" autocomplete="section-ospite2 country-name"/>
+            <div class="autocomplete-list" id="g2-cittadinanza-list"></div>
           </div>
         </div>
         <div class="form-row">
@@ -388,7 +413,7 @@ body {
         <div class="fattura-fields" id="g2-fatturaFields">
           <div>
             <label class="field-label" for="g2-indirizzoResidenza">Indirizzo di residenza completo</label>
-            <input type="text" id="g2-indirizzoResidenza" class="field-sm" placeholder="Via, numero civico, CAP, città"/>
+            <input type="text" id="g2-indirizzoResidenza" class="field-sm" placeholder="Via, numero civico, CAP, città" autocomplete="section-ospite2 street-address"/>
           </div>
           <div>
             <label class="field-label" for="g2-codiceFiscale">Codice Fiscale</label>
@@ -473,6 +498,79 @@ $('remove-guest-btn').addEventListener('click', () => {
     $(`${prefix}-fatturaFields`).classList.toggle('open', e.target.checked);
   });
 });
+
+// ── AUTOCOMPLETAMENTO CITTADINANZA ──
+
+const PAESI_IT = [
+  "Afghanistan", "Albania", "Algeria", "Andorra", "Angola", "Antigua e Barbuda",
+  "Arabia Saudita", "Argentina", "Armenia", "Australia", "Austria", "Azerbaigian",
+  "Bahamas", "Bahrein", "Bangladesh", "Barbados", "Belgio", "Belize", "Benin",
+  "Bhutan", "Bielorussia", "Bolivia", "Bosnia ed Erzegovina", "Botswana", "Brasile",
+  "Brunei", "Bulgaria", "Burkina Faso", "Burundi", "Cambogia", "Camerun", "Canada",
+  "Capo Verde", "Ciad", "Cile", "Cina", "Cipro", "Colombia", "Comore",
+  "Corea del Nord", "Corea del Sud", "Costa d'Avorio", "Costa Rica", "Croazia",
+  "Cuba", "Danimarca", "Dominica", "Ecuador", "Egitto", "El Salvador",
+  "Emirati Arabi Uniti", "Eritrea", "Estonia", "Eswatini", "Etiopia", "Figi",
+  "Filippine", "Finlandia", "Francia", "Gabon", "Gambia", "Georgia", "Germania",
+  "Ghana", "Giamaica", "Giappone", "Gibuti", "Giordania", "Grecia", "Grenada",
+  "Guatemala", "Guinea", "Guinea-Bissau", "Guinea Equatoriale", "Guyana", "Haiti",
+  "Honduras", "India", "Indonesia", "Iran", "Iraq", "Irlanda", "Islanda",
+  "Isole Marshall", "Isole Salomone", "Israele", "Italia", "Kazakistan", "Kenya",
+  "Kirghizistan", "Kiribati", "Kosovo", "Kuwait", "Laos", "Lesotho", "Lettonia",
+  "Libano", "Liberia", "Libia", "Liechtenstein", "Lituania", "Lussemburgo",
+  "Macedonia del Nord", "Madagascar", "Malawi", "Malaysia", "Maldive", "Mali",
+  "Malta", "Marocco", "Mauritania", "Maurizio", "Messico", "Micronesia",
+  "Moldavia", "Monaco", "Mongolia", "Montenegro", "Mozambico", "Myanmar",
+  "Namibia", "Nauru", "Nepal", "Nicaragua", "Niger", "Nigeria", "Norvegia",
+  "Nuova Zelanda", "Oman", "Paesi Bassi", "Pakistan", "Palau", "Palestina",
+  "Panama", "Papua Nuova Guinea", "Paraguay", "Perù", "Polonia", "Portogallo",
+  "Qatar", "Regno Unito", "Repubblica Ceca", "Repubblica Centrafricana",
+  "Repubblica del Congo", "Repubblica Democratica del Congo",
+  "Repubblica Dominicana", "Romania", "Ruanda", "Russia", "Saint Kitts e Nevis",
+  "Saint Lucia", "Saint Vincent e Grenadine", "Samoa", "San Marino",
+  "São Tomé e Príncipe", "Senegal", "Serbia", "Seychelles", "Sierra Leone",
+  "Singapore", "Siria", "Slovacchia", "Slovenia", "Somalia", "Spagna",
+  "Sri Lanka", "Stati Uniti d'America", "Sudafrica", "Sudan", "Sudan del Sud",
+  "Suriname", "Svezia", "Svizzera", "Tagikistan", "Tanzania", "Thailandia",
+  "Timor Est", "Togo", "Tonga", "Trinidad e Tobago", "Tunisia", "Turchia",
+  "Turkmenistan", "Tuvalu", "Ucraina", "Uganda", "Ungheria", "Uruguay",
+  "Uzbekistan", "Vanuatu", "Vaticano", "Venezuela", "Vietnam", "Yemen",
+  "Zambia", "Zimbabwe"
+];
+
+function setupCountryAutocomplete(prefix) {
+  const input = $(`${prefix}-cittadinanza`);
+  const list = $(`${prefix}-cittadinanza-list`);
+
+  function close() {
+    list.classList.remove('open');
+    list.innerHTML = '';
+  }
+
+  function renderMatches(query) {
+    const q = query.trim().toLowerCase();
+    if (!q) { close(); return; }
+    const matches = PAESI_IT.filter(p => p.toLowerCase().includes(q)).slice(0, 8);
+    if (!matches.length) { close(); return; }
+    list.innerHTML = matches.map(p => `<div class="autocomplete-item">${p}</div>`).join('');
+    list.classList.add('open');
+  }
+
+  input.addEventListener('input', () => renderMatches(input.value));
+  input.addEventListener('focus', () => { if (input.value.trim()) renderMatches(input.value); });
+  input.addEventListener('blur', () => setTimeout(close, 150));
+
+  // mousedown (non click): scatta prima del blur, altrimenti la lista si
+  // chiuderebbe prima che il click sull'elemento venga registrato.
+  list.addEventListener('mousedown', e => {
+    const item = e.target.closest('.autocomplete-item');
+    if (!item) return;
+    input.value = item.textContent;
+    close();
+  });
+}
+
+['g1', 'g2'].forEach(setupCountryAutocomplete);
 
 // ── VALIDAZIONE ──
 // Controllo esplicito indipendente dagli attributi "required": alcuni
