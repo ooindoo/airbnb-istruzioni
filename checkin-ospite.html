@@ -670,6 +670,13 @@ function applyLang(l) {
   });
   localStorage.setItem('lang', l);
   setCheckinBusy(checkinBusy);
+
+  // Se un paese è già stato selezionato dai suggerimenti, aggiorna anche
+  // il testo mostrato nella nuova lingua (il valore canonico salvato non cambia).
+  Object.keys(cittadinanzaCanonical).forEach(inputId => {
+    const idx = PAESI.it.indexOf(cittadinanzaCanonical[inputId]);
+    if (idx !== -1 && $(inputId)) $(inputId).value = (PAESI[l] || PAESI.it)[idx];
+  });
 }
 
 document.querySelectorAll('.lb').forEach(b => {
@@ -742,46 +749,166 @@ $('remove-guest-btn').addEventListener('click', () => {
 
 // ── AUTOCOMPLETAMENTO CITTADINANZA ──
 
-const PAESI_IT = [
-  "Afghanistan", "Albania", "Algeria", "Andorra", "Angola", "Antigua e Barbuda",
-  "Arabia Saudita", "Argentina", "Armenia", "Australia", "Austria", "Azerbaigian",
-  "Bahamas", "Bahrein", "Bangladesh", "Barbados", "Belgio", "Belize", "Benin",
-  "Bhutan", "Bielorussia", "Bolivia", "Bosnia ed Erzegovina", "Botswana", "Brasile",
-  "Brunei", "Bulgaria", "Burkina Faso", "Burundi", "Cambogia", "Camerun", "Canada",
-  "Capo Verde", "Ciad", "Cile", "Cina", "Cipro", "Colombia", "Comore",
-  "Corea del Nord", "Corea del Sud", "Costa d'Avorio", "Costa Rica", "Croazia",
-  "Cuba", "Danimarca", "Dominica", "Ecuador", "Egitto", "El Salvador",
-  "Emirati Arabi Uniti", "Eritrea", "Estonia", "Eswatini", "Etiopia", "Figi",
-  "Filippine", "Finlandia", "Francia", "Gabon", "Gambia", "Georgia", "Germania",
-  "Ghana", "Giamaica", "Giappone", "Gibuti", "Giordania", "Grecia", "Grenada",
-  "Guatemala", "Guinea", "Guinea-Bissau", "Guinea Equatoriale", "Guyana", "Haiti",
-  "Honduras", "India", "Indonesia", "Iran", "Iraq", "Irlanda", "Islanda",
-  "Isole Marshall", "Isole Salomone", "Israele", "Italia", "Kazakistan", "Kenya",
-  "Kirghizistan", "Kiribati", "Kosovo", "Kuwait", "Laos", "Lesotho", "Lettonia",
-  "Libano", "Liberia", "Libia", "Liechtenstein", "Lituania", "Lussemburgo",
-  "Macedonia del Nord", "Madagascar", "Malawi", "Malaysia", "Maldive", "Mali",
-  "Malta", "Marocco", "Mauritania", "Maurizio", "Messico", "Micronesia",
-  "Moldavia", "Monaco", "Mongolia", "Montenegro", "Mozambico", "Myanmar",
-  "Namibia", "Nauru", "Nepal", "Nicaragua", "Niger", "Nigeria", "Norvegia",
-  "Nuova Zelanda", "Oman", "Paesi Bassi", "Pakistan", "Palau", "Palestina",
-  "Panama", "Papua Nuova Guinea", "Paraguay", "Perù", "Polonia", "Portogallo",
-  "Qatar", "Regno Unito", "Repubblica Ceca", "Repubblica Centrafricana",
-  "Repubblica del Congo", "Repubblica Democratica del Congo",
-  "Repubblica Dominicana", "Romania", "Ruanda", "Russia", "Saint Kitts e Nevis",
-  "Saint Lucia", "Saint Vincent e Grenadine", "Samoa", "San Marino",
-  "São Tomé e Príncipe", "Senegal", "Serbia", "Seychelles", "Sierra Leone",
-  "Singapore", "Siria", "Slovacchia", "Slovenia", "Somalia", "Spagna",
-  "Sri Lanka", "Stati Uniti d'America", "Sudafrica", "Sudan", "Sudan del Sud",
-  "Suriname", "Svezia", "Svizzera", "Tagikistan", "Tanzania", "Thailandia",
-  "Timor Est", "Togo", "Tonga", "Trinidad e Tobago", "Tunisia", "Turchia",
-  "Turkmenistan", "Tuvalu", "Ucraina", "Uganda", "Ungheria", "Uruguay",
-  "Uzbekistan", "Vanuatu", "Vaticano", "Venezuela", "Vietnam", "Yemen",
-  "Zambia", "Zimbabwe"
-];
+// Le 4 liste sono allineate per indice (stessa posizione = stesso paese).
+// Il valore effettivamente salvato/inviato è sempre quello italiano
+// (PAESI.it), coerente con la regola già usata per Tipo documento — solo
+// il suggerimento mostrato cambia lingua.
+const PAESI = {
+  it: [
+    "Afghanistan", "Albania", "Algeria", "Andorra", "Angola", "Antigua e Barbuda",
+    "Arabia Saudita", "Argentina", "Armenia", "Australia", "Austria", "Azerbaigian",
+    "Bahamas", "Bahrein", "Bangladesh", "Barbados", "Belgio", "Belize", "Benin",
+    "Bhutan", "Bielorussia", "Bolivia", "Bosnia ed Erzegovina", "Botswana", "Brasile",
+    "Brunei", "Bulgaria", "Burkina Faso", "Burundi", "Cambogia", "Camerun", "Canada",
+    "Capo Verde", "Ciad", "Cile", "Cina", "Cipro", "Colombia", "Comore",
+    "Corea del Nord", "Corea del Sud", "Costa d'Avorio", "Costa Rica", "Croazia",
+    "Cuba", "Danimarca", "Dominica", "Ecuador", "Egitto", "El Salvador",
+    "Emirati Arabi Uniti", "Eritrea", "Estonia", "Eswatini", "Etiopia", "Figi",
+    "Filippine", "Finlandia", "Francia", "Gabon", "Gambia", "Georgia", "Germania",
+    "Ghana", "Giamaica", "Giappone", "Gibuti", "Giordania", "Grecia", "Grenada",
+    "Guatemala", "Guinea", "Guinea-Bissau", "Guinea Equatoriale", "Guyana", "Haiti",
+    "Honduras", "India", "Indonesia", "Iran", "Iraq", "Irlanda", "Islanda",
+    "Isole Marshall", "Isole Salomone", "Israele", "Italia", "Kazakistan", "Kenya",
+    "Kirghizistan", "Kiribati", "Kosovo", "Kuwait", "Laos", "Lesotho", "Lettonia",
+    "Libano", "Liberia", "Libia", "Liechtenstein", "Lituania", "Lussemburgo",
+    "Macedonia del Nord", "Madagascar", "Malawi", "Malaysia", "Maldive", "Mali",
+    "Malta", "Marocco", "Mauritania", "Maurizio", "Messico", "Micronesia",
+    "Moldavia", "Monaco", "Mongolia", "Montenegro", "Mozambico", "Myanmar",
+    "Namibia", "Nauru", "Nepal", "Nicaragua", "Niger", "Nigeria", "Norvegia",
+    "Nuova Zelanda", "Oman", "Paesi Bassi", "Pakistan", "Palau", "Palestina",
+    "Panama", "Papua Nuova Guinea", "Paraguay", "Perù", "Polonia", "Portogallo",
+    "Qatar", "Regno Unito", "Repubblica Ceca", "Repubblica Centrafricana",
+    "Repubblica del Congo", "Repubblica Democratica del Congo",
+    "Repubblica Dominicana", "Romania", "Ruanda", "Russia", "Saint Kitts e Nevis",
+    "Saint Lucia", "Saint Vincent e Grenadine", "Samoa", "San Marino",
+    "São Tomé e Príncipe", "Senegal", "Serbia", "Seychelles", "Sierra Leone",
+    "Singapore", "Siria", "Slovacchia", "Slovenia", "Somalia", "Spagna",
+    "Sri Lanka", "Stati Uniti d'America", "Sudafrica", "Sudan", "Sudan del Sud",
+    "Suriname", "Svezia", "Svizzera", "Tagikistan", "Tanzania", "Thailandia",
+    "Timor Est", "Togo", "Tonga", "Trinidad e Tobago", "Tunisia", "Turchia",
+    "Turkmenistan", "Tuvalu", "Ucraina", "Uganda", "Ungheria", "Uruguay",
+    "Uzbekistan", "Vanuatu", "Vaticano", "Venezuela", "Vietnam", "Yemen",
+    "Zambia", "Zimbabwe"
+  ],
+  en: [
+    "Afghanistan", "Albania", "Algeria", "Andorra", "Angola", "Antigua and Barbuda",
+    "Saudi Arabia", "Argentina", "Armenia", "Australia", "Austria", "Azerbaijan",
+    "Bahamas", "Bahrain", "Bangladesh", "Barbados", "Belgium", "Belize", "Benin",
+    "Bhutan", "Belarus", "Bolivia", "Bosnia and Herzegovina", "Botswana", "Brazil",
+    "Brunei", "Bulgaria", "Burkina Faso", "Burundi", "Cambodia", "Cameroon", "Canada",
+    "Cape Verde", "Chad", "Chile", "China", "Cyprus", "Colombia", "Comoros",
+    "North Korea", "South Korea", "Ivory Coast", "Costa Rica", "Croatia",
+    "Cuba", "Denmark", "Dominica", "Ecuador", "Egypt", "El Salvador",
+    "United Arab Emirates", "Eritrea", "Estonia", "Eswatini", "Ethiopia", "Fiji",
+    "Philippines", "Finland", "France", "Gabon", "Gambia", "Georgia", "Germany",
+    "Ghana", "Jamaica", "Japan", "Djibouti", "Jordan", "Greece", "Grenada",
+    "Guatemala", "Guinea", "Guinea-Bissau", "Equatorial Guinea", "Guyana", "Haiti",
+    "Honduras", "India", "Indonesia", "Iran", "Iraq", "Ireland", "Iceland",
+    "Marshall Islands", "Solomon Islands", "Israel", "Italy", "Kazakhstan", "Kenya",
+    "Kyrgyzstan", "Kiribati", "Kosovo", "Kuwait", "Laos", "Lesotho", "Latvia",
+    "Lebanon", "Liberia", "Libya", "Liechtenstein", "Lithuania", "Luxembourg",
+    "North Macedonia", "Madagascar", "Malawi", "Malaysia", "Maldives", "Mali",
+    "Malta", "Morocco", "Mauritania", "Mauritius", "Mexico", "Micronesia",
+    "Moldova", "Monaco", "Mongolia", "Montenegro", "Mozambique", "Myanmar",
+    "Namibia", "Nauru", "Nepal", "Nicaragua", "Niger", "Nigeria", "Norway",
+    "New Zealand", "Oman", "Netherlands", "Pakistan", "Palau", "Palestine",
+    "Panama", "Papua New Guinea", "Paraguay", "Peru", "Poland", "Portugal",
+    "Qatar", "United Kingdom", "Czech Republic", "Central African Republic",
+    "Republic of the Congo", "Democratic Republic of the Congo",
+    "Dominican Republic", "Romania", "Rwanda", "Russia", "Saint Kitts and Nevis",
+    "Saint Lucia", "Saint Vincent and the Grenadines", "Samoa", "San Marino",
+    "São Tomé and Príncipe", "Senegal", "Serbia", "Seychelles", "Sierra Leone",
+    "Singapore", "Syria", "Slovakia", "Slovenia", "Somalia", "Spain",
+    "Sri Lanka", "United States of America", "South Africa", "Sudan", "South Sudan",
+    "Suriname", "Sweden", "Switzerland", "Tajikistan", "Tanzania", "Thailand",
+    "East Timor", "Togo", "Tonga", "Trinidad and Tobago", "Tunisia", "Turkey",
+    "Turkmenistan", "Tuvalu", "Ukraine", "Uganda", "Hungary", "Uruguay",
+    "Uzbekistan", "Vanuatu", "Vatican City", "Venezuela", "Vietnam", "Yemen",
+    "Zambia", "Zimbabwe"
+  ],
+  es: [
+    "Afganistán", "Albania", "Argelia", "Andorra", "Angola", "Antigua y Barbuda",
+    "Arabia Saudita", "Argentina", "Armenia", "Australia", "Austria", "Azerbaiyán",
+    "Bahamas", "Baréin", "Bangladés", "Barbados", "Bélgica", "Belice", "Benín",
+    "Bután", "Bielorrusia", "Bolivia", "Bosnia y Herzegovina", "Botsuana", "Brasil",
+    "Brunéi", "Bulgaria", "Burkina Faso", "Burundi", "Camboya", "Camerún", "Canadá",
+    "Cabo Verde", "Chad", "Chile", "China", "Chipre", "Colombia", "Comoras",
+    "Corea del Norte", "Corea del Sur", "Costa de Marfil", "Costa Rica", "Croacia",
+    "Cuba", "Dinamarca", "Dominica", "Ecuador", "Egipto", "El Salvador",
+    "Emiratos Árabes Unidos", "Eritrea", "Estonia", "Esuatini", "Etiopía", "Fiyi",
+    "Filipinas", "Finlandia", "Francia", "Gabón", "Gambia", "Georgia", "Alemania",
+    "Ghana", "Jamaica", "Japón", "Yibuti", "Jordania", "Grecia", "Granada",
+    "Guatemala", "Guinea", "Guinea-Bisáu", "Guinea Ecuatorial", "Guyana", "Haití",
+    "Honduras", "India", "Indonesia", "Irán", "Irak", "Irlanda", "Islandia",
+    "Islas Marshall", "Islas Salomón", "Israel", "Italia", "Kazajistán", "Kenia",
+    "Kirguistán", "Kiribati", "Kosovo", "Kuwait", "Laos", "Lesoto", "Letonia",
+    "Líbano", "Liberia", "Libia", "Liechtenstein", "Lituania", "Luxemburgo",
+    "Macedonia del Norte", "Madagascar", "Malaui", "Malasia", "Maldivas", "Malí",
+    "Malta", "Marruecos", "Mauritania", "Mauricio", "México", "Micronesia",
+    "Moldavia", "Mónaco", "Mongolia", "Montenegro", "Mozambique", "Myanmar",
+    "Namibia", "Nauru", "Nepal", "Nicaragua", "Níger", "Nigeria", "Noruega",
+    "Nueva Zelanda", "Omán", "Países Bajos", "Pakistán", "Palaos", "Palestina",
+    "Panamá", "Papúa Nueva Guinea", "Paraguay", "Perú", "Polonia", "Portugal",
+    "Catar", "Reino Unido", "República Checa", "República Centroafricana",
+    "República del Congo", "República Democrática del Congo",
+    "República Dominicana", "Rumanía", "Ruanda", "Rusia", "San Cristóbal y Nieves",
+    "Santa Lucía", "San Vicente y las Granadinas", "Samoa", "San Marino",
+    "Santo Tomé y Príncipe", "Senegal", "Serbia", "Seychelles", "Sierra Leona",
+    "Singapur", "Siria", "Eslovaquia", "Eslovenia", "Somalia", "España",
+    "Sri Lanka", "Estados Unidos de América", "Sudáfrica", "Sudán", "Sudán del Sur",
+    "Surinam", "Suecia", "Suiza", "Tayikistán", "Tanzania", "Tailandia",
+    "Timor Oriental", "Togo", "Tonga", "Trinidad y Tobago", "Túnez", "Turquía",
+    "Turkmenistán", "Tuvalu", "Ucrania", "Uganda", "Hungría", "Uruguay",
+    "Uzbekistán", "Vanuatu", "Ciudad del Vaticano", "Venezuela", "Vietnam", "Yemen",
+    "Zambia", "Zimbabue"
+  ],
+  de: [
+    "Afghanistan", "Albanien", "Algerien", "Andorra", "Angola", "Antigua und Barbuda",
+    "Saudi-Arabien", "Argentinien", "Armenien", "Australien", "Österreich", "Aserbaidschan",
+    "Bahamas", "Bahrain", "Bangladesch", "Barbados", "Belgien", "Belize", "Benin",
+    "Bhutan", "Belarus", "Bolivien", "Bosnien und Herzegowina", "Botsuana", "Brasilien",
+    "Brunei", "Bulgarien", "Burkina Faso", "Burundi", "Kambodscha", "Kamerun", "Kanada",
+    "Kap Verde", "Tschad", "Chile", "China", "Zypern", "Kolumbien", "Komoren",
+    "Nordkorea", "Südkorea", "Elfenbeinküste", "Costa Rica", "Kroatien",
+    "Kuba", "Dänemark", "Dominica", "Ecuador", "Ägypten", "El Salvador",
+    "Vereinigte Arabische Emirate", "Eritrea", "Estland", "Eswatini", "Äthiopien", "Fidschi",
+    "Philippinen", "Finnland", "Frankreich", "Gabun", "Gambia", "Georgien", "Deutschland",
+    "Ghana", "Jamaika", "Japan", "Dschibuti", "Jordanien", "Griechenland", "Grenada",
+    "Guatemala", "Guinea", "Guinea-Bissau", "Äquatorialguinea", "Guyana", "Haiti",
+    "Honduras", "Indien", "Indonesien", "Iran", "Irak", "Irland", "Island",
+    "Marshallinseln", "Salomonen", "Israel", "Italien", "Kasachstan", "Kenia",
+    "Kirgisistan", "Kiribati", "Kosovo", "Kuwait", "Laos", "Lesotho", "Lettland",
+    "Libanon", "Liberia", "Libyen", "Liechtenstein", "Litauen", "Luxemburg",
+    "Nordmazedonien", "Madagaskar", "Malawi", "Malaysia", "Malediven", "Mali",
+    "Malta", "Marokko", "Mauretanien", "Mauritius", "Mexiko", "Mikronesien",
+    "Moldau", "Monaco", "Mongolei", "Montenegro", "Mosambik", "Myanmar",
+    "Namibia", "Nauru", "Nepal", "Nicaragua", "Niger", "Nigeria", "Norwegen",
+    "Neuseeland", "Oman", "Niederlande", "Pakistan", "Palau", "Palästina",
+    "Panama", "Papua-Neuguinea", "Paraguay", "Peru", "Polen", "Portugal",
+    "Katar", "Vereinigtes Königreich", "Tschechien", "Zentralafrikanische Republik",
+    "Republik Kongo", "Demokratische Republik Kongo",
+    "Dominikanische Republik", "Rumänien", "Ruanda", "Russland", "St. Kitts und Nevis",
+    "St. Lucia", "St. Vincent und die Grenadinen", "Samoa", "San Marino",
+    "São Tomé und Príncipe", "Senegal", "Serbien", "Seychellen", "Sierra Leone",
+    "Singapur", "Syrien", "Slowakei", "Slowenien", "Somalia", "Spanien",
+    "Sri Lanka", "Vereinigte Staaten von Amerika", "Südafrika", "Sudan", "Südsudan",
+    "Suriname", "Schweden", "Schweiz", "Tadschikistan", "Tansania", "Thailand",
+    "Osttimor", "Togo", "Tonga", "Trinidad und Tobago", "Tunesien", "Türkei",
+    "Turkmenistan", "Tuvalu", "Ukraine", "Uganda", "Ungarn", "Uruguay",
+    "Usbekistan", "Vanuatu", "Vatikanstadt", "Venezuela", "Vietnam", "Jemen",
+    "Sambia", "Simbabwe"
+  ]
+};
+
+// Traccia, per ogni input Cittadinanza, il valore italiano canonico
+// selezionato dalla lista suggerimenti — è quello che viene poi inviato
+// al server, indipendentemente dalla lingua mostrata.
+const cittadinanzaCanonical = {};
 
 function setupCountryAutocomplete(prefix) {
   const input = $(`${prefix}-cittadinanza`);
   const list = $(`${prefix}-cittadinanza-list`);
+  const inputId = `${prefix}-cittadinanza`;
 
   function close() {
     list.classList.remove('open');
@@ -791,13 +918,19 @@ function setupCountryAutocomplete(prefix) {
   function renderMatches(query) {
     const q = query.trim().toLowerCase();
     if (!q) { close(); return; }
-    const matches = PAESI_IT.filter(p => p.toLowerCase().includes(q)).slice(0, 8);
-    if (!matches.length) { close(); return; }
-    list.innerHTML = matches.map(p => `<div class="autocomplete-item">${p}</div>`).join('');
+    const names = PAESI[lang] || PAESI.it;
+    const idxMatches = [];
+    names.forEach((name, i) => { if (name.toLowerCase().includes(q)) idxMatches.push(i); });
+    const shown = idxMatches.slice(0, 8);
+    if (!shown.length) { close(); return; }
+    list.innerHTML = shown.map(i => `<div class="autocomplete-item" data-idx="${i}">${names[i]}</div>`).join('');
     list.classList.add('open');
   }
 
-  input.addEventListener('input', () => renderMatches(input.value));
+  input.addEventListener('input', () => {
+    delete cittadinanzaCanonical[inputId];
+    renderMatches(input.value);
+  });
   input.addEventListener('focus', () => { if (input.value.trim()) renderMatches(input.value); });
   input.addEventListener('blur', () => setTimeout(close, 150));
 
@@ -806,7 +939,9 @@ function setupCountryAutocomplete(prefix) {
   list.addEventListener('mousedown', e => {
     const item = e.target.closest('.autocomplete-item');
     if (!item) return;
-    input.value = item.textContent;
+    const idx = Number(item.dataset.idx);
+    input.value = (PAESI[lang] || PAESI.it)[idx];
+    cittadinanzaCanonical[inputId] = PAESI.it[idx];
     close();
   });
 }
@@ -866,7 +1001,9 @@ function collectGuest(prefix) {
     cognome: $(`${prefix}-cognome`).value.trim(),
     nome: $(`${prefix}-nome`).value.trim(),
     dataNascita: $(`${prefix}-dataNascita`).value,
-    cittadinanza: $(`${prefix}-cittadinanza`).value.trim(),
+    // Se selezionata dai suggerimenti, invia sempre il nome italiano
+    // canonico, indipendentemente dalla lingua mostrata nel campo.
+    cittadinanza: cittadinanzaCanonical[`${prefix}-cittadinanza`] || $(`${prefix}-cittadinanza`).value.trim(),
     luogoNascita: $(`${prefix}-luogoNascita`).value.trim(),
     luogoResidenza: $(`${prefix}-luogoResidenza`).value.trim(),
     tipoDocumento: $(`${prefix}-tipoDocumento`).value,
