@@ -285,6 +285,7 @@ body {
     <button class="lb" data-lang="en">EN</button>
     <button class="lb" data-lang="es">ES</button>
     <button class="lb" data-lang="de">DE</button>
+    <button class="lb" data-lang="fr">FR</button>
   </div>
   <button class="print-btn" id="printBtn" aria-label="Stampa">
     <svg class="icon" width="20" height="20"><use href="#i-print"/></svg>
@@ -646,6 +647,35 @@ const T = {
     "err.fatturaIncomplete": "{guest}: Wohnadresse und Codice Fiscale sind beide erforderlich.",
     "err.checkinMissing": "Gib das Anreisedatum ein.", "err.checkoutMissing": "Gib das Abreisedatum ein.",
     "err.submitGeneric": "Fehler beim Senden"
+  },
+  fr: {
+    "page.title": "Enregistrement des voyageurs",
+    "status.loading": "Vérification en cours…",
+    "status.invalid.title": "Lien non valide",
+    "status.invalid.text1": "Ce lien n'est pas valide ou a expiré.",
+    "status.invalid.text2": "Contactez l'hébergement pour en recevoir un nouveau.",
+    "status.thanks.title": "Merci !",
+    "status.thanks.text": "Vos données ont été reçues avec succès.",
+    "field.checkin": "Date d'arrivée", "field.checkout": "Date de départ",
+    "guest.label": "Voyageur", "guest.1": "Voyageur 1", "guest.2": "Voyageur 2",
+    "field.select": "Sélectionner",
+    "field.sesso": "Sexe", "field.cognome": "Nom", "field.nome": "Prénom",
+    "field.dataNascita": "Date de naissance", "field.cittadinanza": "Nationalité",
+    "field.luogoNascita": "État/lieu de naissance", "field.luogoResidenza": "État/lieu de résidence",
+    "field.tipoDocumento": "Type de document", "field.numeroDocumento": "Numéro du document",
+    "field.luogoRilascio": "État/lieu de délivrance", "field.fatturaCheck": "Résidez-vous en Italie ?",
+    "field.indirizzoResidenza": "Adresse de résidence complète", "field.codiceFiscale": "Numéro fiscal italien (Codice Fiscale)",
+    "doc.ci": "Carte d'identité", "doc.pp": "Passeport",
+    "btn.addGuest": "+ Ajouter un deuxième voyageur", "btn.removeGuest": "− Retirer le deuxième voyageur",
+    "btn.submit": "Envoyer vos données", "btn.submitBusy": "Envoi en cours...",
+    "ph.cognome": "ex. Dupont", "ph.nome": "ex. Jean", "ph.cittadinanza": "ex. Italie",
+    "ph.luogoNascita": "ex. Treviso", "ph.luogoResidenza": "ex. Milan",
+    "ph.numeroDocumento": "ex. AB1234567", "ph.luogoRilascio": "ex. Treviso",
+    "ph.indirizzoResidenza": "Rue, numéro, code postal, ville",
+    "err.required": '{guest} : le champ "{field}" est obligatoire.',
+    "err.fatturaIncomplete": "{guest} : l'adresse de résidence et le Codice Fiscale sont tous deux obligatoires.",
+    "err.checkinMissing": "Indiquez la date d'arrivée.", "err.checkoutMissing": "Indiquez la date de départ.",
+    "err.submitGeneric": "Erreur lors de l'envoi"
   }
 };
 
@@ -897,6 +927,42 @@ const PAESI = {
     "Turkmenistan", "Tuvalu", "Ukraine", "Uganda", "Ungarn", "Uruguay",
     "Usbekistan", "Vanuatu", "Vatikanstadt", "Venezuela", "Vietnam", "Jemen",
     "Sambia", "Simbabwe"
+  ],
+  fr: [
+    "Afghanistan", "Albanie", "Algérie", "Andorre", "Angola", "Antigua-et-Barbuda",
+    "Arabie saoudite", "Argentine", "Arménie", "Australie", "Autriche", "Azerbaïdjan",
+    "Bahamas", "Bahreïn", "Bangladesh", "Barbade", "Belgique", "Belize", "Bénin",
+    "Bhoutan", "Biélorussie", "Bolivie", "Bosnie-Herzégovine", "Botswana", "Brésil",
+    "Brunei", "Bulgarie", "Burkina Faso", "Burundi", "Cambodge", "Cameroun", "Canada",
+    "Cap-Vert", "Tchad", "Chili", "Chine", "Chypre", "Colombie", "Comores",
+    "Corée du Nord", "Corée du Sud", "Côte d'Ivoire", "Costa Rica", "Croatie",
+    "Cuba", "Danemark", "Dominique", "Équateur", "Égypte", "Salvador",
+    "Émirats arabes unis", "Érythrée", "Estonie", "Eswatini", "Éthiopie", "Fidji",
+    "Philippines", "Finlande", "France", "Gabon", "Gambie", "Géorgie", "Allemagne",
+    "Ghana", "Jamaïque", "Japon", "Djibouti", "Jordanie", "Grèce", "Grenade",
+    "Guatemala", "Guinée", "Guinée-Bissau", "Guinée équatoriale", "Guyana", "Haïti",
+    "Honduras", "Inde", "Indonésie", "Iran", "Irak", "Irlande", "Islande",
+    "Îles Marshall", "Îles Salomon", "Israël", "Italie", "Kazakhstan", "Kenya",
+    "Kirghizistan", "Kiribati", "Kosovo", "Koweït", "Laos", "Lesotho", "Lettonie",
+    "Liban", "Libéria", "Libye", "Liechtenstein", "Lituanie", "Luxembourg",
+    "Macédoine du Nord", "Madagascar", "Malawi", "Malaisie", "Maldives", "Mali",
+    "Malte", "Maroc", "Mauritanie", "Maurice", "Mexique", "Micronésie",
+    "Moldavie", "Monaco", "Mongolie", "Monténégro", "Mozambique", "Myanmar",
+    "Namibie", "Nauru", "Népal", "Nicaragua", "Niger", "Nigeria", "Norvège",
+    "Nouvelle-Zélande", "Oman", "Pays-Bas", "Pakistan", "Palaos", "Palestine",
+    "Panama", "Papouasie-Nouvelle-Guinée", "Paraguay", "Pérou", "Pologne", "Portugal",
+    "Qatar", "Royaume-Uni", "République tchèque", "République centrafricaine",
+    "République du Congo", "République démocratique du Congo",
+    "République dominicaine", "Roumanie", "Rwanda", "Russie", "Saint-Christophe-et-Niévès",
+    "Sainte-Lucie", "Saint-Vincent-et-les-Grenadines", "Samoa", "Saint-Marin",
+    "Sao Tomé-et-Principe", "Sénégal", "Serbie", "Seychelles", "Sierra Leone",
+    "Singapour", "Syrie", "Slovaquie", "Slovénie", "Somalie", "Espagne",
+    "Sri Lanka", "États-Unis d'Amérique", "Afrique du Sud", "Soudan", "Soudan du Sud",
+    "Suriname", "Suède", "Suisse", "Tadjikistan", "Tanzanie", "Thaïlande",
+    "Timor oriental", "Togo", "Tonga", "Trinité-et-Tobago", "Tunisie", "Turquie",
+    "Turkménistan", "Tuvalu", "Ukraine", "Ouganda", "Hongrie", "Uruguay",
+    "Ouzbékistan", "Vanuatu", "Cité du Vatican", "Venezuela", "Vietnam", "Yémen",
+    "Zambie", "Zimbabwe"
   ]
 };
 
